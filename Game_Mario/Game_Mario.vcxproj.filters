@@ -12,33 +12,72 @@
     <Filter Include="Source Files\DirectX">
       <UniqueIdentifier>{fa74ca38-0c6a-4cb9-87ac-74090b5ba350}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Game Mario">
+      <UniqueIdentifier>{0fdf19a9-cb77-4395-b171-a11852cff81a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameWindow.cpp">
+      <Filter>Source Files\DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files\DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="GameKeyboard.cpp">
+      <Filter>Source Files\DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="GameGraphic.cpp">
+      <Filter>Source Files\DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Source Files\DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="FileUtils.cpp">
+      <Filter>Source Files\DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\Game Mario</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameWindow.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Global.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameWindow.h">
+      <Filter>Source Files\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Source Files\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="GameKeyboard.h">
+      <Filter>Source Files\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="GameGraphic.h">
+      <Filter>Source Files\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Source Files\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="Transformation.h">
+      <Filter>Source Files\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="FileUtils.h">
+      <Filter>Source Files\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Source Files\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Source Files\Game Mario</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
