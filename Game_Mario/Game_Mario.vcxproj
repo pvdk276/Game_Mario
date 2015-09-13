@@ -155,6 +155,9 @@
     <ClInclude Include="Global.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="DirectX.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
