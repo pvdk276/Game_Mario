@@ -110,7 +110,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dinput8.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;d3dx9.lib;d3d9.lib;dinput8.lib;dxguid.lib;dsound.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -148,22 +148,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="dsutil.cpp" />
+    <ClCompile Include="dxutil.cpp" />
     <ClCompile Include="FileUtils.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameGraphic.cpp" />
     <ClCompile Include="GameKeyboard.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameSound.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="dsutil.h" />
+    <ClInclude Include="dxutil.h" />
     <ClInclude Include="FileUtils.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameGraphic.h" />
     <ClInclude Include="GameKeyboard.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameSound.h" />
     <ClInclude Include="GameWindow.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="Singleton.h" />

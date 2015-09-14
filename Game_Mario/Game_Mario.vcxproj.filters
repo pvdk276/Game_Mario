@@ -44,6 +44,15 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files\Game Mario</Filter>
     </ClCompile>
+    <ClCompile Include="dsutil.cpp">
+      <Filter>Source Files\DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSound.cpp">
+      <Filter>Source Files\DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="dxutil.cpp">
+      <Filter>Source Files\DirectX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Global.h">
@@ -78,6 +87,15 @@
     </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Source Files\Game Mario</Filter>
+    </ClInclude>
+    <ClInclude Include="dsutil.h">
+      <Filter>Source Files\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSound.h">
+      <Filter>Source Files\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="dxutil.h">
+      <Filter>Source Files\DirectX</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
