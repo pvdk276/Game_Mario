@@ -20,12 +20,13 @@ int CGame::Init(HINSTANCE hInstance)
 		return 0;
 	}
 
-	//// Kh?i t?o ??i t??ng ?? h?a c?a game.
-	//if (!CGraphic::GetInstance()->Init(pGameWindow->GetHWND()))
-	//{
-	//	OutputDebugString("[Game.cpp] Cannot init CGraphic.");
-	//	return 0;
-	//}
+	GameGraphic* graphic = new GameGraphic();
+	// Kh?i t?o thi?t b? d3ddevice game.
+	if (!graphic->Init(pGameWindow->GetHWND()))
+	{
+		OutputDebugString("[Game.cpp] Cannot init CGraphic.");
+		return 0;
+	}
 
 
 	//Kh?i t?o ??i t??ng Input.
