@@ -117,18 +117,18 @@ void GameSound::Stop()
 	this->_soundBuffer->Stop();
 }
 
-void ShutdownDirectBuffer(void)
-{
-
-}
-
-void GameSound::ShutdownDirectSound(void)
+void GameSound::ShutdownDirectBuffer(void)
 {
 	if (_soundBuffer != NULL)
 	{
 		_soundBuffer->Release();
 		_soundBuffer = NULL;
 	}
+}
+
+void GameSound::ShutdownDirectSound(void)
+{
+
 
 	if (_pDS != NULL)
 	{
@@ -136,8 +136,6 @@ void GameSound::ShutdownDirectSound(void)
 		_pDS = NULL;
 	}
 }
-
-
 
 LPDIRECTSOUNDBUFFER GameSound::getSoundBuffer()
 {
