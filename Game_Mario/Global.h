@@ -5,8 +5,8 @@
 #include <cmath>
 
 #define GAME_NAME "Game_Mario"
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 600
 #define GAME_FPS 60
 #define GRAVITY  -600.0f
 
