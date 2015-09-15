@@ -1,7 +1,7 @@
 #include "Sprite.h"
 #include "Transformation.h"
 
-Sprite::Sprite(LPD3DXSPRITE spriteHandler, LPCSTR filePath, int width, int height, int count, int spritePerRow, int transparentColor)
+CSprite::CSprite(LPD3DXSPRITE spriteHandler, LPCSTR filePath, int width, int height, int count, int spritePerRow, int transparentColor)
 {
 	this->spriteHandler = spriteHandler;
 	this->width = width;
@@ -46,17 +46,17 @@ Sprite::Sprite(LPD3DXSPRITE spriteHandler, LPCSTR filePath, int width, int heigh
 	}
 }
 
-Sprite::~Sprite()
+CSprite::~CSprite()
 {
 
 }
 
-void Sprite::Next()
+void CSprite::Next()
 {
 	index = (index + 1) % count;
 }
 
-void Sprite::Reset()
+void CSprite::Reset()
 {
 	index = 0;
 }
@@ -126,8 +126,28 @@ void Sprite::Reset()
 //	Next();
 //}
 
-void Sprite::RenderMap(int posX, int posY, int vpx, int vpy, int value)
+void CSprite::RenderMap(int posX, int posY, int vpx, int vpy, int value)
 {
+	//RECT rect;
+	//rect.top = ((value - 1) / spritePerRow) * height;
+	//rect.left = ((value - 1) % spritePerRow) * width;
+	//rect.bottom = rect.top + height;
+	//rect.right = rect.left + width;
+
+	//spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+
+	//D3DXVECTOR3 p = CTransformation::getInstance()->Trans(posX, posY, vpx, vpy);
+
+	//spriteHandler->Draw(
+	//	image,
+	//	&rect,
+	//	//&center,
+	//	NULL,
+	//	&p,
+	//	D3DCOLOR_XRGB(255, 255, 255)
+	//	);
+	//spriteHandler->End();
+
 	RECT rect;
 	rect.top = ((value - 1) / spritePerRow) * height;
 	rect.left = ((value - 1) % spritePerRow) * width;
@@ -135,8 +155,17 @@ void Sprite::RenderMap(int posX, int posY, int vpx, int vpy, int value)
 	rect.right = rect.left + width;
 
 	spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+	D3DXVECTOR3 position((float)posX, (float)posY, 0);
+	D3DXMATRIX mt;
+	D3DXMatrixIdentity(&mt);
+	mt._22 = -1.0f;
+	mt._41 = -vpx;
+	mt._42 = vpy;
+	D3DXVECTOR4 vp_pos;
+	D3DXVec3Transform(&vp_pos, &position, &mt);
 
-	D3DXVECTOR3 p = Transformation::getInstance()->Trans(posX, posY, vpx, vpy);
+	D3DXVECTOR3 p(vp_pos.x, vp_pos.y, 0);
+	D3DXVECTOR3 center((float)width / 2, (float)height / 2, 0);
 
 	spriteHandler->Draw(
 		image,

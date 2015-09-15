@@ -1,7 +1,7 @@
 #pragma once
 #include <d3dx9.h>
 
-class Sprite
+class CSprite
 {
 public:
 	LPDIRECT3DTEXTURE9 image;
@@ -13,8 +13,8 @@ public:
 	int count;
 	int spritePerRow;
 
-	Sprite(LPD3DXSPRITE spriteHandler, LPCSTR filePath, int width, int height, int count, int spritePerRow, int transparentColor);
-	~Sprite();
+	CSprite(LPD3DXSPRITE spriteHandler, LPCSTR filePath, int width, int height, int count, int spritePerRow, int transparentColor);
+	~CSprite();
 
 	void Next();
 	void Reset();

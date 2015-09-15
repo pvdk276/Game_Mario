@@ -2,7 +2,7 @@
 #include "Singleton.h"
 #include <string>
 
-class FileUtils : public Singleton<FileUtils>
+class CFileUtils : public CSingleton<CFileUtils>
 {
 public:
 	int** LoadMatrix(int m, int n, std::string filePath);

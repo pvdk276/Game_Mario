@@ -1,18 +1,16 @@
 #include "GameGraphic.h"
 
-//using namespace std;
-
-GameGraphic::GameGraphic()
+CGameGraphic::CGameGraphic()
 {
 	d3d = NULL;
 	d3ddv = NULL;
 }
 
-GameGraphic::~GameGraphic()
+CGameGraphic::~CGameGraphic()
 {
 }
 
-int GameGraphic::Init(HWND hWnd)
+int CGameGraphic::Init(HWND hWnd)
 {
 	d3d = Direct3DCreate9(D3D_SDK_VERSION);
 	if (!d3d) return 0;
@@ -21,8 +19,8 @@ int GameGraphic::Init(HWND hWnd)
 	ZeroMemory(&d3dpp, sizeof(d3dpp));
 	d3dpp.BackBufferCount = 1;
 	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
-	d3dpp.BackBufferWidth = SCREEN_WIDTH;
-	d3dpp.BackBufferHeight = SCREEN_HEIGHT;
+	d3dpp.BackBufferWidth = 750;
+	d3dpp.BackBufferHeight = 750;
 	d3dpp.hDeviceWindow = hWnd;
 	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
 	d3dpp.Windowed = true;
@@ -45,7 +43,7 @@ int GameGraphic::Init(HWND hWnd)
 	return 1;
 }
 
-void GameGraphic::destroy()
+void CGameGraphic::destroy()
 {
 	if (d3ddv != NULL)
 	{
@@ -60,7 +58,7 @@ void GameGraphic::destroy()
 	}
 }
 
-void GameGraphic::beginRender()
+void CGameGraphic::beginRender()
 {
 	if (NULL == d3ddv)
 	{
@@ -72,13 +70,13 @@ void GameGraphic::beginRender()
 	d3ddv->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 }
 
-void GameGraphic::endRender()
+void CGameGraphic::endRender()
 {
 	// Present the backbuffer contents to the display
 	d3ddv->Present(NULL, NULL, NULL, NULL);
 }
 
-LPDIRECT3DSURFACE9 GameGraphic::getBackbuffer()
+LPDIRECT3DSURFACE9 CGameGraphic::getBackbuffer()
 {
 	IDirect3DSurface9* backbuffer = NULL;
 
@@ -92,7 +90,7 @@ LPDIRECT3DSURFACE9 GameGraphic::getBackbuffer()
 		return backbuffer;
 }
 
-void GameGraphic::strectRect(LPDIRECT3DSURFACE9 srcSurface, const RECT * srcRect, const RECT * destRect)
+void CGameGraphic::strectRect(LPDIRECT3DSURFACE9 srcSurface, const RECT * srcRect, const RECT * destRect)
 {
 	d3ddv->StretchRect(srcSurface, srcRect, getBackbuffer(), destRect, D3DTEXF_NONE);
 }

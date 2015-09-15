@@ -1,7 +1,7 @@
 #pragma once
 
 template <class T>
-class Singleton
+class CSingleton
 {
 public:
 	static T* getInstance()
@@ -16,4 +16,4 @@ public:
 	static T* instance;
 };
 
-template <class T> T* Singleton<T>::instance = nullptr;
+template <class T> T* CSingleton<T>::instance = nullptr;

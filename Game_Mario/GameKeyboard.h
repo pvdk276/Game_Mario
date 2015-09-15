@@ -1,7 +1,8 @@
 #pragma once
 #include <dinput.h>
+#include "Singleton.h"
 
-class GameKeyboard
+class CGameKeyboard : public CSingleton<CGameKeyboard>
 {
 public:
 	LPDIRECTINPUT8 di;
@@ -9,8 +10,8 @@ public:
 	BYTE keyStates[256];
 	DIDEVICEOBJECTDATA keyEvents[1024];
 
-	GameKeyboard();
-	~GameKeyboard();
+	CGameKeyboard();
+	~CGameKeyboard();
 
 	//Khoi tao input object va input device
 	int Init(HINSTANCE hInstance, HWND hWnd);

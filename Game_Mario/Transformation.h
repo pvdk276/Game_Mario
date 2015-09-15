@@ -2,7 +2,7 @@
 #include "Singleton.h"
 #include <d3dx9.h>
 
-class Transformation : public Singleton<Transformation>
+class CTransformation : public CSingleton<CTransformation>
 {
 public:
 	D3DXVECTOR3 Trans(int posX, int posY, int vpx, int vpy)

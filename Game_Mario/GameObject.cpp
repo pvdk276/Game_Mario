@@ -1,11 +1,11 @@
 #include "GameObject.h"
 
-GameObject::GameObject()
+CGameObject::CGameObject()
 {
 
 }
 
-GameObject::GameObject(int id, int typeId, float positionX, float positionY, float width, float height)
+CGameObject::CGameObject(int id, int typeId, float positionX, float positionY, float width, float height)
 {
 	this->id = id;
 	this->typeId = typeId;

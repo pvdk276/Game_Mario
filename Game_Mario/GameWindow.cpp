@@ -49,6 +49,7 @@ int CGameWindow::Init(HINSTANCE hInstance)
 		CW_USEDEFAULT,
 		clientRect.right - clientRect.left,
 		clientRect.bottom - clientRect.top,
+		//750,750,
 		NULL,
 		NULL,
 		m_hInstance,

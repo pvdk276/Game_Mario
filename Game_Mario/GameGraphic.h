@@ -3,16 +3,17 @@
 #include <d3dx9tex.h>
 #include <string>
 #include "Global.h"
+#include "Singleton.h"
 
-class GameGraphic
+class CGameGraphic : public CSingleton<CGameGraphic>
 {
 public:
 	LPDIRECT3D9 d3d;
 	LPDIRECT3DDEVICE9 d3ddv;
 	LPDIRECT3DSURFACE9 backBuffer;
 
-	GameGraphic();
-	~GameGraphic();
+	CGameGraphic();
+	~CGameGraphic();
 
 	//Kh?i t?o d3ddevice
 	int Init(HWND hWnd);

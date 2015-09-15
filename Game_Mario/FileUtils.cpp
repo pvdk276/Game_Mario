@@ -1,7 +1,7 @@
 #include "FileUtils.h"
 #include <fstream>
 
-int** FileUtils::LoadMatrix(int m, int n, std::string filePath)
+int** CFileUtils::LoadMatrix(int m, int n, std::string filePath)
 {
 	int** matrix;
 	matrix = new int*[m];
@@ -26,7 +26,7 @@ int** FileUtils::LoadMatrix(int m, int n, std::string filePath)
 			{
 				matrix[i][j] = atoi(str);
 				j++;
-				if (j == 205)
+				if (j == n)
 				{
 					i++;
 					j = 0;

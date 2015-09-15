@@ -1,14 +1,15 @@
 #pragma once
 #include <Windows.h>
 #include "Global.h"
+#include "Singleton.h"
 
-class CGameWindow
+class CGameWindow : public CSingleton<CGameWindow>
 {
-private:
+public:
 	HINSTANCE m_hInstance;		        /* ??nh danh c?a ?ng d?ng */
 	HWND	  m_hWnd;			        /* ??nh danh c?a c?a s? */
 	static CGameWindow* s_instance;     /* Con tr? ??n th?c th? c?a s? duy nh?t c?a l?p */
-public:
+
 	CGameWindow();
 	~CGameWindow();
 	/*M+==================================================================
