@@ -4,6 +4,7 @@
 #include "GameWindow.h"
 #include "GameGraphic.h"
 #include "GameKeyboard.h"
+#include "Mario.h"
 
 CGame::CGame()
 {
@@ -84,6 +85,9 @@ void CGame::LoadResources()
 	CCamera::getInstance()->m = 15;
 	CCamera::getInstance()->n = 166;
 	CCamera::getInstance()->sprite = new CSprite(spriteHandler, "Resources/tiles.png", 50, 50, 216, 18, NULL);
+
+	CMario::getInstance()->smallMario = new CSprite(spriteHandler, "Resources/SmallMario.png", 50, 50, 10, 5, NULL);
+	CMario::getInstance()->bigMario = new CSprite(spriteHandler, "Resources/HeightMario.png", 50, 100, 10, 5, NULL);
 }
 
 void CGame::Run()
@@ -118,6 +122,8 @@ void CGame::Run()
 				{
 					//CGameGraphic::getInstance()->d3ddv->ColorFill(CGameGraphic::getInstance()->backBuffer, NULL, D3DCOLOR_XRGB(255, 0, 0));
 					CCamera::getInstance()->Render();
+
+					CMario::getInstance()->Render();
 
 					CGameGraphic::getInstance()->d3ddv->EndScene();
 				}

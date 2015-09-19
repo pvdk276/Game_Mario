@@ -40,6 +40,26 @@ int CGameGraphic::Init(HWND hWnd)
 
 	d3ddv->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &backBuffer);
 
+	result =
+		d3ddv->CreateOffscreenPlainSurface(
+			750,
+			750,// width 				100,				// height
+			D3DFMT_X8R8G8B8,		// format
+			D3DPOOL_DEFAULT,		// where? (VRAM or RAM)
+			&surface,
+			NULL);
+
+	result = D3DXLoadSurfaceFromFile(
+		surface, 		// surface
+		NULL,			// destination palette	
+		NULL,			// destination rectangle 
+		"Resources/background.png",
+		NULL,			// source rectangle
+		D3DX_DEFAULT, 		// filter image
+		0,			// transparency (0 = none)
+		NULL);			// reserved
+
+
 	return 1;
 }
 

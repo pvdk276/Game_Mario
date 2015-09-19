@@ -56,6 +56,9 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files\Game Mario</Filter>
     </ClCompile>
+    <ClCompile Include="Mario.cpp">
+      <Filter>Source Files\Game Mario</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Global.h">
@@ -101,6 +104,9 @@
       <Filter>Source Files\DirectX</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
+      <Filter>Source Files\Game Mario</Filter>
+    </ClInclude>
+    <ClInclude Include="Mario.h">
       <Filter>Source Files\Game Mario</Filter>
     </ClInclude>
   </ItemGroup>

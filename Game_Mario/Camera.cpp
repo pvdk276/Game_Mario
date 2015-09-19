@@ -1,5 +1,5 @@
 #include "Camera.h"
-
+#include "GameGraphic.h"
 CCamera::CCamera()
 {
 	positionX = 0;
@@ -13,6 +13,14 @@ CCamera::~CCamera()
 
 void CCamera::Render()
 {
+	CGameGraphic::getInstance()->d3ddv->StretchRect(
+		CGameGraphic::getInstance()->surface,			// from 
+		NULL,				// which portion?
+		CGameGraphic::getInstance()->backBuffer,			// to 
+		NULL,				// which portion?
+		D3DTEXF_NONE);
+
+
 	int columnBegin = positionX / 50;
 	for (int i = 0; i < 15; i++)
 	{
