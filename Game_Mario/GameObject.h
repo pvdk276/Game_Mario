@@ -10,6 +10,8 @@ public:
 	float positionY;
 	float width;
 	float height;
+	float speedX;
+	float speedY;
 
 	CGameObject();
 

@@ -6,6 +6,8 @@
 #include "GameKeyboard.h"
 #include "Mario.h"
 
+#define FRAME_RATE 30
+
 CGame::CGame()
 {
 
@@ -45,7 +47,7 @@ int CGame::Init(HINSTANCE hInstance)
 		return 0;
 	}
 
-	if (!CGameGraphic::getInstance()->Init(CGameWindow::getInstance()->m_hWnd))
+	if (!CGameKeyboard::getInstance()->Init(hInstance, CGameWindow::getInstance()->m_hWnd))
 	{
 		OutputDebugString("[Game.cpp] Cannot init Keyboard.");
 		return 0;
@@ -90,6 +92,21 @@ void CGame::LoadResources()
 	CMario::getInstance()->bigMario = new CSprite(spriteHandler, "Resources/HeightMario.png", 50, 100, 10, 5, NULL);
 }
 
+void moveLeft()
+{
+	CMario::getInstance()->positionX -= 10;
+}
+
+void moveRight()
+{
+	CMario::getInstance()->positionX += 10;
+}
+
+void stop()
+{
+	//CMario::getInstance()->speedX = 0.0f;
+}
+
 void CGame::Run()
 {
 	MSG msg;
@@ -97,9 +114,12 @@ void CGame::Run()
 	m_pTimer->StartCount();
 
 	LoadResources();
+	CGameKeyboard::getInstance()->moveLeft = &moveLeft;
+	CGameKeyboard::getInstance()->moveRight = &moveRight;
+	CGameKeyboard::getInstance()->stop = &stop;
 
 	float frame_start = GetTickCount();
-	float tick_per_frame = 1000 / 30; //FRAME RATE = 30
+	float tick_per_frame = 1000 / FRAME_RATE; 
 
 	while (!done)
 	{
@@ -117,10 +137,14 @@ void CGame::Run()
 			if (_DeltaTime >= tick_per_frame)
 			{
 				frame_start = now;
+				
+				CGameKeyboard::getInstance()->ProcessKeyboard();
+				CGameKeyboard::getInstance()->ProcessInput();
+				CCamera::getInstance()->Update(CMario::getInstance()->positionX, CMario::getInstance()->positionY);
+				//CMario::getInstance()->Update(_DeltaTime);
 
 				if (CGameGraphic::getInstance()->d3ddv->BeginScene())
 				{
-					//CGameGraphic::getInstance()->d3ddv->ColorFill(CGameGraphic::getInstance()->backBuffer, NULL, D3DCOLOR_XRGB(255, 0, 0));
 					CCamera::getInstance()->Render();
 
 					CMario::getInstance()->Render();
@@ -129,6 +153,7 @@ void CGame::Run()
 				}
 				CGameGraphic::getInstance()->d3ddv->Present(NULL, NULL, NULL, NULL);
 			}
+			
 
 			//if (m_pTimer->GetTime() < 1.0f)
 			//{
@@ -148,3 +173,4 @@ void CGame::Run()
 		}
 	}
 }
+

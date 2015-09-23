@@ -6,9 +6,9 @@
 class CMario : public CSingleton<CMario>, public CGameObject
 {
 public:
-	float speedX;
-	float speedY;
-	float lastSpeedX;
+	//float speedX;
+	//float speedY;
+	//float lastSpeedX;
 
 	CSprite* smallMario;
 	CSprite* bigMario;

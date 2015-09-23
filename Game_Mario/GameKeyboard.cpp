@@ -1,4 +1,5 @@
 #include "GameKeyboard.h"
+#include "GameWindow.h"
 
 CGameKeyboard::CGameKeyboard()
 {
@@ -14,13 +15,13 @@ CGameKeyboard::~CGameKeyboard()
 int CGameKeyboard::Init(HINSTANCE hInstance, HWND hWnd)
 {
 	HRESULT result;
-	result = DirectInput8Create(GetModuleHandle(NULL), DIRECTINPUT_VERSION, IID_IDirectInput8, (VOID**)&di, NULL);
+	//result = DirectInput8Create(GetModuleHandle(NULL), DIRECTINPUT_VERSION, IID_IDirectInput8, (VOID**)&di, NULL);
+	result = DirectInput8Create(hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (VOID**)&di, NULL);
 	if (result != DI_OK)
 	{
 		OutputDebugString("[GameKeyboard.cpp] Error when create input object.");
 		return 0;
 	}
-
 
 	result = di->CreateDevice(GUID_SysKeyboard, &keyboard, NULL);
 	if (result != DI_OK)
@@ -37,15 +38,78 @@ int CGameKeyboard::Init(HINSTANCE hInstance, HWND hWnd)
 	dipdw.diph.dwHeaderSize = sizeof(DIPROPHEADER);
 	dipdw.diph.dwObj = 0;
 	dipdw.diph.dwHow = DIPH_DEVICE;
-	dipdw.dwData = 1024;
+	dipdw.dwData = KEYBOARD_BUFFER_SIZE;
 
 	result = keyboard->SetProperty(DIPROP_BUFFERSIZE, &dipdw.diph);
-	if (FAILED(result)) return 0;
+	if (FAILED(result))
+	{
+		MessageBox(NULL, "Cannot set property keyboard", "Error", MB_OK);
+		return 0;
+	}
 
 	result = keyboard->Acquire();
-	if (FAILED(result)) return 0;
+	if (FAILED(result))
+	{
+		MessageBox(NULL, "Cannot acquire keyboard", "Error", MB_OK);
+		return 0;
+	}
 
 	return 1;
+}
+
+void CGameKeyboard::ProcessKeyboard()
+{
+	keyboard->GetDeviceState(sizeof(keyStates), keyStates);
+	if (IsKeyDown(DIK_ESCAPE))
+	{
+		PostMessage(CGameWindow::getInstance()->m_hWnd, WM_QUIT, 0, 0);
+	}
+
+	DWORD dwElements = KEYBOARD_BUFFER_SIZE;
+	HRESULT result = keyboard->GetDeviceData(sizeof(DIDEVICEOBJECTDATA), keyEvents, &dwElements, 0);
+	for (int i = 0; i < dwElements; i++)
+	{
+		int KeyCode = keyEvents[i].dwOfs;
+		int KeyState = keyEvents[i].dwData;
+		if ((KeyState & 0x80) > 0)
+		{
+			OnKeyDown(KeyCode);
+		}
+		else OnKeyUp(KeyCode);
+	}
+}
+
+void CGameKeyboard::ProcessInput()
+{
+	if (IsKeyDown(DIK_RIGHT))
+	{
+		moveRight();
+	}
+	else if (IsKeyDown(DIK_LEFT))
+	{
+		moveLeft();
+	}
+	//else stop();
+}
+
+void CGameKeyboard::OnKeyDown(int KeyCode)
+{
+	switch (KeyCode)
+	{
+		/*case DIK_LEFT: moveLeft(); break;
+		case DIK_RIGHT: moveRight(); break;*/
+		//default: stop(); break;
+	}
+}
+
+void CGameKeyboard::OnKeyUp(int KeyCode)
+{
+	switch (KeyCode)
+	{
+	/*case DIK_LEFT: stop(); break;
+	case DIK_RIGHT: stop(); break;*/
+		//case DIK_SPACE: break;
+	}
 }
 
 void CGameKeyboard::destroy()
@@ -64,19 +128,17 @@ void CGameKeyboard::destroy()
 	}
 }
 
-bool CGameKeyboard::IsKeyDown(int key)
+bool CGameKeyboard::IsKeyDown(int KeyCode)
 {
-	if (keyStates[key] & 0x80)
-		return true;
-	return false;
+	return (keyStates[KeyCode] & 0x80) > 0;
 }
 
-bool CGameKeyboard::IsKeyUp(int key)
-{
-	if (keyStates[key] & 0x80)
-		return false;
-	return true;
-}
+//bool CGameKeyboard::IsKeyUp(int KeyCode)
+//{
+//	if (keyStates[key] & 0x80)
+//		return false;
+//	return true;
+//}
 
 void CGameKeyboard::PollKeyboard()
 {
