@@ -19,8 +19,8 @@ int CGameGraphic::Init(HWND hWnd)
 	ZeroMemory(&d3dpp, sizeof(d3dpp));
 	d3dpp.BackBufferCount = 1;
 	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
-	d3dpp.BackBufferWidth = 750;
-	d3dpp.BackBufferHeight = 750;
+	d3dpp.BackBufferWidth = SCREEN_WIDTH;
+	d3dpp.BackBufferHeight = SCREEN_HEIGHT;
 	d3dpp.hDeviceWindow = hWnd;
 	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
 	d3dpp.Windowed = true;
@@ -40,25 +40,35 @@ int CGameGraphic::Init(HWND hWnd)
 
 	d3ddv->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &backBuffer);
 
-	result =
-		d3ddv->CreateOffscreenPlainSurface(
-			750,
-			750,// width 				100,				// height
-			D3DFMT_X8R8G8B8,		// format
-			D3DPOOL_DEFAULT,		// where? (VRAM or RAM)
-			&surface,
-			NULL);
+	result = d3ddv->CreateOffscreenPlainSurface(
+		SCREEN_WIDTH,					//width
+		SCREEN_HEIGHT,					//height
+		D3DFMT_X8R8G8B8,		// format
+		D3DPOOL_DEFAULT,		// where? (VRAM or RAM)
+		&surface,
+		NULL);
+
+	if (FAILED(result))
+	{
+		OutputDebugString("[GameGraphic.cpp] Cannot create surface.");
+		return 0;
+	}
 
 	result = D3DXLoadSurfaceFromFile(
-		surface, 		// surface
-		NULL,			// destination palette	
-		NULL,			// destination rectangle 
-		"Resources/background.png",
-		NULL,			// source rectangle
+		surface, 			// surface
+		NULL,				// destination palette	
+		NULL,				// destination rectangle 
+		"Resources/Background.png",
+		NULL,				// source rectangle
 		D3DX_DEFAULT, 		// filter image
-		0,			// transparency (0 = none)
-		NULL);			// reserved
+		0,					// transparency (0 = none)
+		NULL);				// reserved
 
+	if (FAILED(result))
+	{
+		OutputDebugString("[GameGraphic.cpp] Cannot load surface.");
+		return 0;
+	}
 
 	return 1;
 }

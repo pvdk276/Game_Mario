@@ -73,7 +73,7 @@ void CGame::LoadResources()
 	CCamera::getInstance()->sprite = new CSprite(spriteHandler, "Resources/tiles.png", 50, 50, 216, 18, NULL);
 
 	CMario::getInstance()->smallMario = new CSprite(spriteHandler, "Resources/SmallMario.png", 50, 50, 10, 5, NULL);
-	CMario::getInstance()->bigMario = new CSprite(spriteHandler, "Resources/HeightMario.png", 50, 100, 10, 5, NULL);
+	CMario::getInstance()->bigMario = new CSprite(spriteHandler, "Resources/BigMario.png", 50, 100, 10, 5, NULL);
 }
 
 void moveLeft()
