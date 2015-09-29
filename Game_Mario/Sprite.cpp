@@ -61,7 +61,7 @@ void CSprite::Reset()
 	index = 0;
 }
 
-void CSprite::Render(int x, int y, int vpx, int vpy, float direction)
+void CSprite::Render(float x, float y, float vpx, float vpy, float direction)
 {
 	RECT rect;
 	rect.top = (index / spritePerRow) * height;
@@ -126,7 +126,7 @@ void CSprite::Render(int x, int y, int vpx, int vpy, float direction)
 	Next();
 }
 
-void CSprite::RenderMap(int posX, int posY, int vpx, int vpy, int value)
+void CSprite::RenderMap(float posX, float posY, float vpx, float vpy, int value)
 {
 	RECT rect;
 	rect.top = ((value - 1) / spritePerRow) * height;

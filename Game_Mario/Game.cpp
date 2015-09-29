@@ -6,7 +6,7 @@
 #include "GameKeyboard.h"
 #include "Mario.h"
 
-#define FRAME_RATE 30
+#define FRAME_RATE 60
 
 CGame::CGame()
 {
@@ -19,22 +19,6 @@ CGame::~CGame()
 }
 int CGame::Init(HINSTANCE hInstance)
 {
-	//CGameWindow* pGameWindow = CGameWindow::GetInstance();
-
-	//// Kh?i t?o c?a s? game.
-	//if (!pGameWindow->Init(hInstance))
-	//{
-	//	OutputDebugString("[Game.cpp] Cannot init pGameWindow.");
-	//	return 0;
-	//}
-
-	//CGameGraphic* graphic = new CGameGraphic();
-	//// Kh?i t?o thi?t b? d3ddevice game.
-	//if (!graphic->Init(pGameWindow->GetHWND()))
-	//{
-	//	OutputDebugString("[Game.cpp] Cannot init CGraphic.");
-	//	return 0;
-	//}
 	if (!CGameWindow::getInstance()->Init(hInstance))
 	{
 		OutputDebugString("[Game.cpp] Cannot init Window.");
@@ -94,12 +78,12 @@ void CGame::LoadResources()
 
 void moveLeft()
 {
-	CMario::getInstance()->positionX -= 10;
+	CMario::getInstance()->speedX = -0.3f;
 }
 
 void moveRight()
 {
-	CMario::getInstance()->positionX += 10;
+	CMario::getInstance()->speedX = 0.3f;
 }
 
 void stop()
@@ -140,6 +124,7 @@ void CGame::Run()
 				
 				CGameKeyboard::getInstance()->ProcessKeyboard();
 				CGameKeyboard::getInstance()->ProcessInput();
+				CMario::getInstance()->Update(_DeltaTime);
 				CCamera::getInstance()->Update(CMario::getInstance()->positionX, CMario::getInstance()->positionY);
 				//CMario::getInstance()->Update(_DeltaTime);
 

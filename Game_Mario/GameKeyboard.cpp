@@ -15,7 +15,6 @@ CGameKeyboard::~CGameKeyboard()
 int CGameKeyboard::Init(HINSTANCE hInstance, HWND hWnd)
 {
 	HRESULT result;
-	//result = DirectInput8Create(GetModuleHandle(NULL), DIRECTINPUT_VERSION, IID_IDirectInput8, (VOID**)&di, NULL);
 	result = DirectInput8Create(hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (VOID**)&di, NULL);
 	if (result != DI_OK)
 	{

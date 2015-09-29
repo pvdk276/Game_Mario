@@ -18,6 +18,6 @@ public:
 
 	void Next();
 	void Reset();
-	void Render(int posX, int posY, int vpx, int vpy, float direction);
-	void RenderMap(int posX, int posY, int vpx, int vpy, int value);
+	void Render(float posX, float posY, float vpx, float vpy, float direction);
+	void RenderMap(float posX, float posY, float vpx, float vpy, int value);
 };

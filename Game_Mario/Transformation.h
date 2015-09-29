@@ -5,9 +5,9 @@
 class CTransformation : public CSingleton<CTransformation>
 {
 public:
-	D3DXVECTOR3 Trans(int posX, int posY, int vpx, int vpy)
+	D3DXVECTOR3 Trans(float posX, float posY, float vpx, float vpy)
 	{
-		D3DXVECTOR3 position((float)posX, (float)posY, 0);
+		D3DXVECTOR3 position(posX, posY, 0);
 		D3DXMATRIX mt;
 		D3DXMatrixIdentity(&mt);
 		mt._22 = -1.0f;
