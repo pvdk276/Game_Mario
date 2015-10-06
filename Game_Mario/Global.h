@@ -4,6 +4,10 @@
 #include <windows.h>
 #include <cmath>
 
+#define STANDING 1
+#define RUNNING 2
+#define MARIO_GRAVITY = 0.5f
+
 #define GAME_NAME "Game_Mario"
 #define SCREEN_WIDTH 750
 #define SCREEN_HEIGHT 750

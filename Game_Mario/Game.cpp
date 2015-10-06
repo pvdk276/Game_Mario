@@ -5,6 +5,7 @@
 #include "GameGraphic.h"
 #include "GameKeyboard.h"
 #include "Mario.h"
+#include "BinaryTree.h"
 
 #define FRAME_RATE 60
 
@@ -74,21 +75,42 @@ void CGame::LoadResources()
 
 	CMario::getInstance()->smallMario = new CSprite(spriteHandler, "Resources/SmallMario.png", 50, 50, 10, 5, NULL);
 	CMario::getInstance()->bigMario = new CSprite(spriteHandler, "Resources/BigMario.png", 50, 100, 10, 5, NULL);
+
+	CBinaryTree::getInstance()->init("Resources/map1_ListObject.txt", "Resources/map1_BinaryTree.txt");
 }
 
-void moveLeft()
+void moveLeft(float delta_time)
 {
-	CMario::getInstance()->speedX = -0.3f;
+	
 }
 
-void moveRight()
+void moveRight(float delta_time)
 {
-	CMario::getInstance()->speedX = 0.3f;
+	/*std::string s = std::to_string(delta_time);
+	MessageBox(NULL, s.c_str(), "Error", MB_OK);*/
+
+	if (CMario::getInstance()->state == STANDING)
+	{
+		CMario::getInstance()->gravity = 50;
+		CMario::getInstance()->speedX = CMario::getInstance()->speedX + CMario::getInstance()->gravity * delta_time/1000;
+		if (CMario::getInstance()->speedX >= 500) CMario::getInstance()->speedX = 500;
+		CMario::getInstance()->state = RUNNING;
+	}
+	//MessageBox(NULL, "DIK_RIGHT", "Error", MB_OK);
 }
 
-void stop()
+void stop(float delta_time)
 {
-	//CMario::getInstance()->speedX = 0.0f;
+	if (CMario::getInstance()->state == RUNNING)
+	{
+		CMario::getInstance()->gravity = -0.001f;
+		CMario::getInstance()->speedX = CMario::getInstance()->speedX + CMario::getInstance()->gravity * delta_time;
+		if (CMario::getInstance()->speedX <= 0)
+		{
+			CMario::getInstance()->speedX = 0;
+			CMario::getInstance()->state = STANDING;
+		}
+	}
 }
 
 void CGame::Run()
@@ -121,12 +143,15 @@ void CGame::Run()
 			if (_DeltaTime >= tick_per_frame)
 			{
 				frame_start = now;
+
+				CBinaryTree::getInstance()->listCurrentObject->clear();
+				CBinaryTree::getInstance()->loadListCurrentObject(CBinaryTree::getInstance()->rootNode, CCamera::getInstance()->positionX, CCamera::getInstance()->positionY, CCamera::getInstance()->width, CCamera::getInstance()->height);
+
 				
 				CGameKeyboard::getInstance()->ProcessKeyboard();
-				CGameKeyboard::getInstance()->ProcessInput();
+				CGameKeyboard::getInstance()->ProcessInput(_DeltaTime);
 				CMario::getInstance()->Update(_DeltaTime);
 				CCamera::getInstance()->Update(CMario::getInstance()->positionX, CMario::getInstance()->positionY);
-				//CMario::getInstance()->Update(_DeltaTime);
 
 				if (CGameGraphic::getInstance()->d3ddv->BeginScene())
 				{
@@ -158,4 +183,3 @@ void CGame::Run()
 		}
 	}
 }
-

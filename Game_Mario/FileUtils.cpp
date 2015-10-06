@@ -1,5 +1,8 @@
 #include "FileUtils.h"
 #include <fstream>
+#include <sstream>
+#include <string>
+
 
 int** CFileUtils::LoadMatrix(int m, int n, std::string filePath)
 {
@@ -36,4 +39,39 @@ int** CFileUtils::LoadMatrix(int m, int n, std::string filePath)
 		}
 	}
 	return matrix;
+}
+
+std::vector<std::string> CFileUtils::split(const std::string& str, char ch)
+{
+	std::vector<std::string> result;
+	if (str.length() > 0) //Neu gia tri truyen vao khac null thi tien hanh cat
+	{
+		std::stringstream stream(str);
+		std::string item;
+		while (getline(stream, item, ch))
+		{
+			if (item.length() > 0)
+			{
+				result.push_back(item);
+			}
+		}
+	}
+	return result;
+}
+
+std::vector<std::string> CFileUtils::loadFromFile(const std::string& filePath)
+{
+	std::ifstream* reader = new std::ifstream(filePath);
+	std::string item;
+	std::vector<std::string> result;
+	if (reader->is_open())
+	{
+		while (!reader->eof())
+		{
+			std::getline(*reader, item);
+			result.push_back(item);
+		}
+		reader->close();
+	}
+	return result;
 }

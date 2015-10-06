@@ -10,6 +10,10 @@ CMario::CMario()
 	speedY = 0;
 
 	currentSprite = smallMario;
+
+	state = STANDING;
+
+	gravity = 0.08f;
 }
 
 CMario::~CMario()
@@ -25,5 +29,6 @@ void CMario::Render()
 void CMario::Update(float delta_time)
 {
 	positionX += speedX * delta_time;
-	positionY += speedY * delta_time;
+	//MessageBox(NULL, "Cannot set property keyboard", "Error", MB_OK);
+	//positionY += speedY * delta_time;
 }

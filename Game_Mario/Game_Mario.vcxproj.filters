@@ -59,6 +59,12 @@
     <ClCompile Include="Mario.cpp">
       <Filter>Source Files\Game Mario</Filter>
     </ClCompile>
+    <ClCompile Include="BinaryTree.cpp">
+      <Filter>Source Files\DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryNode.cpp">
+      <Filter>Source Files\DirectX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Global.h">
@@ -108,6 +114,12 @@
     </ClInclude>
     <ClInclude Include="Mario.h">
       <Filter>Source Files\Game Mario</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryNode.h">
+      <Filter>Source Files\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryTree.h">
+      <Filter>Source Files\DirectX</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -78,26 +78,20 @@ void CGameKeyboard::ProcessKeyboard()
 	}
 }
 
-void CGameKeyboard::ProcessInput()
+void CGameKeyboard::ProcessInput(float time_begin)
 {
 	if (IsKeyDown(DIK_RIGHT))
 	{
-		moveRight();
+		moveRight(time_begin);
 	}
-	else if (IsKeyDown(DIK_LEFT))
-	{
-		moveLeft();
-	}
-	//else stop();
+	else stop(time_begin);
 }
 
 void CGameKeyboard::OnKeyDown(int KeyCode)
 {
 	switch (KeyCode)
 	{
-		/*case DIK_LEFT: moveLeft(); break;
-		case DIK_RIGHT: moveRight(); break;*/
-		//default: stop(); break;
+	//case DIK_RIGHT: moveRight()
 	}
 }
 
@@ -105,9 +99,7 @@ void CGameKeyboard::OnKeyUp(int KeyCode)
 {
 	switch (KeyCode)
 	{
-	/*case DIK_LEFT: stop(); break;
-	case DIK_RIGHT: stop(); break;*/
-		//case DIK_SPACE: break;
+	case DIK_RIGHT: break;
 	}
 }
 

@@ -2,13 +2,14 @@
 #include "Singleton.h"
 #include "GameObject.h"
 #include "Sprite.h"
+#include "Global.h"
 
 class CMario : public CSingleton<CMario>, public CGameObject
 {
 public:
-	//float speedX;
-	//float speedY;
-	//float lastSpeedX;
+
+	float gravity;
+	int state;
 
 	CSprite* smallMario;
 	CSprite* bigMario;

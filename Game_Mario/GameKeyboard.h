@@ -19,15 +19,15 @@ public:
 	int Init(HINSTANCE hInstance, HWND hWnd);
 
 	void ProcessKeyboard();
-	void ProcessInput();
+	void ProcessInput(float time_begin);
 
 	void OnKeyDown(int KeyCode);
 
 	void OnKeyUp(int KeyCode);
 
-	void(*moveLeft)();
-	void(*moveRight)();
-	void(*stop)();
+	void(*moveLeft)(float time_begin);
+	void(*moveRight)(float time_begin);
+	void(*stop)(float time_begin);
 
 	//Huy input object va input device
 	void destroy();
