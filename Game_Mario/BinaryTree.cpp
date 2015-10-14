@@ -1,27 +1,41 @@
 #include "BinaryTree.h"
 #include <string>
 
+//load data from binary_tree_file_text to a list of binary node
+std::vector<CBinaryNode*> loadBinaryTree(std::vector<CGameObject*> listObject, std::string binaryTreePath);
+
+//arrange node into a binary tree, the input is list_binary_node
+void buildTree(CBinaryNode* node, std::vector<CBinaryNode*> listBinaryNode);
+
+//load data from list_object_text_file
+std::vector<CGameObject*> loadListObject(std::string listObjectPath);
+
 CBinaryTree::CBinaryTree()
 {
 	rootNode = nullptr;
 	listCurrentObject = new std::vector<CGameObject*>();
-
-	//std::vector<CGameObject*> listObject = loadListObject(listObjectPath);
-	//loadQuadTree(listObject, binaryTreePath);
 }
 
 bool CBinaryTree::init(std::string listObjectPath, std::string binaryTreePath)
 {
 	std::vector<CGameObject*> listObject = loadListObject(listObjectPath);
-	loadQuadTree(listObject, binaryTreePath);
+
+	std::vector<CBinaryNode*> listBinaryNode = loadBinaryTree(listObject, binaryTreePath);
+
+	for (int i = 0; i < listBinaryNode.size(); i++)
+	{
+		if (listBinaryNode.at(i)->id == "00") rootNode = listBinaryNode.at(i);
+	}
+
+	buildTree(rootNode, listBinaryNode);
 
 	return 1;
 }
 
-void CBinaryTree::loadQuadTree(std::vector<CGameObject*> listObject, std::string binaryTreePath)
+std::vector<CBinaryNode*> loadBinaryTree(std::vector<CGameObject*> listObject, std::string binaryTreePath)
 {
 	std::vector<std::string> nodes = CFileUtils::getInstance()->loadFromFile(binaryTreePath);
-	std::vector<CBinaryNode*> listQuadNode;
+	std::vector<CBinaryNode*> listBinaryNode;
 
 	for (int i = 0; i < nodes.size(); i++)
 	{
@@ -50,32 +64,26 @@ void CBinaryTree::loadQuadTree(std::vector<CGameObject*> listObject, std::string
 			}
 		}
 
-		listQuadNode.push_back(node);
+		listBinaryNode.push_back(node);
 	}
 
-	//find root node
-	for (int i = 0; i < listQuadNode.size(); i++)
-	{
-		if (listQuadNode.at(i)->id == "00") rootNode = listQuadNode.at(i);
-	}
-
-	buildTree(rootNode, listQuadNode);
+	return listBinaryNode;
 }
 
-void CBinaryTree::buildTree(CBinaryNode* node, std::vector<CBinaryNode*> listQuadNode)
+void buildTree(CBinaryNode* node, std::vector<CBinaryNode*> listBinaryNode)
 {
 	std::string idL = node->id + "00";
 	std::string idR = node->id + "01";
 
-	for (int i = 0; i < listQuadNode.size(); i++)
+	for (int i = 0; i < listBinaryNode.size(); i++)
 	{
-		std::string id = listQuadNode.at(i)->id;
-		if (id == idL) node->nodeL = listQuadNode.at(i);
-		else if (id == idR) node->nodeR = listQuadNode.at(i);
+		std::string id = listBinaryNode.at(i)->id;
+		if (id == idL) node->nodeL = listBinaryNode.at(i);
+		else if (id == idR) node->nodeR = listBinaryNode.at(i);
 	}
 
-	if (node->nodeL != nullptr) buildTree(node->nodeL, listQuadNode);
-	if (node->nodeR != nullptr) buildTree(node->nodeR, listQuadNode);
+	if (node->nodeL != nullptr) buildTree(node->nodeL, listBinaryNode);
+	if (node->nodeR != nullptr) buildTree(node->nodeR, listBinaryNode);
 }
 
 void CBinaryTree::loadListCurrentObject(CBinaryNode* node, int posX, int posY, int width, int height)
@@ -103,7 +111,7 @@ void CBinaryTree::loadListCurrentObject(CBinaryNode* node, int posX, int posY, i
 	}
 }
 
-std::vector<CGameObject*> CBinaryTree::loadListObject(std::string listObjectPath)
+std::vector<CGameObject*> loadListObject(std::string listObjectPath)
 {
 	std::vector<CGameObject*> listObject;
 	//= new std::vector<GameObject*>();

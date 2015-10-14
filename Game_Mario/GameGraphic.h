@@ -16,10 +16,16 @@ public:
 	CGameGraphic();
 	~CGameGraphic();
 
-	//Kh?i t?o d3ddevice
+	//init game graphic
 	int Init(HWND hWnd);
 
-	//h?y b? c?p phát cho các bi?n
+	//init surface
+	int InitSurface(std::string filePath);
+
+	//render from surface to back buffer
+	void RenderBackbuffer(RECT *fromSurface, RECT *toBackbuffer);
+
+	//destroy game graphic
 	void destroy();
 
 	//clear backbuffer tr??c khi render

@@ -151,6 +151,7 @@
     <ClCompile Include="BinaryNode.cpp" />
     <ClCompile Include="BinaryTree.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Collision.cpp" />
     <ClCompile Include="dsutil.cpp" />
     <ClCompile Include="dxutil.cpp" />
     <ClCompile Include="FileUtils.cpp" />
@@ -168,7 +169,9 @@
   <ItemGroup>
     <ClInclude Include="BinaryNode.h" />
     <ClInclude Include="BinaryTree.h" />
+    <ClInclude Include="Box.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Collision.h" />
     <ClInclude Include="dsutil.h" />
     <ClInclude Include="dxutil.h" />
     <ClInclude Include="FileUtils.h" />

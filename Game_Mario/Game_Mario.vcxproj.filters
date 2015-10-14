@@ -65,6 +65,9 @@
     <ClCompile Include="BinaryNode.cpp">
       <Filter>Source Files\DirectX</Filter>
     </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Source Files\DirectX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Global.h">
@@ -119,6 +122,12 @@
       <Filter>Source Files\DirectX</Filter>
     </ClInclude>
     <ClInclude Include="BinaryTree.h">
+      <Filter>Source Files\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Source Files\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="Box.h">
       <Filter>Source Files\DirectX</Filter>
     </ClInclude>
   </ItemGroup>

@@ -40,7 +40,12 @@ int CGameGraphic::Init(HWND hWnd)
 
 	d3ddv->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &backBuffer);
 
-	result = d3ddv->CreateOffscreenPlainSurface(
+	return 1;
+}
+
+int CGameGraphic::InitSurface(std::string filePath)
+{
+	HRESULT result = d3ddv->CreateOffscreenPlainSurface(
 		SCREEN_WIDTH,					//width
 		SCREEN_HEIGHT,					//height
 		D3DFMT_X8R8G8B8,		// format
@@ -58,7 +63,7 @@ int CGameGraphic::Init(HWND hWnd)
 		surface, 			// surface
 		NULL,				// destination palette	
 		NULL,				// destination rectangle 
-		"Resources/Background.png",
+		filePath.c_str(),
 		NULL,				// source rectangle
 		D3DX_DEFAULT, 		// filter image
 		0,					// transparency (0 = none)
@@ -71,6 +76,16 @@ int CGameGraphic::Init(HWND hWnd)
 	}
 
 	return 1;
+}
+
+void CGameGraphic::RenderBackbuffer(RECT *fromSurface, RECT *toBackbuffer)
+{
+	d3ddv->StretchRect(
+		surface,			// from 
+		fromSurface,				// which portion?
+		backBuffer,			// to 
+		toBackbuffer,				// which portion?
+		D3DTEXF_NONE);
 }
 
 void CGameGraphic::destroy()

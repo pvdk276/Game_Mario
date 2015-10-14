@@ -78,8 +78,6 @@ void CSprite::Render(float x, float y, float vpx, float vpy, float direction)
 	D3DXVECTOR4 vp_pos;
 	D3DXVec3Transform(&vp_pos, &position, &mt);
 
-	/*D3DXVECTOR3 p(vp_pos.x, vp_pos.y, 0);
-	D3DXVECTOR3 p;*/
 	D3DXVECTOR3 center((float)width / 2, (float)height / 2, 0);
 
 	D3DXMATRIX currentMatrix;
@@ -120,9 +118,6 @@ void CSprite::Render(float x, float y, float vpx, float vpy, float direction)
 	}
 	spriteHandler->End();
 
-
-	//spriteHandler->SetTransform(&currentMatrix);
-
 	Next();
 }
 
@@ -141,39 +136,9 @@ void CSprite::RenderMap(float posX, float posY, float vpx, float vpy, int value)
 	spriteHandler->Draw(
 		image,
 		&rect,
-		//&center,
-		NULL,
+		NULL, //&center,
 		&p,
 		D3DCOLOR_XRGB(255, 255, 255)
 		);
 	spriteHandler->End();
-
-	//RECT rect;
-	//rect.top = ((value - 1) / spritePerRow) * height;
-	//rect.left = ((value - 1) % spritePerRow) * width;
-	//rect.bottom = rect.top + height;
-	//rect.right = rect.left + width;
-
-	//spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
-	//D3DXVECTOR3 position((float)posX, (float)posY, 0);
-	//D3DXMATRIX mt;
-	//D3DXMatrixIdentity(&mt);
-	//mt._22 = -1.0f;
-	//mt._41 = -vpx;
-	//mt._42 = vpy;
-	//D3DXVECTOR4 vp_pos;
-	//D3DXVec3Transform(&vp_pos, &position, &mt);
-
-	//D3DXVECTOR3 p(vp_pos.x, vp_pos.y, 0);
-	//D3DXVECTOR3 center((float)width / 2, (float)height / 2, 0);
-
-	//spriteHandler->Draw(
-	//	image,
-	//	&rect,
-	//	//&center,
-	//	NULL,
-	//	&p,
-	//	D3DCOLOR_XRGB(255, 255, 255)
-	//	);
-	//spriteHandler->End();
 }

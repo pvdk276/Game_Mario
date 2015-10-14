@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Box.h"
 
 class CGameObject
 {
@@ -18,5 +19,5 @@ public:
 	CGameObject(int id, int typeId, float positionX, float positionY, float width, float height);
 
 	virtual void Render() {}
-
+	CBox GetBox();
 };

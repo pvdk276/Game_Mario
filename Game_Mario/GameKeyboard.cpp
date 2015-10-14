@@ -58,12 +58,14 @@ int CGameKeyboard::Init(HINSTANCE hInstance, HWND hWnd)
 
 void CGameKeyboard::ProcessKeyboard()
 {
+	//scanning keyboard
 	keyboard->GetDeviceState(sizeof(keyStates), keyStates);
 	if (IsKeyDown(DIK_ESCAPE))
 	{
 		PostMessage(CGameWindow::getInstance()->m_hWnd, WM_QUIT, 0, 0);
 	}
 
+	//add key event to queue and handle one by one
 	DWORD dwElements = KEYBOARD_BUFFER_SIZE;
 	HRESULT result = keyboard->GetDeviceData(sizeof(DIDEVICEOBJECTDATA), keyEvents, &dwElements, 0);
 	for (int i = 0; i < dwElements; i++)
@@ -80,18 +82,18 @@ void CGameKeyboard::ProcessKeyboard()
 
 void CGameKeyboard::ProcessInput(float time_begin)
 {
-	if (IsKeyDown(DIK_RIGHT))
-	{
-		moveRight(time_begin);
-	}
-	else stop(time_begin);
+
 }
 
 void CGameKeyboard::OnKeyDown(int KeyCode)
 {
 	switch (KeyCode)
 	{
-	//case DIK_RIGHT: moveRight()
+	case DIK_LEFT: Left_Button_Down(); break;
+	case DIK_RIGHT: Right_Button_Down(); break;
+	case DIK_DOWN: Down_Button_Down(); break;
+	case DIK_SPACE: Space_Button_Down(); break;
+	case DIK_X: X_Button_Down(); break;
 	}
 }
 
@@ -99,7 +101,11 @@ void CGameKeyboard::OnKeyUp(int KeyCode)
 {
 	switch (KeyCode)
 	{
-	case DIK_RIGHT: break;
+	case DIK_LEFT: Left_Button_Up(); break;
+	case DIK_RIGHT: Right_Button_Up(); break;
+	case DIK_DOWN: Down_Button_Up(); break;
+	case DIK_SPACE: Space_Button_Up(); break;
+	case DIK_X: X_Button_Up(); break;
 	}
 }
 

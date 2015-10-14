@@ -14,3 +14,9 @@ CGameObject::CGameObject(int id, int typeId, float positionX, float positionY, f
 	this->width = width;
 	this->height = height;
 }
+
+CBox CGameObject::GetBox()
+{
+	CBox box(positionX, positionY, width, height, speedX, speedY);
+	return box;
+}

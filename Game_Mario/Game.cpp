@@ -6,6 +6,7 @@
 #include "GameKeyboard.h"
 #include "Mario.h"
 #include "BinaryTree.h"
+#include "Collision.h"
 
 #define FRAME_RATE 60
 
@@ -77,26 +78,8 @@ void CGame::LoadResources()
 	CMario::getInstance()->bigMario = new CSprite(spriteHandler, "Resources/BigMario.png", 50, 100, 10, 5, NULL);
 
 	CBinaryTree::getInstance()->init("Resources/map1_ListObject.txt", "Resources/map1_BinaryTree.txt");
-}
 
-void moveLeft(float delta_time)
-{
-	
-}
-
-void moveRight(float delta_time)
-{
-	/*std::string s = std::to_string(delta_time);
-	MessageBox(NULL, s.c_str(), "Error", MB_OK);*/
-
-	if (CMario::getInstance()->state == STANDING)
-	{
-		CMario::getInstance()->gravity = 50;
-		CMario::getInstance()->speedX = CMario::getInstance()->speedX + CMario::getInstance()->gravity * delta_time/1000;
-		if (CMario::getInstance()->speedX >= 500) CMario::getInstance()->speedX = 500;
-		CMario::getInstance()->state = RUNNING;
-	}
-	//MessageBox(NULL, "DIK_RIGHT", "Error", MB_OK);
+	CGameGraphic::getInstance()->InitSurface("Resources/Background.png");
 }
 
 void stop(float delta_time)
@@ -120,9 +103,9 @@ void CGame::Run()
 	m_pTimer->StartCount();
 
 	LoadResources();
-	CGameKeyboard::getInstance()->moveLeft = &moveLeft;
+	/*CGameKeyboard::getInstance()->moveLeft = &moveLeft;
 	CGameKeyboard::getInstance()->moveRight = &moveRight;
-	CGameKeyboard::getInstance()->stop = &stop;
+	CGameKeyboard::getInstance()->stop = &stop;*/
 
 	float frame_start = GetTickCount();
 	float tick_per_frame = 1000 / FRAME_RATE; 
@@ -147,6 +130,17 @@ void CGame::Run()
 				CBinaryTree::getInstance()->listCurrentObject->clear();
 				CBinaryTree::getInstance()->loadListCurrentObject(CBinaryTree::getInstance()->rootNode, CCamera::getInstance()->positionX, CCamera::getInstance()->positionY, CCamera::getInstance()->width, CCamera::getInstance()->height);
 
+				for (int i = 0; i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
+				{
+					float normalx, normaly;
+					float value = CCollision::getInstance()->CheckCollision(CMario::getInstance()->GetBox(), CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(), normalx, normaly, _DeltaTime);
+					
+					//a collision occur
+					if (value < 1.0f)
+					{
+
+					}
+				}
 				
 				CGameKeyboard::getInstance()->ProcessKeyboard();
 				CGameKeyboard::getInstance()->ProcessInput(_DeltaTime);
