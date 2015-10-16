@@ -26,9 +26,6 @@
     <ClCompile Include="GameWindow.cpp">
       <Filter>Source Files\DirectX</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files\DirectX</Filter>
-    </ClCompile>
     <ClCompile Include="GameKeyboard.cpp">
       <Filter>Source Files\DirectX</Filter>
     </ClCompile>
@@ -68,6 +65,9 @@
     <ClCompile Include="Collision.cpp">
       <Filter>Source Files\DirectX</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files\Game Mario</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Global.h">
@@ -77,9 +77,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="GameWindow.h">
-      <Filter>Source Files\DirectX</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
       <Filter>Source Files\DirectX</Filter>
     </ClInclude>
     <ClInclude Include="GameKeyboard.h">
@@ -129,6 +126,9 @@
     </ClInclude>
     <ClInclude Include="Box.h">
       <Filter>Source Files\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Source Files\Game Mario</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

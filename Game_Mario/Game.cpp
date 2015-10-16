@@ -10,6 +10,17 @@
 
 #define FRAME_RATE 60
 
+void Left_Button_Down();
+void Left_Button_Up();
+void Right_Button_Down();
+void Right_Button_Up();
+void Down_Button_Down();
+void Down_Button_Up();
+void Space_Button_Down();
+void Space_Button_Up();
+void X_Button_Down();
+void X_Button_Up();
+
 CGame::CGame()
 {
 
@@ -80,6 +91,17 @@ void CGame::LoadResources()
 	CBinaryTree::getInstance()->init("Resources/map1_ListObject.txt", "Resources/map1_BinaryTree.txt");
 
 	CGameGraphic::getInstance()->InitSurface("Resources/Background.png");
+
+	CGameKeyboard::getInstance()->Left_Button_Down = Left_Button_Down;
+	CGameKeyboard::getInstance()->Left_Button_Up = Left_Button_Up;
+	CGameKeyboard::getInstance()->Right_Button_Down = Right_Button_Down;
+	CGameKeyboard::getInstance()->Right_Button_Up = Right_Button_Up;
+	CGameKeyboard::getInstance()->Down_Button_Down = Down_Button_Down;
+	CGameKeyboard::getInstance()->Down_Button_Up = Down_Button_Up;
+	CGameKeyboard::getInstance()->X_Button_Down = X_Button_Down;
+	CGameKeyboard::getInstance()->X_Button_Up = X_Button_Up;
+	CGameKeyboard::getInstance()->Space_Button_Down = Space_Button_Down;
+	CGameKeyboard::getInstance()->Space_Button_Up = Space_Button_Up;
 }
 
 void stop(float delta_time)
@@ -103,9 +125,6 @@ void CGame::Run()
 	m_pTimer->StartCount();
 
 	LoadResources();
-	/*CGameKeyboard::getInstance()->moveLeft = &moveLeft;
-	CGameKeyboard::getInstance()->moveRight = &moveRight;
-	CGameKeyboard::getInstance()->stop = &stop;*/
 
 	float frame_start = GetTickCount();
 	float tick_per_frame = 1000 / FRAME_RATE; 
@@ -132,6 +151,10 @@ void CGame::Run()
 
 				for (int i = 0; i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
 				{
+					if (CBinaryTree::getInstance()->listCurrentObject->at(i)->typeId == 1)
+					{
+
+					}
 					float normalx, normaly;
 					float value = CCollision::getInstance()->CheckCollision(CMario::getInstance()->GetBox(), CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(), normalx, normaly, _DeltaTime);
 					
@@ -177,3 +200,54 @@ void CGame::Run()
 		}
 	}
 }
+
+void Left_Button_Down()
+{
+
+}
+
+void Left_Button_Up()
+{
+
+}
+
+void Right_Button_Down()
+{
+
+}
+
+void Right_Button_Up()
+{
+	
+}
+
+void Down_Button_Down()
+{
+
+}
+
+void Down_Button_Up()
+{
+
+}
+
+void Space_Button_Down()
+{
+
+}
+
+void Space_Button_Up()
+{
+
+}
+
+void X_Button_Down()
+{
+
+}
+
+void X_Button_Up()
+{
+
+}
+
