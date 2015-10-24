@@ -5,10 +5,10 @@
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	CGame* pGame;
-	// Kh?i t?o game.
+	// Khởi tạo game
 	pGame = new CGame();
 	pGame->Init(hInstance);
-	// Ch?y game.
+	// Chạy game
 	pGame->Run();
 
 	return 0;
