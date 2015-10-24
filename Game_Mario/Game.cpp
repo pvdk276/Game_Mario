@@ -218,7 +218,7 @@ void Right_Button_Down()
 
 void Right_Button_Up()
 {
-	
+
 }
 
 void Down_Button_Down()
