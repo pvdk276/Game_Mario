@@ -68,6 +68,9 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files\Game Mario</Filter>
     </ClCompile>
+    <ClCompile Include="Amination.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Global.h">
@@ -130,6 +133,7 @@
     <ClInclude Include="GameObject.h">
       <Filter>Source Files\Game Mario</Filter>
     </ClInclude>
+    <ClInclude Include="Amination.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="DirectX.txt">
