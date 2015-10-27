@@ -7,9 +7,9 @@
 #include "Mario.h"
 #include "BinaryTree.h"
 #include "Collision.h"
-#include "GameObject.h"
+
 #define FRAME_RATE 60
-ActionMario m_action;
+
 void Left_Button_Down();
 void Left_Button_Up();
 void Right_Button_Down();
@@ -213,20 +213,7 @@ void Left_Button_Up()
 
 void Right_Button_Down()
 {
-	if (m_action != down)
-	{
 
-		int m_direct = 1;
-		if (m_veloc.x < m_maxVelocity.x)
-		{
-			m_accel.x = m_maxAccelemeter.x;
-		}
-		else //if (m_veloc.x >= m_maxVelocity.x)
-		{
-			m_accel.x = 0;
-			m_veloc.x = m_maxVelocity.x;
-		}
-	}
 }
 
 void Right_Button_Up()

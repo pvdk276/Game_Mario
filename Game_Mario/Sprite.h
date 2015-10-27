@@ -7,16 +7,11 @@ public:
 	LPDIRECT3DTEXTURE9 image;
 	LPD3DXSPRITE spriteHandler;
 
-	int curIndex;
-	int beginIndex;
-	int endIndex;
-
+	int index;
 	int width;
 	int height;
 	int count;
 	int spritePerRow;
-	float timeAmination;
-	float timeCurrent;
 
 	CSprite(LPD3DXSPRITE spriteHandler, LPCSTR filePath, int width, int height, int count, int spritePerRow, int transparentColor);
 	~CSprite();
@@ -32,10 +27,4 @@ public:
 
 	//render map
 	void RenderMap(float posX, float posY, float vpx, float vpy, int value);
-	void UpdateSprite();
-	void UpdateSprite(float, int, int, int);
-	void PositionSprite();
-	//set
-	void SetCurrentSprite(int _cursprite) { index = _cursprite; }
-	void SetTimeAmination(float _time) { m_timeAmination = _time; }
 };

@@ -8,9 +8,8 @@ CSprite::CSprite(LPD3DXSPRITE spriteHandler, LPCSTR filePath, int width, int hei
 	this->height = height;
 	this->count = count;
 	this->spritePerRow = spritePerRow;
-	this->curIndex = 0;
-	timeAmination = 0;
-	timeCurrent = 0;
+	this->index = 0;
+
 	D3DXIMAGE_INFO info;
 	HRESULT result;
 
@@ -54,26 +53,19 @@ CSprite::~CSprite()
 
 void CSprite::Next()
 {
-	curIndex = (curIndex + 1) % count;
+	index = (index + 1) % count;
 }
 
 void CSprite::Reset()
 {
-	curIndex = 0;
+	index = 0;
 }
-void CSprite::PositionSprite()
-{
-	RECT rect;
-	rect.top = (curIndex / spritePerRow) * height;
-	rect.left = (curIndex % spritePerRow) * width;
-	rect.bottom = rect.top + height;
-	rect.right = rect.left + width;
-}
+
 void CSprite::Render(float x, float y, float vpx, float vpy, float direction)
 {
 	RECT rect;
-	rect.top = (curIndex / spritePerRow) * height;
-	rect.left = (curIndex % spritePerRow) * width;
+	rect.top = (index / spritePerRow) * height;
+	rect.left = (index % spritePerRow) * width;
 	rect.bottom = rect.top + height;
 	rect.right = rect.left + width;
 
@@ -126,48 +118,9 @@ void CSprite::Render(float x, float y, float vpx, float vpy, float direction)
 	}
 	spriteHandler->End();
 
-	//Next();
-	UpdateSprite();
+	Next();
 }
-void CSprite::UpdateSprite() {
-	PositionSprite();
-}
-void CSprite::UpdateSprite(float _time, int _spriteBegin, int _SpriteEnd, int _flag) {
-	if (timeAmination != 0) {
-		if (timeCurrent >= timeAmination)
-		{
-			if (_flag == -1)
 
-				//nó bay m?t luôn ?ó
-			{
-				curIndex--;
-				if (curIndex < _spriteBegin) {
-					curIndex = _SpriteEnd;
-				}
-				if (curIndex > _SpriteEnd) {
-					curIndex = _SpriteEnd;
-				}
-			}
-			if (_flag == 1)
-			{
-				curIndex++;
-				if (curIndex < _spriteBegin) {
-					curIndex = _spriteBegin;
-				}
-				if (curIndex > _SpriteEnd) {
-					curIndex = _spriteBegin;
-				}
-			}
-			//PositionSprite();
-			timeCurrent = 0;
-
-		}
-		else
-		{
-			timeCurrent += _time;
-		}
-	}
-}
 void CSprite::RenderMap(float posX, float posY, float vpx, float vpy, int value)
 {
 	RECT rect;
