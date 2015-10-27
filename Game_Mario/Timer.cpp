@@ -1,6 +1,6 @@
 /*+========================================================
 File:		Timer.cpp
-Sumary:		Hi?n th?c h�a c�c ph??ng th?c c?a l?p CTimer
+Sumary:		Hiện thực hóa các phương thức của lớp CTimer
 ========================================================+*/
 
 #include "Timer.h"
@@ -34,7 +34,7 @@ void CTimer::EndCount()
 {
 	QueryPerformanceCounter((LARGE_INTEGER*)&m_nTimeEnd);
 	m_fDeltaTime = (m_nTimeEnd - m_nTimeStart) * m_fTimeScale;
-	//T�nh l?i th?i gian delta time n?u ch?a kh?p v?i th?i gian gi?a 2 frame li�n ti?p
+	//Tính lại thời gian delta time nếu chưa khớp với thời gian giữa 2 frame liên tiếp
 	if (m_fLockFps > 0.0f)
 	{
 		while (m_fDeltaTime < 1.0f / m_fLockFps)
@@ -43,7 +43,7 @@ void CTimer::EndCount()
 			m_fDeltaTime = (m_nTimeEnd - m_nTimeStart) * m_fTimeScale;
 		}
 	}
-	//G�n l?i th?i ?i?m b?t ??u
+	//Gán lại thời gian bắt đầu
 	QueryPerformanceCounter((LARGE_INTEGER*)&m_nTimeStart);
 }
 
