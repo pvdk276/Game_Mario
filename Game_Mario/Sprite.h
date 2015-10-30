@@ -10,32 +10,30 @@ public:
 	int curIndex;
 	int beginIndex;
 	int endIndex;
+	float timeAnimation;
+	float timeCurrent;
 
 	int width;
 	int height;
 	int count;
 	int spritePerRow;
-	float timeAmination;
-	float timeCurrent;
+	
+
+	RECT rect;
 
 	CSprite(LPD3DXSPRITE spriteHandler, LPCSTR filePath, int width, int height, int count, int spritePerRow, int transparentColor);
 	~CSprite();
 
-	//next picture in a picture chain
-	void Next();
-
-	//return to the first picture
-	void Reset();
-
-	//render character
-	void Render(float posX, float posY, float vpx, float vpy, float direction);
-
-	//render map
-	void RenderMap(float posX, float posY, float vpx, float vpy, int value);
+	
+	void Next();	//next picture in a picture chain
+	void Reset();	//return to the first picture
+	void Render(float posX, float posY, float vpx, float vpy, float direction);	//render character
+	void RenderMap(float posX, float posY, float vpx, float vpy, int value);	//render map
 	void UpdateSprite();
 	void UpdateSprite(float, int, int, int);
 	void PositionSprite();
+
 	//set
-	void SetCurrentSprite(int _cursprite) { index = _cursprite; }
-	void SetTimeAmination(float _time) { m_timeAmination = _time; }
+	void SetCurrentIndex(int _cursprite) { curIndex = _cursprite; }
+	void SetTimeAnimation(float _time) { timeAnimation = _time; }
 };

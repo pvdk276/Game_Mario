@@ -3,12 +3,13 @@
 #include "GameObject.h"
 #include "Sprite.h"
 #include "Global.h"
-#define TIMEAMINATION  1.6f
+
+#define TIME_ANIMATION  1.6f
 #define MAXHEIGHT  450
 enum ActionMario
 {
-	normal,
-	Jump,
+	stand,
+	jump,
 	run,
 	down
 };
@@ -25,11 +26,11 @@ private:
 
 public:
 	ActionMario m_action;
-	D3DXVECTOR2 m_MaxVeloc;//luu tru maxveloc ban dau,khi va cham cho maxvecloc ve 0
+	//D3DXVECTOR2 m_MaxVeloc;//luu tru maxveloc ban dau,khi va cham cho maxvecloc ve 0
 
-	D3DXVECTOR2 m_lastPos;
-	float gravity;
-	int state;
+	//D3DXVECTOR2 m_lastPos;
+	//float gravity;
+	//int state;
 
 	CSprite* smallMario;
 	CSprite* bigMario;
@@ -39,6 +40,7 @@ public:
 	~CMario();
 
 	void Render();
-	void Update(float _time);
-	void UpdateAnimation(float _time);
+	void Update(float delta_time);
+	void UpdatePosition(float delta_time);
+	void UpdateAnimation(float delta_time);
 };

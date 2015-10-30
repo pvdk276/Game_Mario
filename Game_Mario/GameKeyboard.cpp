@@ -89,11 +89,7 @@ void CGameKeyboard::OnKeyDown(int KeyCode)
 {
 	switch (KeyCode)
 	{
-	case DIK_LEFT: Left_Button_Down(); break;
-	case DIK_RIGHT: Right_Button_Down(); break;
-	case DIK_DOWN: Down_Button_Down(); break;
-	case DIK_SPACE: Space_Button_Down(); break;
-	case DIK_X: X_Button_Down(); break;
+
 	}
 }
 
@@ -101,11 +97,7 @@ void CGameKeyboard::OnKeyUp(int KeyCode)
 {
 	switch (KeyCode)
 	{
-	case DIK_LEFT: Left_Button_Up(); break;
-	case DIK_RIGHT: Right_Button_Up(); break;
-	case DIK_DOWN: Down_Button_Up(); break;
-	case DIK_SPACE: Space_Button_Up(); break;
-	case DIK_X: X_Button_Up(); break;
+
 	}
 }
 

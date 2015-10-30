@@ -8,28 +8,21 @@
 #include "BinaryTree.h"
 #include "Collision.h"
 #include "GameObject.h"
+
 #define FRAME_RATE 60
-ActionMario m_action;
-void Left_Button_Down();
-void Left_Button_Up();
-void Right_Button_Down();
-void Right_Button_Up();
-void Down_Button_Down();
-void Down_Button_Up();
-void Space_Button_Down();
-void Space_Button_Up();
-void X_Button_Down();
-void X_Button_Up();
+//ActionMario m_action;
 
 CGame::CGame()
 {
 
 }
+
 CGame::~CGame()
 {
 	if (m_pTimer)
 		delete m_pTimer;
 }
+
 int CGame::Init(HINSTANCE hInstance)
 {
 	if (!CGameWindow::getInstance()->Init(hInstance))
@@ -49,8 +42,6 @@ int CGame::Init(HINSTANCE hInstance)
 		OutputDebugString("[Game.cpp] Cannot init Keyboard.");
 		return 0;
 	}
-
-
 
 	//Kh?i t?o ??i t??ng Input.
 	//if (!CInput::GetInstance()->Init(pGameWindow->GetHInstance(), pGameWindow->GetHWND()))
@@ -87,35 +78,11 @@ void CGame::LoadResources()
 
 	CMario::getInstance()->smallMario = new CSprite(spriteHandler, "Resources/SmallMario.png", 50, 50, 10, 5, NULL);
 	CMario::getInstance()->bigMario = new CSprite(spriteHandler, "Resources/BigMario.png", 50, 100, 10, 5, NULL);
+	CMario::getInstance()->currentSprite = CMario::getInstance()->smallMario;
 
 	CBinaryTree::getInstance()->init("Resources/map1_ListObject.txt", "Resources/map1_BinaryTree.txt");
 
 	CGameGraphic::getInstance()->InitSurface("Resources/Background.png");
-
-	CGameKeyboard::getInstance()->Left_Button_Down = Left_Button_Down;
-	CGameKeyboard::getInstance()->Left_Button_Up = Left_Button_Up;
-	CGameKeyboard::getInstance()->Right_Button_Down = Right_Button_Down;
-	CGameKeyboard::getInstance()->Right_Button_Up = Right_Button_Up;
-	CGameKeyboard::getInstance()->Down_Button_Down = Down_Button_Down;
-	CGameKeyboard::getInstance()->Down_Button_Up = Down_Button_Up;
-	CGameKeyboard::getInstance()->X_Button_Down = X_Button_Down;
-	CGameKeyboard::getInstance()->X_Button_Up = X_Button_Up;
-	CGameKeyboard::getInstance()->Space_Button_Down = Space_Button_Down;
-	CGameKeyboard::getInstance()->Space_Button_Up = Space_Button_Up;
-}
-
-void stop(float delta_time)
-{
-	if (CMario::getInstance()->state == RUNNING)
-	{
-		CMario::getInstance()->gravity = -0.001f;
-		CMario::getInstance()->speedX = CMario::getInstance()->speedX + CMario::getInstance()->gravity * delta_time;
-		if (CMario::getInstance()->speedX <= 0)
-		{
-			CMario::getInstance()->speedX = 0;
-			CMario::getInstance()->state = STANDING;
-		}
-	}
 }
 
 void CGame::Run()
@@ -145,30 +112,30 @@ void CGame::Run()
 			if (_DeltaTime >= tick_per_frame)
 			{
 				frame_start = now;
+				//OutputDebugString(std::to_string(_DeltaTime).c_str());
+				//CBinaryTree::getInstance()->listCurrentObject->clear();
+				//CBinaryTree::getInstance()->loadListCurrentObject(CBinaryTree::getInstance()->rootNode, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, CCamera::getInstance()->width, CCamera::getInstance()->height);
 
-				CBinaryTree::getInstance()->listCurrentObject->clear();
-				CBinaryTree::getInstance()->loadListCurrentObject(CBinaryTree::getInstance()->rootNode, CCamera::getInstance()->positionX, CCamera::getInstance()->positionY, CCamera::getInstance()->width, CCamera::getInstance()->height);
+				//for (int i = 0; i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
+				//{
+				//	if (CBinaryTree::getInstance()->listCurrentObject->at(i)->typeId == 1)
+				//	{
 
-				for (int i = 0; i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
-				{
-					if (CBinaryTree::getInstance()->listCurrentObject->at(i)->typeId == 1)
-					{
+				//	}
+				//	float normalx, normaly;
+				//	float value = CCollision::getInstance()->CheckCollision(CMario::getInstance()->GetBox(), CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(), normalx, normaly, _DeltaTime);
+				//	
+				//	//a collision occur
+				//	if (value < 1.0f)
+				//	{
 
-					}
-					float normalx, normaly;
-					float value = CCollision::getInstance()->CheckCollision(CMario::getInstance()->GetBox(), CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(), normalx, normaly, _DeltaTime);
-					
-					//a collision occur
-					if (value < 1.0f)
-					{
-
-					}
-				}
+				//	}
+				//}
 				
-				CGameKeyboard::getInstance()->ProcessKeyboard();
-				CGameKeyboard::getInstance()->ProcessInput(_DeltaTime);
-				CMario::getInstance()->Update(_DeltaTime);
-				CCamera::getInstance()->Update(CMario::getInstance()->positionX, CMario::getInstance()->positionY);
+				CGameKeyboard::getInstance()->PollKeyboard();
+
+				CMario::getInstance()->Update(_DeltaTime/100);
+				CCamera::getInstance()->Update(CMario::getInstance()->position.x, CMario::getInstance()->position.y);
 
 				if (CGameGraphic::getInstance()->d3ddv->BeginScene())
 				{
@@ -200,67 +167,3 @@ void CGame::Run()
 		}
 	}
 }
-
-void Left_Button_Down()
-{
-
-}
-
-void Left_Button_Up()
-{
-
-}
-
-void Right_Button_Down()
-{
-	if (m_action != down)
-	{
-
-		int m_direct = 1;
-		if (m_veloc.x < m_maxVelocity.x)
-		{
-			m_accel.x = m_maxAccelemeter.x;
-		}
-		else //if (m_veloc.x >= m_maxVelocity.x)
-		{
-			m_accel.x = 0;
-			m_veloc.x = m_maxVelocity.x;
-		}
-	}
-}
-
-void Right_Button_Up()
-{
-
-}
-
-void Down_Button_Down()
-{
-
-}
-
-void Down_Button_Up()
-{
-
-}
-
-void Space_Button_Down()
-{
-
-}
-
-void Space_Button_Up()
-{
-
-}
-
-void X_Button_Down()
-{
-
-}
-
-void X_Button_Up()
-{
-
-}
-

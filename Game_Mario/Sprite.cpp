@@ -9,8 +9,10 @@ CSprite::CSprite(LPD3DXSPRITE spriteHandler, LPCSTR filePath, int width, int hei
 	this->count = count;
 	this->spritePerRow = spritePerRow;
 	this->curIndex = 0;
-	timeAmination = 0;
+
+	timeAnimation = 0;
 	timeCurrent = 0;
+
 	D3DXIMAGE_INFO info;
 	HRESULT result;
 
@@ -61,21 +63,22 @@ void CSprite::Reset()
 {
 	curIndex = 0;
 }
+
 void CSprite::PositionSprite()
 {
-	RECT rect;
 	rect.top = (curIndex / spritePerRow) * height;
 	rect.left = (curIndex % spritePerRow) * width;
 	rect.bottom = rect.top + height;
 	rect.right = rect.left + width;
 }
+
 void CSprite::Render(float x, float y, float vpx, float vpy, float direction)
 {
-	RECT rect;
+	/*RECT rect;
 	rect.top = (curIndex / spritePerRow) * height;
 	rect.left = (curIndex % spritePerRow) * width;
 	rect.bottom = rect.top + height;
-	rect.right = rect.left + width;
+	rect.right = rect.left + width;*/
 
 	D3DXVECTOR3 position((float)x, (float)y, 0);
 	D3DXMATRIX mt;
@@ -129,12 +132,16 @@ void CSprite::Render(float x, float y, float vpx, float vpy, float direction)
 	//Next();
 	UpdateSprite();
 }
+
 void CSprite::UpdateSprite() {
 	PositionSprite();
 }
-void CSprite::UpdateSprite(float _time, int _spriteBegin, int _SpriteEnd, int _flag) {
-	if (timeAmination != 0) {
-		if (timeCurrent >= timeAmination)
+
+void CSprite::UpdateSprite(float _time, int _spriteBegin, int _SpriteEnd, int _flag) 
+{
+	if (timeAnimation != 0) 
+	{
+		if (timeCurrent >= timeAnimation)
 		{
 			if (_flag == -1)
 
@@ -158,9 +165,8 @@ void CSprite::UpdateSprite(float _time, int _spriteBegin, int _SpriteEnd, int _f
 					curIndex = _spriteBegin;
 				}
 			}
-			//PositionSprite();
+			PositionSprite();
 			timeCurrent = 0;
-
 		}
 		else
 		{
@@ -168,6 +174,7 @@ void CSprite::UpdateSprite(float _time, int _spriteBegin, int _SpriteEnd, int _f
 		}
 	}
 }
+
 void CSprite::RenderMap(float posX, float posY, float vpx, float vpy, int value)
 {
 	RECT rect;
