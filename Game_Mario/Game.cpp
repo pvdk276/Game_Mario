@@ -113,24 +113,24 @@ void CGame::Run()
 			{
 				frame_start = now;
 				//OutputDebugString(std::to_string(_DeltaTime).c_str());
-				//CBinaryTree::getInstance()->listCurrentObject->clear();
-				//CBinaryTree::getInstance()->loadListCurrentObject(CBinaryTree::getInstance()->rootNode, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, CCamera::getInstance()->width, CCamera::getInstance()->height);
+				CBinaryTree::getInstance()->listCurrentObject->clear();
+				CBinaryTree::getInstance()->loadListCurrentObject(CBinaryTree::getInstance()->rootNode, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, CCamera::getInstance()->width, CCamera::getInstance()->height);
 
-				//for (int i = 0; i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
-				//{
-				//	if (CBinaryTree::getInstance()->listCurrentObject->at(i)->typeId == 1)
-				//	{
+				for (int i = 0; i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
+				{
+					if (CBinaryTree::getInstance()->listCurrentObject->at(i)->typeId == 1)
+					{
 
-				//	}
-				//	float normalx, normaly;
-				//	float value = CCollision::getInstance()->CheckCollision(CMario::getInstance()->GetBox(), CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(), normalx, normaly, _DeltaTime);
-				//	
-				//	//a collision occur
-				//	if (value < 1.0f)
-				//	{
+					}
+					float normalx, normaly;
+					float value = CCollision::getInstance()->CheckCollision(CMario::getInstance()->GetBox(), CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(), normalx, normaly, _DeltaTime);
+					
+					//a collision occur
+					if (value < 1.0f) 
+					{
 
-				//	}
-				//}
+					}
+				}
 				
 				CGameKeyboard::getInstance()->PollKeyboard();
 
