@@ -4,5 +4,8 @@
 
 class CHiddenObject : public CGameObject
 {
-
+public:
+	CHiddenObject();
+	~CHiddenObject();
+	CBox GetBox();
 };

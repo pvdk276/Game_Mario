@@ -20,11 +20,11 @@ CGameObject::~CGameObject()
 
 }
 
-CBox CGameObject::GetBox()
-{
-	CBox box(position.x, position.y, width, height, velocity.x, velocity.y);
-	return box;
-}
+//CBox CGameObject::GetBox()
+//{
+//	CBox box(position.x, position.y, width, height, velocity.x, velocity.y);
+//	return box;
+//}
 //void CGameObject::SetBound() {
 //	m_bound.left = (LONG)(m_pos.x - m_sprite->GetSpriteWidth() / 2);
 //	m_bound.bottom = (LONG)(m_pos.y - m_sprite->GetSpriteHeight() / 2);

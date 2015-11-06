@@ -80,9 +80,6 @@
     <ClCompile Include="HiddenObject.cpp">
       <Filter>Source Files\Game Mario\Game Object</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source Files\Game Mario\Game Object\Hidden Object</Filter>
-    </ClCompile>
     <ClCompile Include="Ground.cpp">
       <Filter>Source Files\Game Mario\Game Object\Hidden Object</Filter>
     </ClCompile>
@@ -138,6 +135,9 @@
       <Filter>Source Files\DirectX</Filter>
     </ClCompile>
     <ClCompile Include="WinMain.cpp">
+      <Filter>Source Files\Game Mario</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
       <Filter>Source Files\Game Mario</Filter>
     </ClCompile>
   </ItemGroup>
@@ -202,9 +202,6 @@
     <ClInclude Include="Mario.h">
       <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Source Files\Game Mario\Game Object\Hidden Object</Filter>
-    </ClInclude>
     <ClInclude Include="Ground.h">
       <Filter>Source Files\Game Mario\Game Object\Hidden Object</Filter>
     </ClInclude>
@@ -260,6 +257,9 @@
       <Filter>Source Files\DirectX</Filter>
     </ClInclude>
     <ClInclude Include="Global.h">
+      <Filter>Source Files\Game Mario</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
       <Filter>Source Files\Game Mario</Filter>
     </ClInclude>
   </ItemGroup>

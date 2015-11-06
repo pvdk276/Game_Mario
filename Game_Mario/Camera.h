@@ -3,12 +3,15 @@
 #include "GameObject.h"
 #include "Sprite.h"
 
-class CCamera : public CSingleton<CCamera>, public CGameObject
+class CCamera : public CSingleton<CCamera>
 {
 public:
 	int** matrix;
 	int m;
 	int n;
+	D3DXVECTOR2 position;
+	float width;
+	float height;
 
 	CSprite* sprite;
 
