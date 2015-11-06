@@ -5,6 +5,8 @@
 class CStaticObject : public CGameObject
 {
 public:
+	CSprite sprite;
+
 	CStaticObject();
 	~CStaticObject();
 	CBox GetBox();

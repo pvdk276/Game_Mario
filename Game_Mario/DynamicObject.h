@@ -10,6 +10,7 @@ public:
 	D3DXVECTOR2 maxVelocity;
 	D3DXVECTOR2 accel;
 	D3DXVECTOR2 maxAccel;
+	CSprite sprite;
 
 	CDynamicObject();
 	~CDynamicObject();
