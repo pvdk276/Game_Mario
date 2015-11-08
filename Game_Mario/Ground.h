@@ -4,5 +4,6 @@
 
 class CGround : public CHiddenObject
 {
-
+	CGround();
+	~CGround();
 };

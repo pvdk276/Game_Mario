@@ -4,5 +4,6 @@
 
 class CPipeDown1 : public CHiddenObject
 {
-
+	CPipeDown1();
+	~CPipeDown1();
 };
