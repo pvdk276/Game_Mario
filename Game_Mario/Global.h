@@ -4,6 +4,8 @@
 #include <windows.h>
 #include <cmath>
 
+
+#define TIME_ANIMATION  1.6f
 #define STANDING 1
 #define RUNNING 2
 #define MARIO_GRAVITY = 0.5f

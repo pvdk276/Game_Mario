@@ -1,5 +1,22 @@
 #include "BinaryTree.h"
 #include <string>
+#include "Ground.h"
+#include "Cloud.h"
+#include "Pipe.h"
+#include "Grass.h"
+#include "Brick.h"
+#include "MushroomBlock.h"
+#include "CoinBrick.h"
+#include "CoinBlock.h"
+#include "Coin.h"
+#include "Flower.h"
+#include "Stone.h"
+#include "PipeUp1.h"
+#include "MushroomEnemy.h"
+#include "Turtle.h"
+#include "WingTurtle.h"
+#include "FireTurtle.h"
+
 
 //load data from binary_tree_file_text to a list of binary node
 std::vector<CBinaryNode*> loadBinaryTree(std::vector<CGameObject*> listObject, std::string binaryTreePath);
@@ -125,7 +142,39 @@ std::vector<CGameObject*> loadListObject(std::string listObjectPath)
 		float y = atof(items.at(3).c_str());
 		float width = atof(items.at(4).c_str());
 		float height = atof(items.at(5).c_str());
-		CGameObject* gameObject = new CGameObject(id, typeId, x, y, width, height);
+		CGameObject* gameObject;
+		switch (typeId)
+		{
+		case 4: gameObject = new CGround();
+			break;
+		case 112: gameObject = new CCloud();
+			break;
+		case 7: gameObject = new CPipe();
+			break;
+		case 59: gameObject = new CGrass();
+			break;
+		case 62: gameObject = new CBrick();
+			break;
+		case 218: gameObject = new CMushroomBlock();
+			break;
+		case 221: gameObject = new CCoinBrick();
+			break;
+		case 222: gameObject = new CCoinBlock();
+			break;
+		case 223: gameObject = new CCoin();
+			break;
+		case 115: gameObject = new CFlowerPipe();//Ch?a có
+			break;
+		case 147: gameObject = new CpipeDown1();//Ch?a  có
+			break;
+		case 42: gameObject = new CStone();
+			break;
+		case 61: gameObject = new CFlower();
+			break;
+		case 169: gameObject = new CPipeUp1();
+			break;
+		}
+		//= new CGameObject(id, typeId, x, y, width, height);
 		listObject.push_back(gameObject);
 	}
 

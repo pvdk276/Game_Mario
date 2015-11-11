@@ -2,7 +2,7 @@
 
 CDynamicObject::CDynamicObject()
 {
-
+	
 }
 
 CDynamicObject::~CDynamicObject()
