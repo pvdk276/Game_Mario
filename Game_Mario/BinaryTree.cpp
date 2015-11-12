@@ -163,9 +163,9 @@ std::vector<CGameObject*> loadListObject(std::string listObjectPath)
 			break;
 		case 223: gameObject = new CCoin();
 			break;
-		case 115: gameObject = new CFlowerPipe();//Ch?a có
+		//case 115: gameObject = new CFlowerPipe();//Ch?a có
 			break;
-		case 147: gameObject = new CpipeDown1();//Ch?a  có
+		//case 147: gameObject = new CpipeDown1();//Ch?a  có
 			break;
 		case 42: gameObject = new CStone();
 			break;

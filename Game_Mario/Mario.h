@@ -1,6 +1,6 @@
 #pragma once
 #include "Singleton.h"
-#include "DynamicObject.h"
+#include "LivingObject.h"
 #include "Sprite.h"
 #include "Global.h"
 
@@ -19,7 +19,7 @@ enum StatusMario
 	mariobig,
 	mariogun
 };
-class CMario : public CSingleton<CMario>, public CDynamicObject
+class CMario : public CSingleton<CMario>, public CLivingObject
 {
 private:
 	

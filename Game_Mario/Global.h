@@ -4,6 +4,10 @@
 #include <windows.h>
 #include <cmath>
 
+enum ObjectName
+{
+
+};
 
 #define TIME_ANIMATION  1.6f
 #define STANDING 1

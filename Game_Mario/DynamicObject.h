@@ -1,23 +1,16 @@
 #pragma once
 
-#include "GameObject.h"
+#include "BaseObject.h"
+#include "Camera.h"
 
-class CDynamicObject : public CGameObject
+class CDynamicObject : public CBaseObject
 {
 public:
-	int direct;
-	D3DXVECTOR2 velocity;
-	D3DXVECTOR2 maxVelocity;
-	D3DXVECTOR2 accel;
-	D3DXVECTOR2 maxAccel;
-	CSprite *sprite;
+	float timeAnimation;
 
-	CDynamicObject();
+	CDynamicObject(ObjectName type, D3DXVECTOR2 position, float width, float height, CSprite* sprite, float timeAnimation);
 	~CDynamicObject();
-	CBox GetBox();
 
-	virtual void Update(float delta_time) = 0;	//general update function
-	virtual void UpdatePosition(float delta_time) = 0;
-	virtual void UpdateAnimation(float delta_time) = 0;
-	virtual void Render() = 0;
+	void UpdateAnimation(float delta_time);
+	void Render();
 };

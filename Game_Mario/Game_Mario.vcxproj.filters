@@ -24,7 +24,7 @@
     <Filter Include="Source Files\Game Mario\Game Object\Dynamic Object">
       <UniqueIdentifier>{488dc38b-83ad-40ec-b251-2c8accd574df}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Game Mario\Game Object\Hidden Object">
+    <Filter Include="Source Files\Game Mario\Game Object\Living Object">
       <UniqueIdentifier>{73e2ea90-8ac8-4eae-aee0-4d9745f6da4b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -65,31 +65,13 @@
     <ClCompile Include="Collision.cpp">
       <Filter>Source Files\DirectX</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files\Game Mario\Game Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Mario.cpp">
-      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
-    </ClCompile>
     <ClCompile Include="StaticObject.cpp">
       <Filter>Source Files\Game Mario\Game Object</Filter>
     </ClCompile>
     <ClCompile Include="DynamicObject.cpp">
       <Filter>Source Files\Game Mario\Game Object</Filter>
     </ClCompile>
-    <ClCompile Include="HiddenObject.cpp">
-      <Filter>Source Files\Game Mario\Game Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Ground.cpp">
-      <Filter>Source Files\Game Mario\Game Object\Hidden Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Cloud.cpp">
-      <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
-    </ClCompile>
     <ClCompile Include="Pipe.cpp">
-      <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Grass.cpp">
       <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
     </ClCompile>
     <ClCompile Include="Brick.cpp">
@@ -107,29 +89,8 @@
     <ClCompile Include="Coin.cpp">
       <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
     </ClCompile>
-    <ClCompile Include="Flower.cpp">
-      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
-    </ClCompile>
-    <ClCompile Include="PipeDown1.cpp">
-      <Filter>Source Files\Game Mario\Game Object\Hidden Object</Filter>
-    </ClCompile>
     <ClCompile Include="Stone.cpp">
       <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
-    </ClCompile>
-    <ClCompile Include="PipeUp1.cpp">
-      <Filter>Source Files\Game Mario\Game Object\Hidden Object</Filter>
-    </ClCompile>
-    <ClCompile Include="MushroomEnemy.cpp">
-      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Turtle.cpp">
-      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
-    </ClCompile>
-    <ClCompile Include="WingTurtle.cpp">
-      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
-    </ClCompile>
-    <ClCompile Include="FireTurtle.cpp">
-      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>Source Files\DirectX</Filter>
@@ -139,6 +100,45 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files\Game Mario</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseObject.cpp">
+      <Filter>Source Files\Game Mario\Game Object</Filter>
+    </ClCompile>
+    <ClCompile Include="LivingObject.cpp">
+      <Filter>Source Files\Game Mario\Game Object</Filter>
+    </ClCompile>
+    <ClCompile Include="FireTurtle.cpp">
+      <Filter>Source Files\Game Mario\Game Object\Living Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Mario.cpp">
+      <Filter>Source Files\Game Mario\Game Object\Living Object</Filter>
+    </ClCompile>
+    <ClCompile Include="MushroomEnemy.cpp">
+      <Filter>Source Files\Game Mario\Game Object\Living Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Turtle.cpp">
+      <Filter>Source Files\Game Mario\Game Object\Living Object</Filter>
+    </ClCompile>
+    <ClCompile Include="WingTurtle.cpp">
+      <Filter>Source Files\Game Mario\Game Object\Living Object</Filter>
+    </ClCompile>
+    <ClCompile Include="PipeUp1.cpp">
+      <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CarnivorousFlower.cpp">
+      <Filter>Source Files\Game Mario\Game Object\Living Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
+    </ClCompile>
+    <ClCompile Include="PipeDown1.cpp">
+      <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Cloud.cpp">
+      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Grass.cpp">
+      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -187,31 +187,13 @@
     <ClInclude Include="Box.h">
       <Filter>Source Files\DirectX</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Source Files\Game Mario\Game Object</Filter>
-    </ClInclude>
-    <ClInclude Include="HiddenObject.h">
-      <Filter>Source Files\Game Mario\Game Object</Filter>
-    </ClInclude>
     <ClInclude Include="StaticObject.h">
       <Filter>Source Files\Game Mario\Game Object</Filter>
     </ClInclude>
     <ClInclude Include="DynamicObject.h">
       <Filter>Source Files\Game Mario\Game Object</Filter>
     </ClInclude>
-    <ClInclude Include="Mario.h">
-      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Ground.h">
-      <Filter>Source Files\Game Mario\Game Object\Hidden Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Cloud.h">
-      <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
-    </ClInclude>
     <ClInclude Include="Pipe.h">
-      <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Grass.h">
       <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
     </ClInclude>
     <ClInclude Include="Brick.h">
@@ -229,29 +211,8 @@
     <ClInclude Include="Coin.h">
       <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
     </ClInclude>
-    <ClInclude Include="Flower.h">
-      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
-    </ClInclude>
-    <ClInclude Include="PipeDown1.h">
-      <Filter>Source Files\Game Mario\Game Object\Hidden Object</Filter>
-    </ClInclude>
     <ClInclude Include="Stone.h">
       <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
-    </ClInclude>
-    <ClInclude Include="PipeUp1.h">
-      <Filter>Source Files\Game Mario\Game Object\Hidden Object</Filter>
-    </ClInclude>
-    <ClInclude Include="MushroomEnemy.h">
-      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Turtle.h">
-      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
-    </ClInclude>
-    <ClInclude Include="WingTurtle.h">
-      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
-    </ClInclude>
-    <ClInclude Include="FireTurtle.h">
-      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>Source Files\DirectX</Filter>
@@ -261,6 +222,45 @@
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Source Files\Game Mario</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseObject.h">
+      <Filter>Source Files\Game Mario\Game Object</Filter>
+    </ClInclude>
+    <ClInclude Include="LivingObject.h">
+      <Filter>Source Files\Game Mario\Game Object</Filter>
+    </ClInclude>
+    <ClInclude Include="FireTurtle.h">
+      <Filter>Source Files\Game Mario\Game Object\Living Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Mario.h">
+      <Filter>Source Files\Game Mario\Game Object\Living Object</Filter>
+    </ClInclude>
+    <ClInclude Include="MushroomEnemy.h">
+      <Filter>Source Files\Game Mario\Game Object\Living Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Turtle.h">
+      <Filter>Source Files\Game Mario\Game Object\Living Object</Filter>
+    </ClInclude>
+    <ClInclude Include="WingTurtle.h">
+      <Filter>Source Files\Game Mario\Game Object\Living Object</Filter>
+    </ClInclude>
+    <ClInclude Include="PipeUp1.h">
+      <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CarnivorousFlower.h">
+      <Filter>Source Files\Game Mario\Game Object\Living Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
+    </ClInclude>
+    <ClInclude Include="PipeDown1.h">
+      <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Cloud.h">
+      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Grass.h">
+      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

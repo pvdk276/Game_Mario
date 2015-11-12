@@ -1,17 +1,14 @@
 #pragma once
 
-#include "GameObject.h"
+#include "BaseObject.h"
 #include "Camera.h"
 
-class CStaticObject : public CGameObject
+class CStaticObject : public CBaseObject
 {
 public:
-	CSprite *sprite;
-
-	CStaticObject();
+	CStaticObject(ObjectName type, D3DXVECTOR2 position, float width, float height, CSprite* sprite);
 	~CStaticObject();
 	CBox GetBox();
-	virtual void UpdateAnimation(float delta_time) = 0;
-	virtual void Render() = 0;
-
+	void UpdateAnimation(float delta_time);
+	void Render();
 };

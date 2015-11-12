@@ -1,9 +1,8 @@
 #pragma once
 
-#include "StaticObject.h"
-#include "Global.h"
+#include "DynamicObject.h"
 
-class CGrass : public CStaticObject
+class CGrass : public CDynamicObject
 {
 public:
 	CGrass(CSprite* _grass, D3DXVECTOR2 _position);
