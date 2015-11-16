@@ -151,7 +151,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Bar.cpp" />
     <ClCompile Include="BinaryNode.cpp" />
     <ClCompile Include="BinaryTree.cpp" />
     <ClCompile Include="Brick.cpp" />
@@ -178,11 +177,10 @@
     <ClCompile Include="LivingObject.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="MushroomBlock.cpp" />
-    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="MushroomEnemy.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="PipeDown1.cpp" />
     <ClCompile Include="PipeUp1.cpp" />
-    <ClCompile Include="Spring.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="StaticObject.cpp" />
     <ClCompile Include="Stone.cpp" />
@@ -192,7 +190,6 @@
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bar.h" />
     <ClInclude Include="BinaryNode.h" />
     <ClInclude Include="BinaryTree.h" />
     <ClInclude Include="Box.h" />
@@ -221,12 +218,11 @@
     <ClInclude Include="LivingObject.h" />
     <ClInclude Include="Mario.h" />
     <ClInclude Include="MushroomBlock.h" />
-    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="MushroomEnemy.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="PipeDown1.h" />
     <ClInclude Include="PipeUp1.h" />
     <ClInclude Include="Singleton.h" />
-    <ClInclude Include="Spring.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="StaticObject.h" />
     <ClInclude Include="Stone.h" />
