@@ -1,8 +1,8 @@
 #pragma once
 
-#include "HiddenObject.h"
+#include "StaticObject.h"
 
-class CPipeUp1 : public CHiddenObject
+class CPipeUp1 : public CStaticObject
 {
 	CPipeUp1();
 	~CPipeUp1();

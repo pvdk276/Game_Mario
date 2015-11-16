@@ -1,5 +1,4 @@
 #include "Grass.h"
-
 CGrass::CGrass(CSprite * _grass, D3DXVECTOR2 _position)
 {
 	this->sprite = _grass;

@@ -188,7 +188,6 @@
     <ClCompile Include="Stone.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Turtle.cpp" />
-    <ClCompile Include="WingTurtle.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -233,7 +232,6 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Transformation.h" />
     <ClInclude Include="Turtle.h" />
-    <ClInclude Include="WingTurtle.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="DirectX.txt" />

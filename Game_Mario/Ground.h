@@ -1,8 +1,8 @@
 #pragma once
 
-#include "HiddenObject.h"
+#include "StaticObject.h"
 
-class CGround : public CHiddenObject
+class CGround : public CStaticObject
 {
 	CGround();
 	~CGround();

@@ -7,7 +7,7 @@
 #include "Mario.h"
 #include "BinaryTree.h"
 #include "Collision.h"
-#include "GameObject.h"
+#include "BaseObject.h"
 
 #define FRAME_RATE 60
 //ActionMario m_action;

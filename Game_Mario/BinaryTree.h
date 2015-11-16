@@ -9,7 +9,7 @@ class CBinaryTree : public CSingleton<CBinaryTree>
 {
 public:
 	CBinaryNode* rootNode;
-	std::vector<CGameObject*>* listCurrentObject;
+	std::vector<CBaseObject*>* listCurrentObject;
 
 	//default init function
 	CBinaryTree();

@@ -1,6 +1,6 @@
 #pragma once
 #include "Singleton.h"
-#include "GameObject.h"
+#include "BaseObject.h"
 #include "Sprite.h"
 
 class CCamera : public CSingleton<CCamera>

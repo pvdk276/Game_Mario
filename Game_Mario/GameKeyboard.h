@@ -1,7 +1,7 @@
 #pragma once
 #include <dinput.h>
 #include "Singleton.h"
-#include "GameObject.h"
+#include "BaseObject.h"
 #define KEYBOARD_BUFFER_SIZE 1024
 
 class CGameKeyboard : public CSingleton<CGameKeyboard>

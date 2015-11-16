@@ -19,23 +19,23 @@
 
 
 //load data from binary_tree_file_text to a list of binary node
-std::vector<CBinaryNode*> loadBinaryTree(std::vector<CGameObject*> listObject, std::string binaryTreePath);
+std::vector<CBinaryNode*> loadBinaryTree(std::vector<CBaseObject*> listObject, std::string binaryTreePath);
 
 //arrange node into a binary tree, the input is list_binary_node
 void buildTree(CBinaryNode* node, std::vector<CBinaryNode*> listBinaryNode);
 
 //load data from list_object_text_file
-std::vector<CGameObject*> loadListObject(std::string listObjectPath);
+std::vector<CBaseObject*> loadListObject(std::string listObjectPath);
 
 CBinaryTree::CBinaryTree()
 {
 	rootNode = nullptr;
-	listCurrentObject = new std::vector<CGameObject*>();
+	listCurrentObject = new std::vector<CBaseObject*>();
 }
 
 bool CBinaryTree::init(std::string listObjectPath, std::string binaryTreePath)
 {
-	std::vector<CGameObject*> listObject = loadListObject(listObjectPath);
+	std::vector<CBaseObject*> listObject = loadListObject(listObjectPath);
 
 	std::vector<CBinaryNode*> listBinaryNode = loadBinaryTree(listObject, binaryTreePath);
 
@@ -49,7 +49,7 @@ bool CBinaryTree::init(std::string listObjectPath, std::string binaryTreePath)
 	return 1;
 }
 
-std::vector<CBinaryNode*> loadBinaryTree(std::vector<CGameObject*> listObject, std::string binaryTreePath)
+std::vector<CBinaryNode*> loadBinaryTree(std::vector<CBaseObject*> listObject, std::string binaryTreePath)
 {
 	std::vector<std::string> nodes = CFileUtils::getInstance()->loadFromFile(binaryTreePath);
 	std::vector<CBinaryNode*> listBinaryNode;
@@ -128,9 +128,9 @@ void CBinaryTree::loadListCurrentObject(CBinaryNode* node, int posX, int posY, i
 	}
 }
 
-std::vector<CGameObject*> loadListObject(std::string listObjectPath)
+std::vector<CBaseObject*> loadListObject(std::string listObjectPath)
 {
-	std::vector<CGameObject*> listObject;
+	std::vector<CBaseObject*> listObject;
 	//= new std::vector<GameObject*>();
 	std::vector<std::string> objects = CFileUtils::getInstance()->loadFromFile(listObjectPath);
 	for (int i = 0; i < objects.size(); i++)
@@ -142,7 +142,7 @@ std::vector<CGameObject*> loadListObject(std::string listObjectPath)
 		float y = atof(items.at(3).c_str());
 		float width = atof(items.at(4).c_str());
 		float height = atof(items.at(5).c_str());
-		CGameObject* gameObject;
+		CBaseObject* gameObject;
 		switch (typeId)
 		{
 		case 4: gameObject = new CGround();
@@ -174,7 +174,7 @@ std::vector<CGameObject*> loadListObject(std::string listObjectPath)
 		case 169: gameObject = new CPipeUp1();
 			break;
 		}
-		//= new CGameObject(id, typeId, x, y, width, height);
+		//= new CBaseObject(id, typeId, x, y, width, height);
 		listObject.push_back(gameObject);
 	}
 

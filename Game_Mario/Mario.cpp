@@ -12,7 +12,7 @@ CMario::CMario()
 	maxVelocity = D3DXVECTOR2(40.0f, 80.0f);
 	maxAccel = D3DXVECTOR2(5.0f, 30.0f);
 
-	direct = 1;
+	direction = 1;
 
 	currentSprite = smallMario;
 
@@ -46,7 +46,7 @@ void CMario::Update(float delta_time)
 	{
 		if (CGameKeyboard::getInstance()->IsKeyDown(DIK_RIGHT))
 		{
-			direct = 1;
+			direction = 1;
 			if (velocity.x < maxVelocity.x)
 			{
 				accel.x = maxAccel.x;
@@ -61,14 +61,14 @@ void CMario::Update(float delta_time)
 		}
 		else if (CGameKeyboard::getInstance()->IsKeyDown(DIK_LEFT))
 		{
-			direct = -1;
-			if (velocity.x > direct * maxVelocity.x)
+			direction = -1;
+			if (velocity.x > direction * maxVelocity.x)
 			{
-				accel.x = direct * maxAccel.x;
+				accel.x = direction * maxAccel.x;
 			}
-			else //(speedX <= direct*maxSpeedX)
+			else //(speedX <= direction*maxSpeedX)
 			{
-				velocity.x = maxVelocity.x * direct;
+				velocity.x = maxVelocity.x * direction;
 				accel.x = 0;
 			}
 
@@ -79,10 +79,10 @@ void CMario::Update(float delta_time)
 			if (m_action != jump) m_action = stand;
 			if (velocity.x != 0)
 			{
-				accel.x = -1.0f * direct * maxAccel.x;
+				accel.x = -1.0f * direction * maxAccel.x;
 			}
 
-			if (direct * velocity.x <= 0)
+			if (direction * velocity.x <= 0)
 			{
 				velocity.x = 0;
 				accel.x = 0;
@@ -94,11 +94,11 @@ void CMario::Update(float delta_time)
 	{
 		if (CGameKeyboard::getInstance()->IsKeyDown(DIK_RIGHT))
 		{
-			direct = 1;
+			direction = 1;
 		}
 		else if (CGameKeyboard::getInstance()->IsKeyDown(DIK_LEFT))
 		{
-			direct = -1;
+			direction = -1;
 		}
 		
 		if (!CGameKeyboard::getInstance()->IsKeyDown(DIK_DOWN))
@@ -151,7 +151,7 @@ void CMario::UpdateAnimation(float delta_time)
 {
 	if (m_action == stand)
 	{
-		if (direct == 1)
+		if (direction == 1)
 		{
 			currentSprite->SetCurrentIndex(0);
 			currentSprite->UpdateSprite();
@@ -164,7 +164,7 @@ void CMario::UpdateAnimation(float delta_time)
 	}
 	else if (m_action == run)
 	{
-		if (direct == 1)
+		if (direction == 1)
 		{
 			currentSprite->SetTimeAnimation(TIME_ANIMATION);
 			currentSprite->UpdateSprite(delta_time, 0, 1, 1);
@@ -177,7 +177,7 @@ void CMario::UpdateAnimation(float delta_time)
 	}
 	else if (m_action == jump)
 	{
-		if (direct == 1)
+		if (direction == 1)
 		{
 			currentSprite->SetCurrentIndex(2);
 			currentSprite->UpdateSprite();
@@ -190,7 +190,7 @@ void CMario::UpdateAnimation(float delta_time)
 	}
 	else //if(m_action == down)
 	{
-		if (direct == 1)
+		if (direction == 1)
 		{
 			currentSprite->SetCurrentIndex(3);
 			currentSprite->UpdateSprite();

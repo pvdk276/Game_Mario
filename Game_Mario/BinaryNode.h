@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GameObject.h"
+#include "BaseObject.h"
 #include <vector>
 
 class CBinaryNode
@@ -15,7 +15,7 @@ public:
 	CBinaryNode *nodeL;
 	CBinaryNode *nodeR;
 
-	std::vector<CGameObject*> listObject;
+	std::vector<CBaseObject*> listObject;
 
 	//init 1
 	CBinaryNode();
