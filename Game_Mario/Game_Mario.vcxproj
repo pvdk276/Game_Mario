@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Bar.cpp" />
+    <ClCompile Include="BaseGameState.cpp" />
     <ClCompile Include="BinaryNode.cpp" />
     <ClCompile Include="BinaryTree.cpp" />
     <ClCompile Include="Brick.cpp" />
@@ -173,11 +174,13 @@
     <ClCompile Include="GameKeyboard.cpp" />
     <ClCompile Include="BaseObject.cpp" />
     <ClCompile Include="GameSound.cpp" />
+    <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="Grass.cpp" />
     <ClCompile Include="Land.cpp" />
     <ClCompile Include="LivingObject.cpp" />
     <ClCompile Include="Mario.cpp" />
+    <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="MushroomBlock.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Pipe.cpp" />
@@ -194,6 +197,7 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Bar.h" />
+    <ClInclude Include="BaseGameState.h" />
     <ClInclude Include="BinaryNode.h" />
     <ClInclude Include="BinaryTree.h" />
     <ClInclude Include="Box.h" />
@@ -215,12 +219,14 @@
     <ClInclude Include="GameKeyboard.h" />
     <ClInclude Include="BaseObject.h" />
     <ClInclude Include="GameSound.h" />
+    <ClInclude Include="GameStateManager.h" />
     <ClInclude Include="GameWindow.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="Grass.h" />
     <ClInclude Include="Land.h" />
     <ClInclude Include="LivingObject.h" />
     <ClInclude Include="Mario.h" />
+    <ClInclude Include="MenuState.h" />
     <ClInclude Include="MushroomBlock.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Pipe.h" />
