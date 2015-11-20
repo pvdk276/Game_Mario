@@ -19,7 +19,6 @@ CMario::CMario() : CLivingObject(0, D3DXVECTOR2(120.0f, 125.0f), NULL)
 
 CMario::~CMario()
 {
-
 }
 
 void CMario::Init(CSprite * smallMario, CSprite * bigMario, CSprite * superMario)
