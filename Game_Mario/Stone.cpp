@@ -11,7 +11,7 @@ CStone::~CStone()
 {
 }
 
-void CStone::Update()
+void CStone::Update(float delta_time)
 {
 
 }

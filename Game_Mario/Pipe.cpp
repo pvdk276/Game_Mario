@@ -11,7 +11,7 @@ CPipe::~CPipe()
 {
 }
 
-void CPipe::Update()
+void CPipe::Update(float delta_time)
 {
 }
 

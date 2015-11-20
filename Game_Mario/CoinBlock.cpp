@@ -5,7 +5,6 @@ CCoinBlock::CCoinBlock(int id, D3DXVECTOR2 position, CSprite* sprite) : CDynamic
 	this->type = COIN_BLOCK;
 	this->width = 50;
 	this->height = 50;
-	this->direction = 1;
 }
 
 CCoinBlock::~CCoinBlock()

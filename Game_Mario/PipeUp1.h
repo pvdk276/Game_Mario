@@ -8,6 +8,6 @@ public:
 	CPipeUp1(int id, D3DXVECTOR2 position, CSprite* sprite);
 	~CPipeUp1();
 
-	void Update();
+	void Update(float delta_time);
 	void Render();
 };

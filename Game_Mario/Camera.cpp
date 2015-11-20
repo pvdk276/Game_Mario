@@ -5,6 +5,8 @@ CCamera::CCamera()
 {
 	position.x = 0;
 	position.y = 750;
+	width = 750;
+	height = 750;
 }
 
 CCamera::~CCamera()

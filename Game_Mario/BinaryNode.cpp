@@ -26,10 +26,16 @@ CBinaryNode::CBinaryNode(std::string id, float positionX, float positionY, float
 
 bool CBinaryNode::IsIntersecting(float vp_X, float vp_Y, float vp_Width, float vp_Height)
 {
-	if (vp_X - vp_Width / 2 >= positionX && vp_X - vp_Width / 2 <= positionX + width) return true;
+	/*if (vp_X - vp_Width / 2 >= positionX && vp_X - vp_Width / 2 <= positionX + width) return true;
 
 	if (vp_X + vp_Width / 2 >= positionX && vp_X + vp_Width / 2 <= positionX + width) return true;
 
+	return false;*/
+	
+	if (vp_X >= positionX && vp_X <= positionX + width) return true;
+	if (vp_X + vp_Width >= positionX && vp_X + vp_Width <= positionX + width) return true;
+	if (positionX >= vp_X && positionX <= vp_X + vp_Width) return true;
+	if (positionX + width >= vp_X && positionX + width <= vp_X + vp_Width) return true;
 	return false;
 }
 

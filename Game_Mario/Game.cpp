@@ -80,7 +80,7 @@ void CGame::LoadResources()
 	//CMario::getInstance()->currentSprite = CMario::getInstance()->smallMario;
 	CMario::getInstance()->Init(smallMario, bigMario, NULL);
 
-	//CBinaryTree::getInstance()->init("Resources/Maps/map1_ListObject.txt", "Resources/Maps/map1_BinaryTree.txt");
+	CBinaryTree::getInstance()->init("Resources/Maps/map1_ListObject.txt", "Resources/Maps/map1_BinaryTree.txt");
 
 	CGameGraphic::getInstance()->InitSurface("Resources/Images/Other/Background.png");
 }
@@ -113,24 +113,28 @@ void CGame::Run()
 			{
 				frame_start = now;
 				//OutputDebugString(std::to_string(_DeltaTime).c_str());
-				//CBinaryTree::getInstance()->listCurrentObject->clear();
-				//CBinaryTree::getInstance()->loadListCurrentObject(CBinaryTree::getInstance()->rootNode, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, CCamera::getInstance()->width, CCamera::getInstance()->height);
+				CBinaryTree::getInstance()->listCurrentObject->clear();
+				CBinaryTree::getInstance()->loadListCurrentObject(CBinaryTree::getInstance()->rootNode, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, CCamera::getInstance()->width, CCamera::getInstance()->height);
+				
+				OutputDebugString((std::to_string(CBinaryTree::getInstance()->listCurrentObject->size()) + " ").c_str());
 
-				//for (int i = 0; i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
-				//{
-				//	/*if (CBinaryTree::getInstance()->listCurrentObject->at(i)->typeId == 1)
-				//	{
+				for (int i = 0; i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
+				{
+					//OutputDebugString((std::to_string(CBinaryTree::getInstance()->listCurrentObject->at(i)->id) + " ").c_str());
+					CBinaryTree::getInstance()->listCurrentObject->at(i)->Update(_DeltaTime);
+					/*if (CBinaryTree::getInstance()->listCurrentObject->at(i)->typeId == 1)
+					{
 
-				//	}*/
-				//	float normalx, normaly;
-				//	float value = CCollision::getInstance()->CheckCollision(CMario::getInstance()->GetBox(), CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(), normalx, normaly, _DeltaTime);
-				//	
-				//	//a collision occur
-				//	if (value < 1.0f) 
-				//	{
+					}*/
+					//float normalx, normaly;
+					//float value = CCollision::getInstance()->CheckCollision(CMario::getInstance()->GetBox(), CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(), normalx, normaly, _DeltaTime);
+					//
+					////a collision occur
+					//if (value < 1.0f) 
+					//{
 
-				//	}
-				//}
+					//}
+				}
 				
 				CGameKeyboard::getInstance()->PollKeyboard();
 
@@ -140,6 +144,26 @@ void CGame::Run()
 				if (CGameGraphic::getInstance()->d3ddv->BeginScene())
 				{
 					CCamera::getInstance()->Render();
+
+					
+
+					for (int i = 0; i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
+					{
+						//OutputDebugString((std::to_string(CBinaryTree::getInstance()->listCurrentObject->at(i)->id) + " ").c_str());
+						CBinaryTree::getInstance()->listCurrentObject->at(i)->Render();
+						/*if (CBinaryTree::getInstance()->listCurrentObject->at(i)->typeId == 1)
+						{
+
+						}*/
+						//float normalx, normaly;
+						//float value = CCollision::getInstance()->CheckCollision(CMario::getInstance()->GetBox(), CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(), normalx, normaly, _DeltaTime);
+						//
+						////a collision occur
+						//if (value < 1.0f) 
+						//{
+
+						//}
+					}
 
 					CMario::getInstance()->Render();
 
