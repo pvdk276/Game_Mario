@@ -8,9 +8,9 @@ class CBrick : public CStaticObject
 private:
 public:
 
-	CBrick(CSprite *brick,D3DXVECTOR2 _position);
+	CBrick(int id, D3DXVECTOR2 position, CSprite* sprite);
 	~CBrick();
 
+	void Update();
 	void Render();
-	void UpdateAnimation(float delta_time);
 };

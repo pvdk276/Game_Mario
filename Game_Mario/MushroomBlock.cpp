@@ -1,23 +1,23 @@
 #include "MushroomBlock.h"
 
-CMushroomBlock::CMushroomBlock(CSprite * _mushroom, D3DXVECTOR2 _position)
+CMushroomBlock::CMushroomBlock(int id, D3DXVECTOR2 position, CSprite* sprite) : CDynamicObject(id, position, sprite)
 {
-	this->sprite = _mushroom;
-	this->position = _position;
+	this->type = MUSHROOM_BLOCK;
 	this->width = 50;
 	this->height = 50;
+	this->direction = 1;
 }
 
 CMushroomBlock::~CMushroomBlock()
 {
 }
 
-void CMushroomBlock::Render()
+void CMushroomBlock::Update(float delta_time)
 {
-	this->sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, 1);
+	UpdateAnimation(delta_time, 0, 1, direction);
 }
 
-void CMushroomBlock::UpdateAnimation(float delta_time)
+void CMushroomBlock::Render()
 {
-
+	if (curTime == 0) sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, curIndex);
 }

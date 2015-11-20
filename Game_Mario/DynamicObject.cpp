@@ -1,8 +1,8 @@
 #include "DynamicObject.h"
 
-CDynamicObject::CDynamicObject(ObjectName type, D3DXVECTOR2 position, float width, float height, CSprite* sprite, float timeAnimation) :CBaseObject(type, position, width, height, sprite)
+CDynamicObject::CDynamicObject(int id, D3DXVECTOR2 position, CSprite* sprite) : CBaseObject(id, position, sprite)
 {
-	this->timeAnimation = timeAnimation;
+	
 }
 
 CDynamicObject::~CDynamicObject()
@@ -10,13 +10,13 @@ CDynamicObject::~CDynamicObject()
 
 }
 
-void CDynamicObject::UpdateAnimation(float delta_time)
+CBox CDynamicObject::GetBox()
 {
-	sprite->SetTimeAnimation(timeAnimation);
-	sprite->UpdateSprite(delta_time, 0, sprite->count - 1, 1);
+	CBox box(position.x, position.y, width, height, velocity.x, velocity.y);
+	return box;
 }
 
-void CDynamicObject::Render()
+std::string CDynamicObject::GetType()
 {
-	sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, 1);
+	return "DynamicObject";
 }

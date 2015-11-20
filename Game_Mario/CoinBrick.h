@@ -5,9 +5,9 @@
 class CCoinBrick : public CStaticObject
 {
 public:
-	CCoinBrick(CSprite* _coinBrick, D3DXVECTOR2 _position);
+	CCoinBrick(int id, D3DXVECTOR2 position, CSprite* sprite);
 	~CCoinBrick();
 
+	void Update();
 	void Render();
-	void UpdateAnimation(float delta_time);
 };

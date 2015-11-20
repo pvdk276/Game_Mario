@@ -5,9 +5,9 @@
 class CGrass : public CDynamicObject
 {
 public:
-	CGrass(CSprite* _grass, D3DXVECTOR2 _position);
+	CGrass(int id, D3DXVECTOR2 position, CSprite* sprite);
 	~CGrass();
 
-	void Render();
-	void UpdateAnimation(float delta_time);
+	void Update(float delta_time);
+	void Render();	
 };

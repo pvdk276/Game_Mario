@@ -1,9 +1,8 @@
 #include "Brick.h"
 
-CBrick::CBrick(CSprite *brick, D3DXVECTOR2 _position)
+CBrick::CBrick(int id, D3DXVECTOR2 position, CSprite* sprite) : CStaticObject(id, position, sprite)
 {
-	this->sprite = brick;
-	this->position = _position;
+	this->type = BRICK;
 	this->width = 50;
 	this->height = 50;
 }
@@ -12,11 +11,11 @@ CBrick::~CBrick()
 {
 }
 
-void CBrick::Render()
+void CBrick::Update()
 {
-	this->sprite->Render(position.x, position.y,CCamera::getInstance()->position.x, CCamera::getInstance()->position.y,1);
 }
 
-void CBrick::UpdateAnimation(float delta_time)
+void CBrick::Render()
 {
+	sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, 0);
 }

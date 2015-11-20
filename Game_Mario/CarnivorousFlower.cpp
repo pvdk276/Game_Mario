@@ -1,15 +1,30 @@
 #include "CarnivorousFlower.h"
 
-CCarnivorousFlower::CCarnivorousFlower(ObjectName type, D3DXVECTOR2 position, float width, float height, CSprite * sprite, float timeAmination, D3DXVECTOR2 maxVelocity, D3DXVECTOR2 maxAccel) : CLivingObject(type, position, width, height, sprite, timeAnimation, maxVelocity, maxAccel)
+CCarnivorousFlower::CCarnivorousFlower(int id, D3DXVECTOR2 position, CSprite * sprite) : CLivingObject(id, position, sprite)
 {
-
+	this->type = CARNIVOROUS_FLOWER;
+	this->width = 50;
+	this->height = 50;
+	this->direction = 1;
+	isDead = false;
 }
 
 CCarnivorousFlower::~CCarnivorousFlower()
 {
 }
 
-void CCarnivorousFlower::UpdateAnimation(float delta_time)
+void CCarnivorousFlower::Update(float delta_time)
 {
-	sprite->UpdateSprite(delta_time, 0, 2, direction);
+	//update position	
+
+	//update animation
+	UpdateAnimation(delta_time, 0, 2, direction);
+}
+
+void CCarnivorousFlower::Render()
+{
+	if (curTime == 0)
+	{
+		sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, curIndex);
+	}
 }

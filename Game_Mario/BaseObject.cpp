@@ -1,11 +1,9 @@
 #include "BaseObject.h"
 
-CBaseObject::CBaseObject(ObjectName type, D3DXVECTOR2 position, float width, float height, CSprite* sprite)
+CBaseObject::CBaseObject(int id, D3DXVECTOR2 position, CSprite* sprite)
 {
-	this->type = type;
+	this->id = id;
 	this->position = position;
-	this->width = width;
-	this->height = height;
 	this->sprite = sprite;
 }
 

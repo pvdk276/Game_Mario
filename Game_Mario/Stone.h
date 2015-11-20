@@ -5,9 +5,9 @@
 class CStone : public CStaticObject
 {
 public:
-	CStone(CSprite* _stone, D3DXVECTOR2 _position);
+	CStone(int id, D3DXVECTOR2 position, CSprite* sprite);
 	~CStone();
 
+	void Update();
 	void Render();
-	void UpdateAnimation(float delta_time);
 };

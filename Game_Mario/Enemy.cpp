@@ -1,15 +1,30 @@
 #include "Enemy.h"
 
-CEnemy::CEnemy(ObjectName type, D3DXVECTOR2 position, float width, float height, CSprite * sprite, float timeAmination, D3DXVECTOR2 maxVelocity, D3DXVECTOR2 maxAccel) : CLivingObject(type, position, width, height, sprite, timeAnimation, maxVelocity, maxAccel)
+CEnemy::CEnemy(int id, D3DXVECTOR2 position, CSprite * sprite) : CLivingObject(id, position, sprite)
 {
-
+	this->type = ENEMY;
+	this->width = 50;
+	this->height = 50;
+	this->direction = 1;
+	isDead = false;
 }
 
 CEnemy::~CEnemy()
 {
 }
 
-void CEnemy::UpdateAnimation(float delta_time)
+void CEnemy::Update(float delta_time)
 {
-	sprite->UpdateSprite(delta_time, 0, 1, direction);
+	//update position
+
+	//update animation
+	UpdateAnimation(delta_time, 0, 1, direction);
+}
+
+void CEnemy::Render()
+{
+	if (curTime == 0)
+	{
+		sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, curIndex);
+	}
 }

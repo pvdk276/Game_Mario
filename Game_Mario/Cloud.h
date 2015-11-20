@@ -1,14 +1,14 @@
 #pragma once
 
-#include "StaticObject.h"
+#include "DynamicObject.h"
 #include "Global.h"
 
-class CCloud : public CStaticObject
+class CCloud : public CDynamicObject
 {
 public:
-	CCloud(CSprite* _cloud,D3DXVECTOR2 _position);
+	CCloud(int id, D3DXVECTOR2 position, CSprite* sprite);
 	~CCloud();
 
-	void Render();
-	void UpdateAnimation(float delta_time);
+	void Update(float delta_time);
+	void Render();	
 };

@@ -1,9 +1,8 @@
 #include "CoinBrick.h"
 
-CCoinBrick::CCoinBrick(CSprite * _coinBrick, D3DXVECTOR2 _position)
+CCoinBrick::CCoinBrick(int id, D3DXVECTOR2 position, CSprite* sprite) : CStaticObject(id, position, sprite)
 {
-	this->sprite = _coinBrick;
-	this->position = _position;
+	this->type = COIN_BRICK;
 	this->width = 50;
 	this->height = 50;
 }
@@ -12,11 +11,12 @@ CCoinBrick::~CCoinBrick()
 {
 }
 
-void CCoinBrick::Render()
+void CCoinBrick::Update()
 {
-	this->sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, 1);
+
 }
 
-void CCoinBrick::UpdateAnimation(float delta_time)
+void CCoinBrick::Render()
 {
+	sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, 0);
 }

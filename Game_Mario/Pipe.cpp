@@ -1,22 +1,21 @@
 #include "Pipe.h"
 
-CPipe::CPipe(CSprite * _mushroom, D3DXVECTOR2 _position)
+CPipe::CPipe(int id, D3DXVECTOR2 position, CSprite* sprite) : CStaticObject(id, position, sprite)
 {
-	this->sprite = _mushroom;
-	this->position = _position;
-	this->width = 50;
-	this->height = 50;
+	this->type = PIPE;
+	this->width = 100;
+	this->height = 150;
 }
 
 CPipe::~CPipe()
 {
 }
 
-void CPipe::Render()
+void CPipe::Update()
 {
-	this->sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, 1);
 }
 
-void CPipe::UpdateAnimation(float delta_time)
+void CPipe::Render()
 {
+	sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, 0);
 }

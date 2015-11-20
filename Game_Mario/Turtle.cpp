@@ -1,39 +1,46 @@
 #include "Turtle.h"
 
-CTurtle::CTurtle(ObjectName type, D3DXVECTOR2 position, float width, float height, CSprite * sprite, float timeAmination, D3DXVECTOR2 maxVelocity, D3DXVECTOR2 maxAccel) : CLivingObject(type, position, width, height, sprite, timeAnimation, maxVelocity, maxAccel)
+CTurtle::CTurtle(int id, ObjectName type, D3DXVECTOR2 position, CSprite * sprite) : CLivingObject(id, position, sprite)
 {
-
+	this->type = type;
+	this->width = 50;
+	this->height = 50;
+	this->direction = 1;
 }
 
 CTurtle::~CTurtle()
 {
 }
 
-void CTurtle::UpdateAnimation(float delta_time)
+void CTurtle::Update(float delta_time)
 {
-	sprite->SetTimeAnimation(timeAnimation);
-	if (type == TURTLE)
+	if (type == WING_TURTLE)
 	{
 		if (direction == 1)
 		{
-			sprite->UpdateSprite(delta_time, 2, 3, direction);
+			UpdateAnimation(delta_time, 0, 1, direction);
 		}
-		else sprite->UpdateSprite(delta_time, 8, 9, direction);
+		else UpdateAnimation(delta_time, 6, 7, direction);
 	}
-
-	else if (type == TURTLE){
+	else if (type == TURTLE)
+	{
 		if (direction == 1)
 		{
-			sprite->UpdateSprite(delta_time, 0, 1, direction);
+			UpdateAnimation(delta_time, 2, 3, direction);
 		}
-		else sprite->UpdateSprite(delta_time, 6, 7, direction);
+		else UpdateAnimation(delta_time, 8, 9, direction);
 	}
 	else
 	{
-		if (direction == 1)
-		{
-			sprite->UpdateSprite(delta_time, 4, 5, direction);
-		}
-		else sprite->UpdateSprite(delta_time, 10, 11, direction);
+		UpdateAnimation(delta_time, 4, 5, direction);
+	}
+	
+}
+
+void CTurtle::Render()
+{
+	if (curTime == 0)
+	{
+		sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, curIndex);
 	}
 }

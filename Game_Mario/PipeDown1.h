@@ -4,6 +4,10 @@
 
 class CPipeDown1 : public CStaticObject
 {
-	CPipeDown1();
+public:
+	CPipeDown1(int id, D3DXVECTOR2 position, CSprite* sprite);
 	~CPipeDown1();
+
+	void Update();
+	void Render();
 };

@@ -1,14 +1,14 @@
 #pragma once
 
-#include "StaticObject.h"
+#include "DynamicObject.h"
 #include "Global.h"
 
-class CCoin : public CStaticObject
+class CCoin : public CDynamicObject
 {
 public:
-	CCoin(CSprite* _coin, D3DXVECTOR2 _position);
+	CCoin(int id, D3DXVECTOR2 position, CSprite* sprite);
 	~CCoin();
 
-	void Render();
-	void UpdateAnimation(float delta_time);
+	void Update(float delta_time);
+	void Render();	
 };

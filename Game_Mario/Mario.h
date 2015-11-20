@@ -15,16 +15,16 @@ enum ActionMario
 };
 enum StatusMario
 {
-	mariosmall,
-	mariobig,
-	mariogun
+	SmallMario,
+	BigMario,
+	SuperMario
 };
 class CMario : public CSingleton<CMario>, public CLivingObject
 {
-private:
-	
-
 public:
+	D3DXVECTOR2 accel;
+	D3DXVECTOR2 maxVelocity;
+	D3DXVECTOR2 maxAccel;
 	ActionMario m_action;
 	//D3DXVECTOR2 m_MaxVeloc;//luu tru maxveloc ban dau,khi va cham cho maxvecloc ve 0
 
@@ -34,11 +34,12 @@ public:
 
 	CSprite* smallMario;
 	CSprite* bigMario;
-	CSprite* currentSprite;
+	CSprite* superMario;
 
 	CMario();
 	~CMario();
 
+	void Init(CSprite* smallMario, CSprite* bigMario, CSprite* superMario);
 	void Render();
 	void Update(float delta_time);
 	void UpdatePosition(float delta_time);

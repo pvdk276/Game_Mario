@@ -1,14 +1,13 @@
 #pragma once
 
-#include "StaticObject.h"
-#include "Global.h"
+#include "DynamicObject.h"
 
-class CMushroomBlock : public CStaticObject
+class CMushroomBlock : public CDynamicObject
 {
 public:
-	CMushroomBlock(CSprite* _mushroom, D3DXVECTOR2 _position);
+	CMushroomBlock(int id, D3DXVECTOR2 position, CSprite* sprite);
 	~CMushroomBlock();
 
+	void Update(float delta_time);
 	void Render();
-	void UpdateAnimation(float delta_time);
 };
