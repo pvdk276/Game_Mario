@@ -1,22 +1,26 @@
 #include "Coin.h"
 
-CCoin::CCoin(CSprite * _coin, D3DXVECTOR2 _position)
+CCoin::CCoin(int id, D3DXVECTOR2 position, CSprite* sprite) : CDynamicObject(id, position, sprite)
 {
-	this->sprite = _coin;
-	this->position = _position;
+	this->type = COIN;
 	this->width = 50;
 	this->height = 50;
+	direction = 1;
 }
 
 CCoin::~CCoin()
 {
+
 }
 
+void CCoin::Update(float delta_time)
+{
+	UpdateAnimation(delta_time, 0, 1, direction);
+}
 void CCoin::Render()
 {
-	this->sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, 1);
-}
-
-void CCoin::UpdateAnimation(float delta_time)
-{
+	if (curTime == 0)
+	{
+		sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, curIndex);
+	}
 }

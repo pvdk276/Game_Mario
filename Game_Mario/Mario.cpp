@@ -2,21 +2,19 @@
 #include "Camera.h"
 #include "GameKeyboard.h"
 
-
-
-CMario::CMario()
+CMario::CMario() : CLivingObject(0, D3DXVECTOR2(120.0f, 125.0f), NULL)
 {
-	position = D3DXVECTOR2(20.0f, 125.0f);
 	velocity = D3DXVECTOR2(0.0f, 0.0f);
 	accel = D3DXVECTOR2(0.0f, 0.0f);
 	maxVelocity = D3DXVECTOR2(40.0f, 80.0f);
 	maxAccel = D3DXVECTOR2(5.0f, 30.0f);
-
 	direction = 1;
 
-	currentSprite = smallMario;
-
 	m_action = stand;
+
+	curIndex = 0;
+	curTime = 0;
+	animationTime = TIME_ANIMATION;
 }
 
 CMario::~CMario()
@@ -24,9 +22,18 @@ CMario::~CMario()
 
 }
 
+void CMario::Init(CSprite * smallMario, CSprite * bigMario, CSprite * superMario)
+{
+	this->smallMario = smallMario;
+	this->bigMario = bigMario;
+	this->superMario = superMario;
+
+	this->sprite = this->smallMario;
+}
+
 void CMario::Render()
 {
-	currentSprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, 1);
+	sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, curIndex);
 }
 
 void CMario::Update(float delta_time)
@@ -116,6 +123,8 @@ void CMario::Update(float delta_time)
 		}
 	}
 
+	UpdatePosition(delta_time);
+
 	if (m_action == jump)
 	{
 		if (velocity.y >= maxVelocity.y)
@@ -132,8 +141,6 @@ void CMario::Update(float delta_time)
 			position.y = 125;
 		}
 	}
-
-	UpdatePosition(delta_time);
 
 	UpdateAnimation(delta_time);
 }
@@ -153,52 +160,44 @@ void CMario::UpdateAnimation(float delta_time)
 	{
 		if (direction == 1)
 		{
-			currentSprite->SetCurrentIndex(0);
-			currentSprite->UpdateSprite();
+			CAnimation::UpdateAnimation(delta_time, 0, 0, direction);
 		}
 		else
 		{
-			currentSprite->SetCurrentIndex(5);
-			currentSprite->UpdateSprite();
+			CAnimation::UpdateAnimation(delta_time, 5, 5, direction);
 		}
 	}
 	else if (m_action == run)
 	{
 		if (direction == 1)
 		{
-			currentSprite->SetTimeAnimation(TIME_ANIMATION);
-			currentSprite->UpdateSprite(delta_time, 0, 1, 1);
+			CAnimation::UpdateAnimation(delta_time, 0, 1, direction);
 		}
 		else
 		{
-			currentSprite->SetTimeAnimation(TIME_ANIMATION);
-			currentSprite->UpdateSprite(delta_time, 5, 6, -1);
+			CAnimation::UpdateAnimation(delta_time, 5, 6, direction);
 		}
 	}
 	else if (m_action == jump)
 	{
 		if (direction == 1)
 		{
-			currentSprite->SetCurrentIndex(2);
-			currentSprite->UpdateSprite();
+			CAnimation::UpdateAnimation(delta_time, 2, 2, direction);
 		}
 		else
 		{
-			currentSprite->SetCurrentIndex(7);
-			currentSprite->UpdateSprite();
+			CAnimation::UpdateAnimation(delta_time, 7, 7, direction);
 		}
 	}
 	else //if(m_action == down)
 	{
 		if (direction == 1)
 		{
-			currentSprite->SetCurrentIndex(3);
-			currentSprite->UpdateSprite();
+			CAnimation::UpdateAnimation(delta_time, 3, 3, direction);
 		}
 		else
 		{
-			currentSprite->SetCurrentIndex(8);
-			currentSprite->UpdateSprite();
+			CAnimation::UpdateAnimation(delta_time, 8, 8, direction);
 		}
 	}
 }

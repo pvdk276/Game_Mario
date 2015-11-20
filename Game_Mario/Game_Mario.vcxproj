@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Bar.cpp" />
     <ClCompile Include="BinaryNode.cpp" />
     <ClCompile Include="BinaryTree.cpp" />
@@ -174,7 +175,7 @@
     <ClCompile Include="GameSound.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="Grass.cpp" />
-    <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="Land.cpp" />
     <ClCompile Include="LivingObject.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="MushroomBlock.cpp" />
@@ -191,6 +192,7 @@
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="Bar.h" />
     <ClInclude Include="BinaryNode.h" />
     <ClInclude Include="BinaryTree.h" />
@@ -216,7 +218,7 @@
     <ClInclude Include="GameWindow.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="Grass.h" />
-    <ClInclude Include="Ground.h" />
+    <ClInclude Include="Land.h" />
     <ClInclude Include="LivingObject.h" />
     <ClInclude Include="Mario.h" />
     <ClInclude Include="MushroomBlock.h" />

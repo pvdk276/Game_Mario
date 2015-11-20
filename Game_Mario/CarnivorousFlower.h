@@ -4,8 +4,10 @@
 
 class CCarnivorousFlower : public CLivingObject
 {
-
-	CCarnivorousFlower(ObjectName type, D3DXVECTOR2 position, float width, float height, CSprite* sprite, float timeAnimation, D3DXVECTOR2 maxVelocity, D3DXVECTOR2 maxAccel);
+public:
+	CCarnivorousFlower(int id, D3DXVECTOR2 position, CSprite* sprite);
 	~CCarnivorousFlower();
-	void UpdateAnimation(float delta_time);
+	
+	void Update(float delta_time);
+	void Render();
 };

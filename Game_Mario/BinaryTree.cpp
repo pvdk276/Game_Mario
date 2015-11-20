@@ -1,6 +1,7 @@
 #include "BinaryTree.h"
 #include <string>
-#include "Ground.h"
+#include "GameGraphic.h"
+#include "Land.h"
 #include "Cloud.h"
 #include "Pipe.h"
 #include "Grass.h"
@@ -9,12 +10,11 @@
 #include "CoinBrick.h"
 #include "CoinBlock.h"
 #include "Coin.h"
-#include "Flower.h"
+#include "CarnivorousFlower.h"
 #include "Stone.h"
 #include "PipeUp1.h"
-#include "MushroomEnemy.h"
+#include "Enemy.h"
 #include "Turtle.h"
-#include "WingTurtle.h"
 #include "FireTurtle.h"
 
 
@@ -130,6 +130,37 @@ void CBinaryTree::loadListCurrentObject(CBinaryNode* node, int posX, int posY, i
 
 std::vector<CBaseObject*> loadListObject(std::string listObjectPath)
 {
+	//Bonus
+	CSprite* coin = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Bonus/Coin.png", 50, 50, 2, 2, NULL);
+	CSprite* flower = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Bonus/Flower.png", 50, 50, 4, 4, NULL);
+	CSprite* mushroom = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Bonus/Mushroom.png", 50, 50, 2, 2, NULL);
+	CSprite* star = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Bonus/Star.png", 50, 50, 4, 4, NULL);
+
+	//Bullet
+	CSprite* bullet = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Bullet/Bullet.png", 30, 30, 4, 4, NULL);
+	CSprite* machineBullet = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Bullet/MachineBullet.png", 75, 50, 4, 2, NULL);
+
+	//Enemy
+	CSprite* carnivorousFlower = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Enemy/CarnivorousFlower.png", 50, 50, 3, 3, NULL);
+	CSprite* enemy = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Enemy/Enemy.png", 50, 50, 4, 4, NULL);
+	CSprite* turtle = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Enemy/Turtle.png", 50, 50, 11, 6, NULL);
+	CSprite* turtle2 = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Enemy/Turtle2.png", 50, 50, 4, 4, NULL);
+
+	//Mario
+	
+	//Other
+	CSprite* bar = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Bar.png", 200, 32, 1, 1, NULL);
+	CSprite* brick = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Brick.png", 50, 50, 2, 2, NULL);
+	CSprite* cloud = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Cloud.png", 150, 100, 3, 3, NULL);
+	CSprite* grass = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Grass.png", 100, 50, 3, 3, NULL);
+	CSprite* land = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Land.png", 50, 50, 3, 3, NULL);
+	CSprite* pipe = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Pipe.png", 100, 150, 1, 1, NULL);
+	CSprite* horizontalPipe = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/HorizontalPipe.png", 150, 100, 1, 1, NULL);
+	CSprite* secretBlock = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/SecretBlock.png", 50, 50, 3, 3, NULL);
+	CSprite* spring = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Spring.png", 50, 100, 3, 3, NULL);
+	CSprite* stone = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Stone.png", 50, 50, 1, 1, NULL);
+	CSprite* tower = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Tower.png", 300, 400, 1, 1, NULL);
+
 	std::vector<CBaseObject*> listObject;
 	//= new std::vector<GameObject*>();
 	std::vector<std::string> objects = CFileUtils::getInstance()->loadFromFile(listObjectPath);
@@ -143,36 +174,42 @@ std::vector<CBaseObject*> loadListObject(std::string listObjectPath)
 		float width = atof(items.at(4).c_str());
 		float height = atof(items.at(5).c_str());
 		CBaseObject* gameObject;
+		D3DXVECTOR2 position = D3DXVECTOR2(x, y);
 		switch (typeId)
 		{
-		case 4: gameObject = new CGround();
+		case 4:  
+			//gameObject = new CLand(position, land);
 			break;
-		case 112: gameObject = new CCloud();
+
+		case 112: gameObject = new CCloud(id, position, cloud);
 			break;
-		case 7: gameObject = new CPipe();
+
+		/*case 7: gameObject = new CPipe();
+			break;*/
+
+		case 59: gameObject = new CGrass(id, position, grass);
 			break;
-		case 59: gameObject = new CGrass();
-			break;
-		case 62: gameObject = new CBrick();
-			break;
-		case 218: gameObject = new CMushroomBlock();
-			break;
-		case 221: gameObject = new CCoinBrick();
-			break;
-		case 222: gameObject = new CCoinBlock();
-			break;
-		case 223: gameObject = new CCoin();
-			break;
-		//case 115: gameObject = new CFlowerPipe();//Ch?a có
-			break;
-		//case 147: gameObject = new CpipeDown1();//Ch?a  có
-			break;
-		case 42: gameObject = new CStone();
-			break;
-		case 61: gameObject = new CFlower();
-			break;
-		case 169: gameObject = new CPipeUp1();
-			break;
+
+		//case 62: gameObject = new CBrick();
+		//	break;
+		//case 218: gameObject = new CMushroomBlock();
+		//	break;
+		//case 221: gameObject = new CCoinBrick();
+		//	break;
+		//case 222: gameObject = new CCoinBlock();
+		//	break;
+		//case 223: gameObject = new CCoin();
+		//	break;
+		////case 115: gameObject = new CFlowerPipe();//Ch?a có
+		//	break;
+		////case 147: gameObject = new CpipeDown1();//Ch?a  có
+		//	break;
+		//case 42: gameObject = new CStone();
+		//	break;
+		//case 61: gameObject = new CFlower();
+		//	break;
+		//case 169: gameObject = new CPipeUp1();
+		//	break;
 		}
 		//= new CBaseObject(id, typeId, x, y, width, height);
 		listObject.push_back(gameObject);

@@ -1,6 +1,6 @@
 #include "StaticObject.h"
 
-CStaticObject::CStaticObject(ObjectName type, D3DXVECTOR2 position, float width, float height, CSprite * sprite) : CBaseObject(type, position, width, height, sprite)
+CStaticObject::CStaticObject(int id, D3DXVECTOR2 position, CSprite* sprite) : CBaseObject(id, position, sprite)
 {
 
 }
@@ -16,14 +16,8 @@ CBox CStaticObject::GetBox()
 	return box;
 }
 
-void CStaticObject::UpdateAnimation(float delta_time)
+std::string CStaticObject::GetType()
 {
-	sprite->SetCurrentIndex(0);
-	sprite->UpdateSprite();
-}
-
-void CStaticObject::Render()
-{
-	sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, 1);
+	return "StaticObject";
 }
 

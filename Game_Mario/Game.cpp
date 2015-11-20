@@ -10,7 +10,6 @@
 #include "BaseObject.h"
 
 #define FRAME_RATE 60
-//ActionMario m_action;
 
 CGame::CGame()
 {
@@ -63,26 +62,27 @@ int CGame::Init(HINSTANCE hInstance)
 
 void CGame::LoadResources()
 {
-	LPD3DXSPRITE spriteHandler;
+	/*LPD3DXSPRITE spriteHandler;
 	HRESULT result = D3DXCreateSprite(CGameGraphic::getInstance()->d3ddv, &spriteHandler);
 	if (FAILED(result))
 	{
 		MessageBox(NULL, "Cannot create sprite", "Error", MB_OK);
 		return;
-	}
+	}*/
 
-	CCamera::getInstance()->matrix = CFileUtils::getInstance()->LoadMatrix(15, 166, "Resources/map1.txt");
+	CCamera::getInstance()->matrix = CFileUtils::getInstance()->LoadMatrix(15, 166, "Resources/Maps/map1.txt");
 	CCamera::getInstance()->m = 15;
 	CCamera::getInstance()->n = 166;
-	CCamera::getInstance()->sprite = new CSprite(spriteHandler, "Resources/tiles.png", 50, 50, 216, 18, NULL);
+	CCamera::getInstance()->sprite = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Maps/tiles.png", 50, 50, 216, 18, NULL);
 
-	CMario::getInstance()->smallMario = new CSprite(spriteHandler, "Resources/SmallMario.png", 50, 50, 10, 5, NULL);
-	CMario::getInstance()->bigMario = new CSprite(spriteHandler, "Resources/BigMario.png", 50, 100, 10, 5, NULL);
-	CMario::getInstance()->currentSprite = CMario::getInstance()->smallMario;
+	CSprite* smallMario = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Mario/SmallMario.png", 50, 50, 10, 5, NULL);
+	CSprite* bigMario = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Mario/BigMario.png", 50, 100, 10, 5, NULL);
+	//CMario::getInstance()->currentSprite = CMario::getInstance()->smallMario;
+	CMario::getInstance()->Init(smallMario, bigMario, NULL);
 
-	CBinaryTree::getInstance()->init("Resources/map1_ListObject.txt", "Resources/map1_BinaryTree.txt");
+	//CBinaryTree::getInstance()->init("Resources/Maps/map1_ListObject.txt", "Resources/Maps/map1_BinaryTree.txt");
 
-	CGameGraphic::getInstance()->InitSurface("Resources/Background.png");
+	CGameGraphic::getInstance()->InitSurface("Resources/Images/Other/Background.png");
 }
 
 void CGame::Run()
@@ -113,24 +113,24 @@ void CGame::Run()
 			{
 				frame_start = now;
 				//OutputDebugString(std::to_string(_DeltaTime).c_str());
-				CBinaryTree::getInstance()->listCurrentObject->clear();
-				CBinaryTree::getInstance()->loadListCurrentObject(CBinaryTree::getInstance()->rootNode, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, CCamera::getInstance()->width, CCamera::getInstance()->height);
+				//CBinaryTree::getInstance()->listCurrentObject->clear();
+				//CBinaryTree::getInstance()->loadListCurrentObject(CBinaryTree::getInstance()->rootNode, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, CCamera::getInstance()->width, CCamera::getInstance()->height);
 
-				for (int i = 0; i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
-				{
-					if (CBinaryTree::getInstance()->listCurrentObject->at(i)->typeId == 1)
-					{
+				//for (int i = 0; i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
+				//{
+				//	/*if (CBinaryTree::getInstance()->listCurrentObject->at(i)->typeId == 1)
+				//	{
 
-					}
-					float normalx, normaly;
-					float value = CCollision::getInstance()->CheckCollision(CMario::getInstance()->GetBox(), CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(), normalx, normaly, _DeltaTime);
-					
-					//a collision occur
-					if (value < 1.0f) 
-					{
+				//	}*/
+				//	float normalx, normaly;
+				//	float value = CCollision::getInstance()->CheckCollision(CMario::getInstance()->GetBox(), CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(), normalx, normaly, _DeltaTime);
+				//	
+				//	//a collision occur
+				//	if (value < 1.0f) 
+				//	{
 
-					}
-				}
+				//	}
+				//}
 				
 				CGameKeyboard::getInstance()->PollKeyboard();
 

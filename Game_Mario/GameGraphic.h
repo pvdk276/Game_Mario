@@ -12,6 +12,7 @@ public:
 	LPDIRECT3DDEVICE9 d3ddv;
 	LPDIRECT3DSURFACE9 backBuffer;
 	LPDIRECT3DSURFACE9 surface;
+	LPD3DXSPRITE spriteHandler;
 
 	CGameGraphic();
 	~CGameGraphic();

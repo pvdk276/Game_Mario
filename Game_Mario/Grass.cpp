@@ -1,23 +1,27 @@
 #include "Grass.h"
-CGrass::CGrass(CSprite * _grass, D3DXVECTOR2 _position)
+CGrass::CGrass(int id, D3DXVECTOR2 position, CSprite* sprite) : CDynamicObject(id, position, sprite)
 {
-	this->sprite = _grass;
-	this->position = _position;
+	this->type = GRASS;
 	this->width = 100;
 	this->height = 50;
+	direction = 1;
 }
 
 CGrass::~CGrass()
 {
+
 }
 
+void CGrass::Update(float delta_time)
+{
+	UpdateAnimation(delta_time, 0, 2, direction);
+}
 void CGrass::Render()
 {
-	this->sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, 1);
+	if (curTime == 0)
+	{
+		sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, curIndex);
+	}	
 }
 
-void CGrass::UpdateAnimation(float delta_time)
-{
-	this->sprite->SetTimeAnimation(TIME_ANIMATION);
-	this->sprite->UpdateSprite(delta_time, 0, 2, 1);
-}
+

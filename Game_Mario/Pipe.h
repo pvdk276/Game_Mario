@@ -5,9 +5,9 @@
 class CPipe : public CStaticObject
 {
 public:
-	CPipe(CSprite* _mushroom, D3DXVECTOR2 _position);
+	CPipe(int id, D3DXVECTOR2 position, CSprite* sprite);
 	~CPipe();
 
+	void Update();
 	void Render();
-	void UpdateAnimation(float delta_time);
 };

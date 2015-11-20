@@ -4,7 +4,10 @@
 
 class CEnemy : public CLivingObject
 {
-	CEnemy(ObjectName type, D3DXVECTOR2 position, float width, float height, CSprite* sprite, float timeAnimation, D3DXVECTOR2 maxVelocity, D3DXVECTOR2 maxAccel);
+public:
+	CEnemy(int id, D3DXVECTOR2 position, CSprite* sprite);
 	~CEnemy();
-	void UpdateAnimation(float delta_time);
+
+	void Update(float delta_time);
+	void Render();
 };

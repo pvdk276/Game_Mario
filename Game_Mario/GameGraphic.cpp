@@ -40,6 +40,14 @@ int CGameGraphic::Init(HWND hWnd)
 
 	d3ddv->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &backBuffer);
 
+	result = D3DXCreateSprite(d3ddv, &spriteHandler);
+
+	if (FAILED(result))
+	{
+		MessageBox(NULL, "Cannot create Sprite", "Error", MB_OK);
+		return 0;
+	}
+
 	return 1;
 }
 
