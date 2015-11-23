@@ -39,6 +39,8 @@ public:
 	//l?y con tr? ??n backbuffer hi?n th?i
 	LPDIRECT3DSURFACE9 getBackbuffer();
 
+	LPDIRECT3DDEVICE9 GetDevice();
+
 	//v? hình ?nh lên backbuffer hi?n th?i
 	//srcSurface surface c?n v?
 	//srcRect v? trí surface c?n v?

@@ -143,6 +143,11 @@ LPDIRECT3DSURFACE9 CGameGraphic::getBackbuffer()
 		return backbuffer;
 }
 
+LPDIRECT3DDEVICE9 CGameGraphic::GetDevice()
+{
+	return this->d3ddv;
+}
+
 void CGameGraphic::strectRect(LPDIRECT3DSURFACE9 srcSurface, const RECT * srcRect, const RECT * destRect)
 {
 	d3ddv->StretchRect(srcSurface, srcRect, getBackbuffer(), destRect, D3DTEXF_NONE);
