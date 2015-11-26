@@ -111,20 +111,26 @@ void CGameGraphic::destroy()
 	}
 }
 
-void CGameGraphic::beginRender()
+int CGameGraphic::beginRender()
 {
+	if (this->d3ddv->BeginScene())
+		return 0;
 	if (NULL == d3ddv)
 	{
 		OutputDebugString("[GameGraphic.cpp] Cannot begin render.");
-		return;
+		return 0;
 	}
 
 	// Clear the backbuffer to a black color
 	d3ddv->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+	this->spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+	return 1;
 }
 
 void CGameGraphic::endRender()
 {
+	this->spriteHandler->End();
+	this->d3ddv->EndScene();
 	// Present the backbuffer contents to the display
 	d3ddv->Present(NULL, NULL, NULL, NULL);
 }
@@ -141,6 +147,11 @@ LPDIRECT3DSURFACE9 CGameGraphic::getBackbuffer()
 		return NULL;
 	else
 		return backbuffer;
+}
+
+LPD3DXSPRITE CGameGraphic::getSpriteHander()
+{
+	return this->spriteHandler;
 }
 
 LPDIRECT3DDEVICE9 CGameGraphic::GetDevice()

@@ -1,16 +1,6 @@
 #include "Game.h"
-#include "Camera.h"
-#include "FileUtils.h"
-#include "GameWindow.h"
-#include "GameGraphic.h"
-#include "GameKeyboard.h"
-#include "Mario.h"
-#include "BinaryTree.h"
-#include "Collision.h"
-#include "BaseObject.h"
 
 #define FRAME_RATE 60
-
 CGame::CGame()
 {
 
@@ -42,6 +32,12 @@ int CGame::Init(HINSTANCE hInstance)
 		return 0;
 	}
 
+	//Kh?i t?o ??i t??ng qu?n lý GameState
+	if (!CGameStateManager::getInstance()->Init(new CMenuState()))
+	{
+		OutputDebugString("[Game.cpp] Cannot init CGameStateManager.");
+		return 0;
+	}
 	//Kh?i t?o ??i t??ng Input.
 	//if (!CInput::GetInstance()->Init(pGameWindow->GetHInstance(), pGameWindow->GetHWND()))
 	//{
@@ -54,6 +50,7 @@ int CGame::Init(HINSTANCE hInstance)
 	//	OutputDebugString("[Game.cpp] Cannot init CGameStateManager.");
 	//	return 0;
 	//}
+
 	//	Kh?i t?o ??i t??ng timer
 	m_pTimer = CTimer::GetInstance();
 	m_pTimer->SetMaxFps((float)GAME_FPS);
@@ -73,10 +70,10 @@ void CGame::LoadResources()
 	CCamera::getInstance()->matrix = CFileUtils::getInstance()->LoadMatrix(15, 166, "Resources/Maps/map1.txt");
 	CCamera::getInstance()->m = 15;
 	CCamera::getInstance()->n = 166;
-	CCamera::getInstance()->sprite = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Maps/tiles.png", 50, 50, 216, 18, NULL);
+	CCamera::getInstance()->sprite = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Maps/tiles.png", 50, 50, 216, 18, NULL);
 
-	CSprite* smallMario = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Mario/SmallMario.png", 50, 50, 10, 5, NULL);
-	CSprite* bigMario = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Mario/BigMario.png", 50, 100, 10, 5, NULL);
+	CSprite* smallMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/SmallMario.png", 50, 50, 10, 5, NULL);
+	CSprite* bigMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/BigMario.png", 50, 100, 10, 5, NULL);
 	//CMario::getInstance()->currentSprite = CMario::getInstance()->smallMario;
 	CMario::getInstance()->Init(smallMario, bigMario, NULL);
 
@@ -112,58 +109,21 @@ void CGame::Run()
 			if (_DeltaTime >= tick_per_frame)
 			{
 				frame_start = now;
-				//OutputDebugString(std::to_string(_DeltaTime).c_str());
-				//CBinaryTree::getInstance()->listCurrentObject->clear();
-				//CBinaryTree::getInstance()->loadListCurrentObject(CBinaryTree::getInstance()->rootNode, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, CCamera::getInstance()->width, CCamera::getInstance()->height);
-
-				//for (int i = 0; i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
-				//{
-				//	/*if (CBinaryTree::getInstance()->listCurrentObject->at(i)->typeId == 1)
-				//	{
-
-				//	}*/
-				//	float normalx, normaly;
-				//	float value = CCollision::getInstance()->CheckCollision(CMario::getInstance()->GetBox(), CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(), normalx, normaly, _DeltaTime);
-				//	
-				//	//a collision occur
-				//	if (value < 1.0f) 
-				//	{
-
-				//	}
-				//}
-				
-				CGameKeyboard::getInstance()->PollKeyboard();
+				CGameStateManager::getInstance()->GetCurrentState()->Run(_DeltaTime);
+				/*CGameKeyboard::getInstance()->PollKeyboard();
 
 				CMario::getInstance()->Update(_DeltaTime/100);
 				CCamera::getInstance()->Update(CMario::getInstance()->position.x, CMario::getInstance()->position.y);
-
 				if (CGameGraphic::getInstance()->d3ddv->BeginScene())
 				{
+					
 					CCamera::getInstance()->Render();
 
 					CMario::getInstance()->Render();
-
 					CGameGraphic::getInstance()->d3ddv->EndScene();
 				}
-				CGameGraphic::getInstance()->d3ddv->Present(NULL, NULL, NULL, NULL);
+				CGameGraphic::getInstance()->d3ddv->Present(NULL, NULL, NULL, NULL);*/
 			}
-			
-
-			//if (m_pTimer->GetTime() < 1.0f)
-			//{
-			//	m_pTimer->EndCount();
-			//	if (CGameGraphic::getInstance()->d3ddv->BeginScene())
-			//	{
-			//		CGameGraphic::getInstance()->d3ddv->ColorFill(CGameGraphic::getInstance()->backBuffer, NULL, D3DCOLOR_XRGB(255, 0, 0));
-			//		CCamera::getInstance()->Render();
-
-			//		CGameGraphic::getInstance()->d3ddv->EndScene();
-			//	}
-			//	CGameGraphic::getInstance()->d3ddv->Present(NULL, NULL, NULL, NULL);
-			//	
-			//	// Get Stage hi?n t?i và run.
-			//	//CGameStateManager::GetInstance()->GetCurrentState()->Run(m_pTimer->GetTime());
-			//}
 		}
 	}
 }

@@ -1,8 +1,8 @@
 #include "BaseGameState.h"
-
+#include "GameGraphic.h"
 CBaseGameState::CBaseGameState()
 {
-	this->m_pNextState = NULL;
+	this->m_pNextState = nullptr;
 }
 
 CBaseGameState::~CBaseGameState()
@@ -13,8 +13,14 @@ CBaseGameState::~CBaseGameState()
 
 void CBaseGameState::Run(float deltaTime)
 {
-	// Update th? gi?i.
+	// Update thế giới
 	Update(deltaTime);
 
-	// V? th? gi?i
+	// Vẽ thế giới
+	if (CGameGraphic::getInstance()->beginRender())
+	{
+		//CInput::GetInstance()->ProcessKeyBroad();
+		Render();
+		CGameGraphic::getInstance()->endRender();
+	}	
 }

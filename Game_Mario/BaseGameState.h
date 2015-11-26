@@ -1,9 +1,12 @@
 #pragma once
 
-#include "GameGraphic.h"
+//#include "GameGraphic.h"
 
 class CBaseGameState
 {
+private:
+	bool m_isFinish;
+	CBaseGameState* m_nextState;
 protected:
 	virtual void Update(float deltaTime) = 0;
 

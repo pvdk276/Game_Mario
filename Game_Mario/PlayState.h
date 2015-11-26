@@ -1,22 +1,21 @@
 #pragma once
 #include "BaseGameState.h"
 #include "Sprite.h"
-#include "GameWindow.h"
-#include "PlayState.h"
+#include "GameStateManager.h"
 
-class CMenuState : public CBaseGameState
+class CPlayState : public CBaseGameState
 {
 private:
-	
 	CSprite* sprMenu;
+	int x = 100;
 public:
-	CMenuState();
-	~CMenuState();
+	CPlayState();
+	~CPlayState();
 	void Init();
 	void Update(float deltaTime);
 	void Render();
 	void End();
-	
+
 };
 
 

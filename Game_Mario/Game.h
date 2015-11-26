@@ -1,12 +1,18 @@
 #pragma once
 #include "d3d9.h"
-//#include "GameWindow.h"
 #include "Timer.h"
 #include "BinaryTree.h"
-//#include "GameGraphic.h"
-//#include "Graphic.h"
-//#include "Input.h"
-//#include "GameStateManager.h"
+#include "Camera.h"
+#include "FileUtils.h"
+#include "GameWindow.h"
+#include "GameGraphic.h"
+#include "GameKeyboard.h"
+#include "Mario.h"
+#include "BinaryTree.h"
+#include "Collision.h"
+#include "BaseObject.h"
+#include "MenuState.h"
+#include "GameStateManager.h"
 
 class CGame
 {
