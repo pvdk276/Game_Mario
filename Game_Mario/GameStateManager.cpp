@@ -30,7 +30,7 @@ CBaseGameState* CGameStateManager::GetCurrentState()
 
 void CGameStateManager::ChangeState(CBaseGameState* state)
 {
-	this->m_pNextState = state;
+	this->m_currentState = state;
 	/*if (!m_aGameState.empty())
 	{
 		m_aGameState.pop_back();

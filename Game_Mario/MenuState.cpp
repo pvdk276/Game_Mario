@@ -1,9 +1,10 @@
 #include "MenuState.h"
 #include "GameGraphic.h"
 
-int x = 100;
+
 CMenuState::CMenuState()
 {
+	
 	this->Init();
 }
 
@@ -14,12 +15,18 @@ CMenuState::~CMenuState()
 
 void CMenuState::Init()
 {
+	x = 100;
+	this->m_bFinished = false;
 	sprMenu = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Other/Background.png", 800, 600, 1, 1, NULL);
 }
 
 void CMenuState::Update(float deltaTime)
 {
-	x += 1;
+	x += 10;
+	if (CGameKeyboard::getInstance()->IsKeyDown(DIK_RETURN))
+	{
+		this->End();
+	}
 }
 
 void CMenuState::Render()
@@ -29,9 +36,9 @@ void CMenuState::Render()
 
 void CMenuState::End()
 {
-	/*this->m_bFinished = true;
+	this->m_bFinished = true;
 	delete m_pNextState;
 	m_pNextState = new CPlayState();
-	CGameStateManager::getInstance()->ChangeState(m_pNextState);*/
+	CGameStateManager::getInstance()->ChangeState(m_pNextState);
 }
 

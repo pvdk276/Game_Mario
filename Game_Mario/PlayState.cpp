@@ -13,6 +13,8 @@ CPlayState::~CPlayState()
 
 void CPlayState::Init()
 {
+	this->x = 100;
+	this->m_bFinished = false;
 	sprMenu = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Other/Background.png", 800, 600, 1, 1, NULL);
 }
 

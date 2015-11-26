@@ -109,6 +109,7 @@ void CGame::Run()
 			if (_DeltaTime >= tick_per_frame)
 			{
 				frame_start = now;
+				CGameKeyboard::getInstance()->PollKeyboard();
 				CGameStateManager::getInstance()->GetCurrentState()->Run(_DeltaTime);
 				/*CGameKeyboard::getInstance()->PollKeyboard();
 

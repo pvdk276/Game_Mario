@@ -7,7 +7,7 @@ class CPlayState : public CBaseGameState
 {
 private:
 	CSprite* sprMenu;
-	int x = 100;
+	int x;
 public:
 	CPlayState();
 	~CPlayState();

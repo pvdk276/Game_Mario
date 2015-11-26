@@ -132,7 +132,7 @@ bool CGameKeyboard::IsKeyDown(int KeyCode)
 void CGameKeyboard::PollKeyboard()
 {
 	keyboard->Poll();
-	if (keyboard->GetDeviceState(sizeof(keyStates), (LPVOID)&keyStates))
+	if (keyboard->GetDeviceState(sizeof(keyStates), (LPVOID)&keyStates) != DI_OK)
 	{
 		//keyboard device lost, try to re-acquire
 		keyboard->Acquire();

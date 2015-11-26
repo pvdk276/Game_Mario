@@ -14,13 +14,13 @@ CBaseGameState::~CBaseGameState()
 void CBaseGameState::Run(float deltaTime)
 {
 	// Update thế giới
-	Update(deltaTime);
+	this->Update(deltaTime);
 
 	// Vẽ thế giới
 	if (CGameGraphic::getInstance()->beginRender())
 	{
 		//CInput::GetInstance()->ProcessKeyBroad();
-		Render();
+		this->Render();
 		CGameGraphic::getInstance()->endRender();
 	}	
 }

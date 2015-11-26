@@ -186,6 +186,7 @@
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="PipeDown1.cpp" />
     <ClCompile Include="PipeUp1.cpp" />
+    <ClCompile Include="PlayState.cpp" />
     <ClCompile Include="Spring.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="StaticObject.cpp" />
@@ -232,6 +233,7 @@
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="PipeDown1.h" />
     <ClInclude Include="PipeUp1.h" />
+    <ClInclude Include="PlayState.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Spring.h" />
     <ClInclude Include="Sprite.h" />
