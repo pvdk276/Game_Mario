@@ -11,8 +11,9 @@ CBrick::~CBrick()
 {
 }
 
-void CBrick::Update()
+void CBrick::Update(float delta_time)
 {
+	
 }
 
 void CBrick::Render()

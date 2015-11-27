@@ -11,8 +11,8 @@ public:
 
 	CBox GetBox();
 
-	virtual void Update() = 0;
-	virtual void Render() = 0;
+	virtual void Update() {};
+	virtual void Render(float delta_time) {};
 
 	std::string GetType();
 };

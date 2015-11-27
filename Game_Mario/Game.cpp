@@ -1,4 +1,4 @@
-#include "Game.h"
+﻿#include "Game.h"
 
 #define FRAME_RATE 60
 CGame::CGame()

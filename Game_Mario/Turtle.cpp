@@ -5,7 +5,6 @@ CTurtle::CTurtle(int id, ObjectName type, D3DXVECTOR2 position, CSprite * sprite
 	this->type = type;
 	this->width = 50;
 	this->height = 50;
-	this->direction = 1;
 }
 
 CTurtle::~CTurtle()
@@ -39,8 +38,5 @@ void CTurtle::Update(float delta_time)
 
 void CTurtle::Render()
 {
-	if (curTime == 0)
-	{
-		sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, curIndex);
-	}
+	sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, curIndex);
 }

@@ -20,4 +20,6 @@ public:
 	
 	virtual std::string GetType() = 0;
 	virtual CBox GetBox() = 0;
+	virtual void Render() {};
+	virtual void Update(float delta_time) {};
 };

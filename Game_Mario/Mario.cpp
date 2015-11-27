@@ -8,12 +8,8 @@ CMario::CMario() : CLivingObject(0, D3DXVECTOR2(120.0f, 125.0f), NULL)
 	accel = D3DXVECTOR2(0.0f, 0.0f);
 	maxVelocity = D3DXVECTOR2(40.0f, 80.0f);
 	maxAccel = D3DXVECTOR2(5.0f, 30.0f);
-	direction = 1;
 
 	m_action = stand;
-
-	curIndex = 0;
-	curTime = 0;
 	animationTime = TIME_ANIMATION;
 }
 

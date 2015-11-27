@@ -12,7 +12,7 @@ CPipeUp1::~CPipeUp1()
 
 }
 
-void CPipeUp1::Update()
+void CPipeUp1::Update(float delta_time)
 {
 }
 

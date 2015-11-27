@@ -11,7 +11,7 @@ CLand::~CLand()
 {
 }
 
-void CLand::Update()
+void CLand::Update(float delta_time)
 {
 }
 

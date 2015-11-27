@@ -11,6 +11,6 @@ public:
 	CBrick(int id, D3DXVECTOR2 position, CSprite* sprite);
 	~CBrick();
 
-	void Update();
+	void Update(float delta_time);
 	void Render();
 };

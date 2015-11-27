@@ -5,7 +5,6 @@ CBar::CBar(int id, D3DXVECTOR2 position, CSprite* sprite) : CDynamicObject(id, p
 	this->type = BAR;
 	this->width = 200;
 	this->height = 32;
-	this->direction = 1;
 }
 
 

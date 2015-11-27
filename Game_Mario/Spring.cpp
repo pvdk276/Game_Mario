@@ -5,7 +5,6 @@ CSpring::CSpring(int id, D3DXVECTOR2 position, CSprite * sprite) : CDynamicObjec
 	this->type = SPRING;
 	this->width = 50;
 	this->height = 100;
-	direction = 1;
 }
 
 CSpring::~CSpring()
