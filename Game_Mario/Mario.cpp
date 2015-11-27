@@ -11,6 +11,9 @@ CMario::CMario() : CLivingObject(0, D3DXVECTOR2(120.0f, 125.0f), NULL)
 
 	m_action = stand;
 	animationTime = TIME_ANIMATION;
+
+	width = 50;
+	height = 50;
 }
 
 CMario::~CMario()

@@ -36,7 +36,7 @@ CBinaryTree::CBinaryTree()
 	listCurrentObject = new std::vector<CBaseObject*>();
 }
 
-bool CBinaryTree::init(std::string listObjectPath, std::string binaryTreePath)
+bool CBinaryTree::Init(std::string listObjectPath, std::string binaryTreePath)
 {
 	std::vector<CBaseObject*> listObject = loadListObject(listObjectPath);
 

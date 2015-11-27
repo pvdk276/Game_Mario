@@ -29,14 +29,18 @@ void CPlayState::LoadResource()
 	CSprite* bigMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/BigMario.png", 50, 100, 10, 5, NULL);
 	//CMario::getInstance()->currentSprite = CMario::getInstance()->smallMario;
 	CMario::getInstance()->Init(smallMario, bigMario, NULL);
-
-	//CBinaryTree::getInstance()->init("Resources/Maps/map1_ListObject.txt", "Resources/Maps/map1_BinaryTree.txt");
-
 	CGameGraphic::getInstance()->InitSurface("Resources/Images/Other/Background.png");
 }
 
 void CPlayState::Update(float deltaTime)
 {
+	CBinaryTree::getInstance()->listCurrentObject->clear();
+	CBinaryTree::getInstance()->loadListCurrentObject(CBinaryTree::getInstance()->rootNode, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, CCamera::getInstance()->width, CCamera::getInstance()->height);
+	for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
+	{
+		CBinaryTree::getInstance()->listCurrentObject->at(i)->Update(deltaTime / 100);
+	}
+
 	CMario::getInstance()->Update(deltaTime / 100);
 	CCamera::getInstance()->Update(CMario::getInstance()->position.x, CMario::getInstance()->position.y);
 	if (CGameKeyboard::getInstance()->IsKeyDown(DIK_ESCAPE))
@@ -48,7 +52,15 @@ void CPlayState::Update(float deltaTime)
 void CPlayState::Render()
 {
 	CCamera::getInstance()->Render();
+	
+
+	for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
+	{
+		CBinaryTree::getInstance()->listCurrentObject->at(i)->Render();
+	}
+
 	CMario::getInstance()->Render();
+	
 }
 
 void CPlayState::End()

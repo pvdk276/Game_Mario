@@ -44,6 +44,8 @@ int CGame::Init(HINSTANCE hInstance)
 	//	Khởi tạo đối tượng Timer
 	m_pTimer = CTimer::GetInstance();
 	m_pTimer->SetMaxFps((float)GAME_FPS);
+
+	CBinaryTree::getInstance()->Init("Resources/Maps/map1_ListObject.txt", "Resources/Maps/map1_BinaryTree.txt");
 	return 1;
 }
 
@@ -72,6 +74,7 @@ void CGame::Run()
 			if (_DeltaTime >= tick_per_frame)
 			{
 				frame_start = now;
+
 				CGameKeyboard::getInstance()->PollKeyboard();
 				CGameStateManager::getInstance()->GetCurrentState()->Run(_DeltaTime);
 			}
