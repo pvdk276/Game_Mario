@@ -49,6 +49,7 @@ public:
 	//check neu key duoc nhan
 	//parameter example: DIK_LEFT
 	bool IsKeyDown(int KeyCode);
+	bool IsKeyUp(int KeyCode);
 
 	//check neu key duoc tha ra
 	//parameter example: DIK_LEFT

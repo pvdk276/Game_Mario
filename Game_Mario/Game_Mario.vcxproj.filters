@@ -27,6 +27,9 @@
     <Filter Include="Source Files\Game Mario\Game Object\Static Object">
       <UniqueIdentifier>{9cfc65d4-8f16-4e7f-89d0-c92b909650f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Game Mario\StateManagement">
+      <UniqueIdentifier>{33fba84a-be6e-4378-82e1-7deb5d9cdd81}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameWindow.cpp">
@@ -145,6 +148,18 @@
     </ClCompile>
     <ClCompile Include="MushroomBlock.cpp">
       <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseGameState.cpp">
+      <Filter>Source Files\Game Mario\StateManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStateManager.cpp">
+      <Filter>Source Files\Game Mario\StateManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuState.cpp">
+      <Filter>Source Files\Game Mario\StateManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayState.cpp">
+      <Filter>Source Files\Game Mario\StateManagement</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -273,6 +288,18 @@
     </ClInclude>
     <ClInclude Include="MushroomBlock.h">
       <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseGameState.h">
+      <Filter>Source Files\Game Mario\StateManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStateManager.h">
+      <Filter>Source Files\Game Mario\StateManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuState.h">
+      <Filter>Source Files\Game Mario\StateManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayState.h">
+      <Filter>Source Files\Game Mario\StateManagement</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
