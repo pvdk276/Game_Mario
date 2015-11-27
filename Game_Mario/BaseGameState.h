@@ -17,7 +17,7 @@ public:
 	~CBaseGameState();
 
 	virtual void Init() = 0;
-
+	virtual void LoadResource() = 0;
 	void Run(float deltaTime);
 
 	//Bi?n ki?m tra State ?ã k?t thúc ch?a

@@ -8,9 +8,6 @@
 #include "GameGraphic.h"
 #include "GameKeyboard.h"
 #include "Mario.h"
-#include "BinaryTree.h"
-#include "Collision.h"
-#include "BaseObject.h"
 #include "PlayState.h"
 #include "GameStateManager.h"
 
@@ -23,8 +20,5 @@ public:
 	CGame();
 	~CGame();
 	int Init(HINSTANCE hInstance);
-
-	void LoadResources();
-
 	void Run();
 };

@@ -20,6 +20,11 @@ void CMenuState::Init()
 	sprMenu = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Other/Background.png", 800, 600, 1, 1, NULL);
 }
 
+void CMenuState::LoadResource()
+{
+
+}
+
 void CMenuState::Update(float deltaTime)
 {
 	x += 10;

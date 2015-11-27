@@ -20,66 +20,31 @@ int CGame::Init(HINSTANCE hInstance)
 		return 0;
 	}
 
+	//Khởi tạo đối tượng GameGraphic
 	if (!CGameGraphic::getInstance()->Init(CGameWindow::getInstance()->m_hWnd))
 	{
 		OutputDebugString("[Game.cpp] Cannot init Graphic.");
 		return 0;
 	}
 
+	//Khởi tạo đối tượng keyboard
 	if (!CGameKeyboard::getInstance()->Init(hInstance, CGameWindow::getInstance()->m_hWnd))
 	{
 		OutputDebugString("[Game.cpp] Cannot init Keyboard.");
 		return 0;
 	}
 
-	//Kh?i t?o ??i t??ng qu?n l� GameState
+	//Khởi tạo đối tượng quản lý game state
 	if (!CGameStateManager::getInstance()->Init(new CMenuState()))
 	{
 		OutputDebugString("[Game.cpp] Cannot init CGameStateManager.");
 		return 0;
 	}
-	//Kh?i t?o ??i t??ng Input.
-	//if (!CInput::GetInstance()->Init(pGameWindow->GetHInstance(), pGameWindow->GetHWND()))
-	//{
-	//	OutputDebugString("[Game.cpp] Cannot init CInput.");
-	//	return 0;
-	//}
-	////Kh?i t?o ??i t??ng qu?n l� GameState.
-	//if (!CGameStateManager::GetInstance()->Init(new CMenuState()))
-	//{
-	//	OutputDebugString("[Game.cpp] Cannot init CGameStateManager.");
-	//	return 0;
-	//}
 
-	//	Kh?i t?o ??i t??ng timer
+	//	Khởi tạo đối tượng Timer
 	m_pTimer = CTimer::GetInstance();
 	m_pTimer->SetMaxFps((float)GAME_FPS);
 	return 1;
-}
-
-void CGame::LoadResources()
-{
-	/*LPD3DXSPRITE spriteHandler;
-	HRESULT result = D3DXCreateSprite(CGameGraphic::getInstance()->d3ddv, &spriteHandler);
-	if (FAILED(result))
-	{
-		MessageBox(NULL, "Cannot create sprite", "Error", MB_OK);
-		return;
-	}*/
-
-	CCamera::getInstance()->matrix = CFileUtils::getInstance()->LoadMatrix(15, 166, "Resources/Maps/map1.txt");
-	CCamera::getInstance()->m = 15;
-	CCamera::getInstance()->n = 166;
-	CCamera::getInstance()->sprite = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Maps/tiles.png", 50, 50, 216, 18, NULL);
-
-	CSprite* smallMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/SmallMario.png", 50, 50, 10, 5, NULL);
-	CSprite* bigMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/BigMario.png", 50, 100, 10, 5, NULL);
-	//CMario::getInstance()->currentSprite = CMario::getInstance()->smallMario;
-	CMario::getInstance()->Init(smallMario, bigMario, NULL);
-
-	//CBinaryTree::getInstance()->init("Resources/Maps/map1_ListObject.txt", "Resources/Maps/map1_BinaryTree.txt");
-
-	CGameGraphic::getInstance()->InitSurface("Resources/Images/Other/Background.png");
 }
 
 void CGame::Run()
@@ -87,8 +52,6 @@ void CGame::Run()
 	MSG msg;
 	int done = 0;
 	m_pTimer->StartCount();
-
-	LoadResources();
 
 	float frame_start = GetTickCount();
 	float tick_per_frame = 1000 / FRAME_RATE; 
@@ -111,19 +74,6 @@ void CGame::Run()
 				frame_start = now;
 				CGameKeyboard::getInstance()->PollKeyboard();
 				CGameStateManager::getInstance()->GetCurrentState()->Run(_DeltaTime);
-				/*CGameKeyboard::getInstance()->PollKeyboard();
-
-				CMario::getInstance()->Update(_DeltaTime/100);
-				CCamera::getInstance()->Update(CMario::getInstance()->position.x, CMario::getInstance()->position.y);
-				if (CGameGraphic::getInstance()->d3ddv->BeginScene())
-				{
-					
-					CCamera::getInstance()->Render();
-
-					CMario::getInstance()->Render();
-					CGameGraphic::getInstance()->d3ddv->EndScene();
-				}
-				CGameGraphic::getInstance()->d3ddv->Present(NULL, NULL, NULL, NULL);*/
 			}
 		}
 	}

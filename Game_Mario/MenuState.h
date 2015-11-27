@@ -14,6 +14,7 @@ public:
 	CMenuState();
 	~CMenuState();
 	void Init();
+	void LoadResource();
 	void Update(float deltaTime);
 	void Render();
 	void End();
