@@ -8,7 +8,9 @@
 class CMenuState : public CBaseGameState
 {
 private:
-	int x;
+	bool m_keyDown = false;
+	bool m_keyUp = false;
+	int m_indexMenu;
 	CSprite* sprMenu;
 public:
 	CMenuState();

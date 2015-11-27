@@ -122,12 +122,12 @@ bool CGameKeyboard::IsKeyDown(int KeyCode)
 	return (keyStates[KeyCode] & 0x80) > 0;
 }
 
-//bool CGameKeyboard::IsKeyUp(int KeyCode)
-//{
-//	if (keyStates[key] & 0x80)
-//		return false;
-//	return true;
-//}
+bool CGameKeyboard::IsKeyUp(int KeyCode)
+{
+	if (keyStates[KeyCode] & 0x80)
+		return false;
+	return true;
+}
 
 void CGameKeyboard::PollKeyboard()
 {
