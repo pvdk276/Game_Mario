@@ -36,12 +36,38 @@ void CPlayState::Update(float deltaTime)
 {
 	CBinaryTree::getInstance()->listCurrentObject->clear();
 	CBinaryTree::getInstance()->loadListCurrentObject(CBinaryTree::getInstance()->rootNode, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, CCamera::getInstance()->width, CCamera::getInstance()->height);
+	
+	/*-------------------------------------------------------------
+	begin demo
+	---------------------------------------------------------------*/
+	bool isCollision = false;
+
+	for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
+	{
+		if (CBinaryTree::getInstance()->listCurrentObject->at(i)->type == PIPE)
+		{
+			float normalx, normaly;
+			float value = CCollision::getInstance()->CheckCollision(
+				CMario::getInstance()->GetBox(),
+				CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(),
+				normalx, normaly, deltaTime / 100);
+			if (value < 1) //a collision occur
+			{
+				isCollision = true;
+				break;
+			}
+		}
+	}
+	/*-------------------------------------------------------------
+	end demo
+	---------------------------------------------------------------*/
+	
 	for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
 	{
 		CBinaryTree::getInstance()->listCurrentObject->at(i)->Update(deltaTime / 100);
 	}
 
-	CMario::getInstance()->Update(deltaTime / 100);
+	if(isCollision == false) CMario::getInstance()->Update(deltaTime / 100);
 	CCamera::getInstance()->Update(CMario::getInstance()->position.x, CMario::getInstance()->position.y);
 	if (CGameKeyboard::getInstance()->IsKeyDown(DIK_ESCAPE))
 	{

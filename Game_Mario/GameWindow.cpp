@@ -47,8 +47,10 @@ int CGameWindow::Init(HINSTANCE hInstance)
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
-		clientRect.right - clientRect.left,
-		clientRect.bottom - clientRect.top,
+		/*clientRect.right - clientRect.left,
+		clientRect.bottom - clientRect.top,*/
+		800,
+		600,
 		NULL,
 		NULL,
 		m_hInstance,
