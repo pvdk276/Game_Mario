@@ -23,14 +23,12 @@ void CEnemy::Update(float delta_time)
 		if (CBinaryTree::getInstance()->listCurrentObject->at(i)->type == PIPE || CBinaryTree::getInstance()->listCurrentObject->at(i)->type == STONE)
 		{
 			float normalx, normaly;
-			float value = CCollision::getInstance()->CheckCollision(
+			float value = CCollision::getInstance()->AABBCheck(
 				this->GetBox(),
-				CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(),
-				normalx,normaly,delta_time);
-			if (value < 1) //a collision occur
+				CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox());
+			if (value == true) //a collision occur
 			{
 				this->velocity.x *= -1;
-				this->direction *= -1;
 				break;
 			}
 		}
