@@ -178,7 +178,7 @@ void CMario::Update(float delta_time)
 			position.y = 125;
 		}
 	}
-	
+	//
 	UpdatePosition(delta_time);
 	UpdateAnimation(delta_time);
 }
