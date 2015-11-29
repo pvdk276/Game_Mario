@@ -47,11 +47,11 @@ int CGameKeyboard::Init(HINSTANCE hInstance, HWND hWnd)
 	}
 
 	result = keyboard->Acquire();
-	if (FAILED(result))
+	/*if (FAILED(result))
 	{
 		MessageBox(NULL, "Cannot acquire keyboard", "Error", MB_OK);
 		return 0;
-	}
+	}*/
 
 	return 1;
 }

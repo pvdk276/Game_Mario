@@ -6,6 +6,7 @@ CTurtle::CTurtle(int id, ObjectName type, D3DXVECTOR2 position, CSprite * sprite
 	this->type = type;
 	this->width = 50;
 	this->height = 50;
+	this->velocity = D3DXVECTOR2(-5.0f, 0.0f);
 }
 
 CTurtle::~CTurtle()
@@ -14,8 +15,7 @@ CTurtle::~CTurtle()
 
 void CTurtle::Update(float delta_time)
 {
-	//update position
-	this->position.x += verlocity;
+	
 
 	//Check collision
 	for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
@@ -28,7 +28,8 @@ void CTurtle::Update(float delta_time)
 				CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox());
 			if (value == true) //a collision occur
 			{
-				verlocity *= -1;
+				this->velocity.x *= -1;
+				direction *= -1;
 				break;
 			}
 		}
@@ -46,15 +47,17 @@ void CTurtle::Update(float delta_time)
 	{
 		if (direction == 1)
 		{
-			UpdateAnimation(delta_time, 2, 3, direction);
+			UpdateAnimation(delta_time, 8, 9, direction);
 		}
-		else UpdateAnimation(delta_time, 8, 9, direction);
+		else UpdateAnimation(delta_time, 2, 3, direction);
 	}
 	else
 	{
 		UpdateAnimation(delta_time, 4, 5, direction);
 	}
-	
+
+	//update position
+	this->position.x += this->velocity.x*delta_time;
 }
 
 void CTurtle::Render()

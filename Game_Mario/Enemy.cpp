@@ -6,6 +6,8 @@ CEnemy::CEnemy(int id, D3DXVECTOR2 position, CSprite * sprite) : CLivingObject(i
 	this->type = ENEMY;
 	this->width = 50;
 	this->height = 50;
+
+	this->velocity = D3DXVECTOR2(-5.0f, 0.0f);
 }
 
 CEnemy::~CEnemy()
@@ -14,8 +16,6 @@ CEnemy::~CEnemy()
 
 void CEnemy::Update(float delta_time)
 {
-	//update position
-	this->position.x += verlocity;
 
 	//Check collision
 	for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
@@ -28,14 +28,17 @@ void CEnemy::Update(float delta_time)
 				CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox());
 			if (value == true) //a collision occur
 			{
-				verlocity *= -1;
+				this->velocity.x *= -1;
 				break;
 			}
 		}
 	}
-
+	
 	//update animation
 	UpdateAnimation(delta_time, 0, 1, direction);
+
+	//update position
+	this->position.x += this->velocity.x*delta_time;
 }
 
 void CEnemy::Render()

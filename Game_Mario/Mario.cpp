@@ -46,7 +46,6 @@ void CMario::Update(float delta_time)
 	{
 		if (CBinaryTree::getInstance()->listCurrentObject->at(i)->type == PIPE)
 		{
-			float normalx, normaly;
 			float value = CCollision::getInstance()->AABBCheck(
 				CMario::getInstance()->GetBox(),
 				CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox());
@@ -59,6 +58,21 @@ void CMario::Update(float delta_time)
 					this->position.x -= 2;
 				else
 					this->position.x += 2;
+				break;
+			}
+		}
+
+		if (CBinaryTree::getInstance()->listCurrentObject->at(i)->type == ENEMY)
+		{
+			float value = CCollision::getInstance()->AABBCheck(
+				CMario::getInstance()->GetBox(),
+				CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox());
+			if (value == true) //a collision occur
+			{
+				if(this->sprite == this->smallMario)
+					this->sprite = this->bigMario;
+				else
+					this->sprite = this->smallMario;
 			}
 		}
 	}
@@ -105,7 +119,7 @@ void CMario::Update(float delta_time)
 
 			if (m_action != jump) m_action = run;
 		}
-		else if (!this->m_iscollision) // KH�ng nh?n n�t (tr??t)
+		else if (!this->m_iscollision) // KHông nhấn nút (trượt)
 		{
 			if (m_action != jump) m_action = stand;
 			if (velocity.x != 0)
@@ -137,7 +151,7 @@ void CMario::Update(float delta_time)
 		}
 	}
 
-	//S? ki?n nh?n ph�m space (nh?y)
+	//Sự kiện nhấn phím khi nhảy
 	if (CGameKeyboard::getInstance()->IsKeyDown(DIK_SPACE))
 	{
 		if (m_action != down && m_action != jump)
@@ -147,7 +161,7 @@ void CMario::Update(float delta_time)
 		}
 	}
 
-	//Khi mario nh?y
+	//Khi mario nhảy
 	if (m_action == jump)
 	{
 		if (velocity.y >= maxVelocity.y)
