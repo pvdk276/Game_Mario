@@ -20,6 +20,8 @@ void CPlayState::Init()
 
 void CPlayState::LoadResource()
 {
+	CBinaryTree::getInstance()->Init("Resources/Maps/map1_ListObject.txt", "Resources/Maps/map1_BinaryTree.txt");
+
 	CCamera::getInstance()->matrix = CFileUtils::getInstance()->LoadMatrix(15, 166, "Resources/Maps/map1.txt");
 	CCamera::getInstance()->m = 15;
 	CCamera::getInstance()->n = 166;
@@ -40,24 +42,7 @@ void CPlayState::Update(float deltaTime)
 	/*-------------------------------------------------------------
 	begin demo
 	---------------------------------------------------------------*/
-	bool isCollision = false;
-
-	for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
-	{
-		if (CBinaryTree::getInstance()->listCurrentObject->at(i)->type == PIPE)
-		{
-			float normalx, normaly;
-			float value = CCollision::getInstance()->CheckCollision(
-				CMario::getInstance()->GetBox(),
-				CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(),
-				normalx, normaly, deltaTime / 100);
-			if (value < 1) //a collision occur
-			{
-				isCollision = true;
-				break;
-			}
-		}
-	}
+	
 	/*-------------------------------------------------------------
 	end demo
 	---------------------------------------------------------------*/
@@ -67,7 +52,7 @@ void CPlayState::Update(float deltaTime)
 		CBinaryTree::getInstance()->listCurrentObject->at(i)->Update(deltaTime / 100);
 	}
 
-	if(isCollision == false) CMario::getInstance()->Update(deltaTime / 100);
+	CMario::getInstance()->Update(deltaTime / 100);
 	CCamera::getInstance()->Update(CMario::getInstance()->position.x, CMario::getInstance()->position.y);
 	if (CGameKeyboard::getInstance()->IsKeyDown(DIK_ESCAPE))
 	{

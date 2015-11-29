@@ -1,6 +1,7 @@
 #include "Mario.h"
 #include "Camera.h"
 #include "GameKeyboard.h"
+#include "BinaryTree.h"
 
 CMario::CMario() : CLivingObject(0, D3DXVECTOR2(120.0f, 125.0f), NULL)
 {
@@ -36,6 +37,27 @@ void CMario::Render()
 
 void CMario::Update(float delta_time)
 {
+	isCollision = false;
+
+	for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
+	{
+		if (CBinaryTree::getInstance()->listCurrentObject->at(i)->type == PIPE)
+		{
+			float normalx, normaly;
+			float value = CCollision::getInstance()->CheckCollision(
+				CMario::getInstance()->GetBox(),
+				CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(),
+				normalx, normaly, delta_time);
+			if (value < 1) //a collision occur
+			{
+				this->velocity.x = 0;
+				this->accel.x = 0;
+				this->position.x -= 5;
+				isCollision = true;
+				break;
+			}
+		}
+	}
 	//update state
 	if (CGameKeyboard::getInstance()->IsKeyDown(DIK_DOWN))
 	{
@@ -52,17 +74,20 @@ void CMario::Update(float delta_time)
 		if (CGameKeyboard::getInstance()->IsKeyDown(DIK_RIGHT))
 		{
 			direction = 1;
-			if (velocity.x < maxVelocity.x)
+			if (!this->isCollision)
 			{
-				accel.x = maxAccel.x;
-			}
-			else //if (m_veloc.x >= m_maxVelocity.x)
-			{
-				accel.x = 0;
-				velocity.x = maxVelocity.x;
-			}
+				if (velocity.x < maxVelocity.x)
+				{
+					accel.x = maxAccel.x;
+				}
+				else //if (m_veloc.x >= m_maxVelocity.x)
+				{
+					accel.x = 0;
+					velocity.x = maxVelocity.x;
+				}
 
-			if (m_action != jump) m_action = run;
+				if (m_action != jump) m_action = run;
+			}
 		}
 		else if (CGameKeyboard::getInstance()->IsKeyDown(DIK_LEFT))
 		{
@@ -81,17 +106,20 @@ void CMario::Update(float delta_time)
 		}
 		else
 		{
-			if (m_action != jump) m_action = stand;
-			if (velocity.x != 0)
+			if (!this->isCollision)
 			{
-				accel.x = -1.0f * direction * maxAccel.x;
-			}
+				if (m_action != jump) m_action = stand;
+				if (velocity.x != 0)
+				{
+					accel.x = -1.0f * direction * maxAccel.x;
+				}
 
-			if (direction * velocity.x <= 0)
-			{
-				velocity.x = 0;
-				accel.x = 0;
-				
+				if (direction * velocity.x <= 0)
+				{
+					velocity.x = 0;
+					accel.x = 0;
+
+				}
 			}
 		}
 	}

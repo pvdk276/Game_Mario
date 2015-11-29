@@ -45,7 +45,6 @@ int CGame::Init(HINSTANCE hInstance)
 	m_pTimer = CTimer::GetInstance();
 	m_pTimer->SetMaxFps((float)GAME_FPS);
 
-	CBinaryTree::getInstance()->Init("Resources/Maps/map1_ListObject.txt", "Resources/Maps/map1_BinaryTree.txt");
 	return 1;
 }
 

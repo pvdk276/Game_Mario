@@ -4,7 +4,7 @@
 #include "Sprite.h"
 #include "Global.h"
 #include <string>
-
+#include "Collision.h"
 class CBaseObject
 {
 public:
