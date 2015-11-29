@@ -22,7 +22,7 @@ enum StatusMario
 class CMario : public CSingleton<CMario>, public CLivingObject
 {
 private:
-	bool m_iscollision = false;
+	bool iscollision;
 public:
 	D3DXVECTOR2 accel;
 	D3DXVECTOR2 maxVelocity;
