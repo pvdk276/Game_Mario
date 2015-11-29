@@ -3,6 +3,7 @@
 #include "Box.h"
 #include "Sprite.h"
 #include "Global.h"
+#include "Collision.h"
 #include <string>
 
 class CBaseObject

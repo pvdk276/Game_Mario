@@ -21,6 +21,8 @@ enum StatusMario
 };
 class CMario : public CSingleton<CMario>, public CLivingObject
 {
+private:
+	bool m_iscollision = false;
 public:
 	D3DXVECTOR2 accel;
 	D3DXVECTOR2 maxVelocity;
@@ -39,7 +41,7 @@ public:
 	CMario();
 	~CMario();
 
-	void Init(CSprite* smallMario, CSprite* bigMario, CSprite* superMario);
+	void Init();
 	void Render();
 	void Update(float delta_time);
 	void UpdatePosition(float delta_time);
