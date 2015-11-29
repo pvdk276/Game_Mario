@@ -1,140 +1,141 @@
+/*+===================================================================
+File:      Collision.cpp
+
+Summary:   ??nh ngh?a các ph??ng th?c c?a CCollision.
+===================================================================+*/
+
 #include "Collision.h"
 
-//SweptAABB 
-float SweptAABB(CBox first, CBox second, float& normalx, float& normaly, float deltaTime)
+
+CCollision::CCollision()
 {
-	float dxEntry, dyEntry;
-	float dxExit, dyExit;
+}
 
-	// find the distance between the objects on the near and far sides for both x and y
-	if (first.vx > 0.0f)
+CCollision::~CCollision()
+{
+
+}
+
+CBox CCollision::GetSweptBroadphaseBox(CBox b, float t)
+{
+	CBox broadphaseBox;
+	broadphaseBox.x = b.vx > 0 ? b.x : b.x + b.vx * t;
+	broadphaseBox.y = b.vy < 0 ? b.y : b.y + b.vy * t;
+	broadphaseBox.w = b.vx > 0 ? b.vx * t + b.w : b.w - b.vx * t;
+	broadphaseBox.h = b.vy > 0 ? b.vy * t + b.h : b.h - b.vy * t;
+
+	return broadphaseBox;
+}
+
+bool CCollision::AABBCheck(CBox b1, CBox b2)
+{
+	return !(b1.x + b1.w < b2.x || b1.x > b2.x + b2.w || b1.y < b2.y - b2.h || b1.y - b1.h > b2.y);
+}
+
+float CCollision::SweepAABB(CBox b1, CBox b2, float& normalx, float& normaly, float timeFrame)
+{
+	float xInvEntry, yInvEntry;
+	float xInvExit, yInvExit;
+
+	// Xác ??nh kho?ng cách b?t ??u và k?t thúc va ch?m theo hay chi?u x, y.
+	if (b1.vx > 0.0f)
 	{
-		dxEntry = (second.x - second.w / 2) - (first.x + first.w / 2);
-		dxExit = (second.x + second.w / 2) - (first.x - first.w / 2);
+		xInvEntry = b2.x - (b1.x + b1.w);
+		xInvExit = (b2.x + b2.w) - b1.x;
 	}
 	else
 	{
-		dxEntry = (second.x + second.w / 2) - (first.x - first.w / 2);
-		dxExit = (second.x - second.w / 2) - (first.x + first.w / 2);
+		xInvEntry = (b2.x + b2.w) - b1.x;
+		xInvExit = b2.x - (b1.x + b1.w);
 	}
 
-	if (first.vy > 0.0f)
+	if (b1.vy > 0.0f)
 	{
-		dyEntry = (second.y - second.h / 2) - (first.y + first.h / 2);
-		dyExit = (second.y + second.h / 2) - (first.y - first.h / 2);
+		yInvEntry = (b2.y - b2.h) - b1.y;
+		yInvExit = b2.y - (b1.y - b1.h);
 	}
 	else
 	{
-		dyEntry = (second.y + second.h / 2) - (first.y - first.h / 2);
-		dyExit = (second.y - second.h / 2) - (first.y + first.h / 2);
+		yInvEntry = b2.y - (b1.y - b1.h);
+		yInvExit = (b2.y - b2.h) - b1.y;
 	}
 
-	// find time of collision and time of leaving for each axis (if statement is to prevent divide by zero)
-	float txEntry, tyEntry;
-	float txExit, tyExit;
+	float xEntry, xExit;
+	float yEntry, yExit;
 
-	if (first.vx == 0.0f)
+	// Tìm th?i gian b?t ??u và k?t thúc va ch?m theo 2 tr?c x, y.
+	if (b1.vx == 0.0f)
 	{
-		txEntry = -std::numeric_limits<float>::infinity();
-		txExit = std::numeric_limits<float>::infinity();
+		xEntry = -std::numeric_limits<float>::infinity();
+		xExit = std::numeric_limits<float>::infinity();
 	}
 	else
 	{
-		txEntry = dxEntry / (first.vx * deltaTime);
-		txExit = dxExit / (first.vx * deltaTime);
+		xEntry = xInvEntry / b1.vx;
+		xExit = xInvExit / b1.vx;
 	}
 
-	if (first.vy == 0.0f)
+	if (b1.vy == 0.0f)
 	{
-		tyEntry = -std::numeric_limits<float>::infinity();
-		tyExit = std::numeric_limits<float>::infinity();
+		yEntry = -std::numeric_limits<float>::infinity();
+		yExit = std::numeric_limits<float>::infinity();
 	}
 	else
 	{
-		tyEntry = dyEntry / (first.vy * deltaTime);
-		tyExit = dyExit / (first.vy * deltaTime);
+		yEntry = yInvEntry / b1.vy;
+		yExit = yInvExit / b1.vy;
 	}
 
-	// find the earliest/latest times of collision
-	float entryTime = max(txEntry, tyEntry);
-	float exitTime = min(txExit, tyExit);
+	// K?t h?p th?i gian b?t ??u và k?t thúc va ch?m theo 2 tr?c x, y
+	// Tìm th?i gian b?t ??u và k?t thúc va ch?m t?ng h?p.
+	float entryTime = __max(xEntry, yEntry);
+	float exitTime = __min(xExit, yExit);
 
-	//kiem tra block la ground
-
-
-	// if there was no collision
-	if (entryTime > exitTime || txEntry < 0.0f && tyEntry < 0.0f || txEntry > 1.0f || tyEntry > 1.0f)
+	// Khi không có va ch?m trong frame này.
+	if (entryTime > exitTime || xEntry < 0.0f && yEntry < 0.0f || xEntry > timeFrame || yEntry > timeFrame)
 	{
 		normalx = 0.0f;
 		normaly = 0.0f;
-		return 1.0f;
+		return timeFrame;
 	}
-	else // if there was a collision
+	else // Khi x?y ra va ch?m.
 	{
-		// calculate normal of collided surface
-		if (txEntry > tyEntry)
+		// Va ch?m theo chi?u x.
+		if (xEntry > yEntry)
 		{
-			if (dxEntry < 0.0f)
-			{
-				normalx = 1.0f;
-				normaly = 0.0f;
-			}
-			else
+			// Va ch?m t? trái qua ph?i.
+			if (b1.vx > 0.0f)
 			{
 				normalx = -1.0f;
 				normaly = 0.0f;
 			}
-		}
-		else
-		{
-			if (dyEntry < 0.0f)
+			else // Va ch?m t? ph?i qua trái.
 			{
-				normalx = 0.0f;
-				normaly = 1.0f;
+				normalx = 1.0f;
+				normaly = 0.0f;
 			}
-			else
+		}
+		else // Va ch?m theo chi?u y.
+		{
+			// Va ch?m t? d??i lên.
+			if (b1.vy > 0.0f)
 			{
 				normalx = 0.0f;
 				normaly = -1.0f;
 			}
+			else // Va ch?m t? trên xu?ng.
+			{
+				normalx = 0.0f;
+				normaly = 1.0f;
+			}
 		}
 
-		// return the time of collision
+		//if (entryTime < timeFrame && normalx = -1)
+		//{
+		//	
+		//}
+
 		return entryTime;
 	}
 }
 
-//Broadphase box : if block is not within broadphase box, there is not a collision.
-//If block is within broadphase box , there is maybe a collision
-CBox GetSweptBroadphaseBox(CBox b, float deltaTime)
-{
-	CBox broadphasebox;
-	float posX;
-	float posY;
-	posX = b.vx > 0 ? (b.x - b.w / 2) : (b.x - b.w / 2) + b.vx * deltaTime;
-	posY = b.vy > 0 ? (b.y + b.h / 2) + b.vy * deltaTime : (b.y + b.h / 2);
-	broadphasebox.w = b.vx > 0 ? b.vx * deltaTime + b.w : b.w - b.vx * deltaTime;
-	broadphasebox.h = b.vy > 0 ? b.vy * deltaTime + b.h : b.h - b.vy * deltaTime;
-	broadphasebox.x = posX + broadphasebox.w / 2;
-	broadphasebox.y = posY - broadphasebox.h / 2;
-	return broadphasebox;
-}
-
-//check if b2 within b1(broadphase box)
-bool AABBCheck(CBox b1, CBox b2)
-{
-	return !(b1.x + b1.w / 2 <= b2.x - b2.w / 2 ||
-		b1.x - b1.w / 2 >= b2.x + b2.w / 2 ||
-		b1.y + b1.h / 2 <= b2.y - b2.h / 2 ||
-		b1.y - b1.h / 2 >= b2.y + b2.h / 2);
-}
-
-float CCollision::CheckCollision(CBox first, CBox second, float& normalx, float& normaly, float deltaTime)
-{
-	CBox broadphasebox = GetSweptBroadphaseBox(first, deltaTime);
-	if (AABBCheck(broadphasebox, second))
-	{
-		return SweptAABB(first, second, normalx, normaly, deltaTime);
-	}
-	else return 1.0f;
-}
