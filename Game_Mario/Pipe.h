@@ -1,11 +1,14 @@
 #pragma once
 
 #include "StaticObject.h"
+#include "CarnivorousFlower.h"
 
 class CPipe : public CStaticObject
 {
 public:
-	CPipe(int id, D3DXVECTOR2 position, CSprite* sprite);
+	CCarnivorousFlower* flower;
+
+	CPipe(int id, ObjectName type, D3DXVECTOR2 position, CSprite* sprite1, CSprite* sprite2);
 	~CPipe();
 
 	void Update(float delta_time);

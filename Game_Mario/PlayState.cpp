@@ -42,7 +42,7 @@ void CPlayState::Update(float deltaTime)
 	---------------------------------------------------------------*/
 	bool isCollision = false;
 
-	for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
+	/*for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
 	{
 		if (CBinaryTree::getInstance()->listCurrentObject->at(i)->type == PIPE)
 		{
@@ -57,7 +57,7 @@ void CPlayState::Update(float deltaTime)
 				break;
 			}
 		}
-	}
+	}*/
 	/*-------------------------------------------------------------
 	end demo
 	---------------------------------------------------------------*/
