@@ -14,6 +14,7 @@ CGame::~CGame()
 
 int CGame::Init(HINSTANCE hInstance)
 {
+	//Khởi tạo GameWindow
 	if (!CGameWindow::getInstance()->Init(hInstance))
 	{
 		OutputDebugString("[Game.cpp] Cannot init Window.");

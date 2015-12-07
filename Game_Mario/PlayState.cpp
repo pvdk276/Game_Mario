@@ -1,4 +1,4 @@
-#include "PlayState.h"
+﻿#include "PlayState.h"
 #include "GameGraphic.h"
 
 CPlayState::CPlayState()
@@ -20,17 +20,19 @@ void CPlayState::Init()
 
 void CPlayState::LoadResource()
 {
+	//Khởi tạo Binary tree
 	CBinaryTree::getInstance()->Init("Resources/Maps/map1_ListObject.txt", "Resources/Maps/map1_BinaryTree.txt");
 
+	//Khởi tạo camera
 	CCamera::getInstance()->matrix = CFileUtils::getInstance()->LoadMatrix(15, 166, "Resources/Maps/map1.txt");
 	CCamera::getInstance()->m = 15;
 	CCamera::getInstance()->n = 166;
 	CCamera::getInstance()->sprite = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Maps/tiles.png", 50, 50, 216, 18, NULL);
+	
+	//Khởi tạo mario
+	CMario::getInstance()->Init();
 
-	CSprite* smallMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/SmallMario.png", 50, 50, 10, 5, NULL);
-	CSprite* bigMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/BigMario.png", 50, 100, 10, 5, NULL);
-	//CMario::getInstance()->currentSprite = CMario::getInstance()->smallMario;
-	CMario::getInstance()->Init(smallMario, bigMario, NULL);
+	//Phông nền
 	CGameGraphic::getInstance()->InitSurface("Resources/Images/Other/Background.png");
 }
 
@@ -39,14 +41,7 @@ void CPlayState::Update(float deltaTime)
 	CBinaryTree::getInstance()->listCurrentObject->clear();
 	CBinaryTree::getInstance()->loadListCurrentObject(CBinaryTree::getInstance()->rootNode, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, CCamera::getInstance()->width, CCamera::getInstance()->height);
 	
-	/*-------------------------------------------------------------
-	begin demo
-	---------------------------------------------------------------*/
-	
-	/*-------------------------------------------------------------
-	end demo
-	---------------------------------------------------------------*/
-	
+	//Update các đối tượng trong binary tree
 	for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
 	{
 		CBinaryTree::getInstance()->listCurrentObject->at(i)->Update(deltaTime / 100);
@@ -63,8 +58,6 @@ void CPlayState::Update(float deltaTime)
 void CPlayState::Render()
 {
 	CCamera::getInstance()->Render();
-	
-
 	for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
 	{
 		CBinaryTree::getInstance()->listCurrentObject->at(i)->Render();
