@@ -86,20 +86,17 @@ void CMario::Update(float delta_time)
 			if (m_collisionX == true && direction == -1)
 				velocity.x = 0;
 			direction = 1;
-			if (!this->isCollision)
+			if (velocity.x < maxVelocity.x)
 			{
-				if (velocity.x < maxVelocity.x)
-				{
-					accel.x = maxAccel.x;
-				}
-				else //if (m_veloc.x >= m_maxVelocity.x)
-				{
-					accel.x = 0;
-					velocity.x = maxVelocity.x;
-				}
-
-				if (m_action != jump) m_action = run;
+				accel.x = maxAccel.x;
 			}
+			else //if (m_veloc.x >= m_maxVelocity.x)
+			{
+				accel.x = 0;
+				velocity.x = maxVelocity.x;
+			}
+
+			if (m_action != jump) m_action = run;
 		}
 		else if (CGameKeyboard::getInstance()->IsKeyDown(DIK_LEFT))
 		{
@@ -121,11 +118,7 @@ void CMario::Update(float delta_time)
 		}
 		else
 		{
-			if (!this->isCollision)
-			{
-				accel.x = -1.0f * direction * maxAccel.x;
-			}
-
+			accel.x = -1.0f * direction * maxAccel.x;
 			if (direction * velocity.x <= 0)
 			{
 				velocity.x = 0;
