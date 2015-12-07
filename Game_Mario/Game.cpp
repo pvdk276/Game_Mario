@@ -46,7 +46,6 @@ int CGame::Init(HINSTANCE hInstance)
 	m_pTimer = CTimer::GetInstance();
 	m_pTimer->SetMaxFps((float)GAME_FPS);
 
-	
 	return 1;
 }
 
