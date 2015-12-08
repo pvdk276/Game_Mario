@@ -209,7 +209,7 @@ std::vector<CBaseObject*> loadListObject(std::string listObjectPath)
 			break;
 
 		case 8: 
-			gameObject = new CMushroomBlock(id, position, mushroom);
+			gameObject = new CMushroom(id, position, mushroom);
 			break;
 
 		case 9: 
@@ -217,7 +217,7 @@ std::vector<CBaseObject*> loadListObject(std::string listObjectPath)
 			break;
 
 		case 10: 
-			gameObject = new CCoinBlock(id, position, secretBlock);
+			gameObject = new CSecretBlock(id, position, secretBlock);
 			break;
 
 		case 11: 

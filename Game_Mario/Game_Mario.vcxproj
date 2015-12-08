@@ -160,7 +160,8 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cloud.cpp" />
     <ClCompile Include="Coin.cpp" />
-    <ClCompile Include="CoinBlock.cpp" />
+    <ClCompile Include="Flower.cpp" />
+    <ClCompile Include="SecretBlock.cpp" />
     <ClCompile Include="CoinBrick.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="dsutil.cpp" />
@@ -181,7 +182,7 @@
     <ClCompile Include="LivingObject.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="MenuState.cpp" />
-    <ClCompile Include="MushroomBlock.cpp" />
+    <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="PipeDown1.cpp" />
@@ -206,7 +207,8 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Cloud.h" />
     <ClInclude Include="Coin.h" />
-    <ClInclude Include="CoinBlock.h" />
+    <ClInclude Include="Flower.h" />
+    <ClInclude Include="SecretBlock.h" />
     <ClInclude Include="CoinBrick.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="dsutil.h" />
@@ -228,7 +230,7 @@
     <ClInclude Include="LivingObject.h" />
     <ClInclude Include="Mario.h" />
     <ClInclude Include="MenuState.h" />
-    <ClInclude Include="MushroomBlock.h" />
+    <ClInclude Include="Mushroom.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="PipeDown1.h" />

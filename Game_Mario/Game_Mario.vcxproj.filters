@@ -140,14 +140,8 @@
     <ClCompile Include="Bar.cpp">
       <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
     </ClCompile>
-    <ClCompile Include="CoinBlock.cpp">
-      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
-    </ClCompile>
     <ClCompile Include="Land.cpp">
       <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
-    </ClCompile>
-    <ClCompile Include="MushroomBlock.cpp">
-      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
     </ClCompile>
     <ClCompile Include="BaseGameState.cpp">
       <Filter>Source Files\Game Mario\StateManagement</Filter>
@@ -160,6 +154,15 @@
     </ClCompile>
     <ClCompile Include="PlayState.cpp">
       <Filter>Source Files\Game Mario\StateManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="SecretBlock.cpp">
+      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Mushroom.cpp">
+      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Flower.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -280,14 +283,8 @@
     <ClInclude Include="Bar.h">
       <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
     </ClInclude>
-    <ClInclude Include="CoinBlock.h">
-      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
-    </ClInclude>
     <ClInclude Include="Land.h">
       <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
-    </ClInclude>
-    <ClInclude Include="MushroomBlock.h">
-      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
     </ClInclude>
     <ClInclude Include="BaseGameState.h">
       <Filter>Source Files\Game Mario\StateManagement</Filter>
@@ -301,6 +298,13 @@
     <ClInclude Include="PlayState.h">
       <Filter>Source Files\Game Mario\StateManagement</Filter>
     </ClInclude>
+    <ClInclude Include="SecretBlock.h">
+      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Mushroom.h">
+      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Flower.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="DirectX.txt">
