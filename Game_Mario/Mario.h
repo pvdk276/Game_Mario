@@ -3,6 +3,7 @@
 #include "LivingObject.h"
 #include "Sprite.h"
 #include "Global.h"
+#include "Box.h"
 
 #define TIME_ANIMATION  1.6f
 #define MAXHEIGHT  450
@@ -21,6 +22,10 @@ enum StatusMario
 };
 class CMario : public CSingleton<CMario>, public CLivingObject
 {
+private:
+	bool m_collisionX = false;
+	bool m_collisionY = false;
+	float velocityY;
 public:
 	D3DXVECTOR2 accel;
 	D3DXVECTOR2 maxVelocity;
@@ -39,7 +44,7 @@ public:
 	CMario();
 	~CMario();
 
-	void Init(CSprite* smallMario, CSprite* bigMario, CSprite* superMario);
+	void Init();
 	void Render();
 	void Update(float delta_time);
 	void UpdatePosition(float delta_time);

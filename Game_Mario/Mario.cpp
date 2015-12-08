@@ -1,6 +1,8 @@
-#include "Mario.h"
+﻿#include "Mario.h"
 #include "Camera.h"
 #include "GameKeyboard.h"
+#include "GameGraphic.h"
+#include "BinaryTree.h"
 
 CMario::CMario() : CLivingObject(0, D3DXVECTOR2(120.0f, 125.0f), NULL)
 {
@@ -20,11 +22,10 @@ CMario::~CMario()
 {
 }
 
-void CMario::Init(CSprite * smallMario, CSprite * bigMario, CSprite * superMario)
+void CMario::Init()
 {
-	this->smallMario = smallMario;
-	this->bigMario = bigMario;
-	this->superMario = superMario;
+	this->bigMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/BigMario.png", 50, 100, 10, 5, NULL);
+	this->smallMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/SmallMario.png", 50, 50, 10, 5, NULL);
 
 	this->sprite = this->smallMario;
 }
@@ -34,8 +35,39 @@ void CMario::Render()
 	sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, curIndex);
 }
 
+/// <summary>
+/// Updates the specified delta_time.
+/// </summary>
+/// <param name="delta_time">The delta_time.</param>
 void CMario::Update(float delta_time)
 {
+	m_collisionX = false;
+	m_collisionY = false;
+	for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
+	{
+		if (CBinaryTree::getInstance()->listCurrentObject->at(i)->type == PIPE)
+		{
+			float normalx, normaly;
+			float value = CCollision::getInstance()->CheckCollision(
+				CMario::getInstance()->GetBox(),
+				CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(),
+				normalx, normaly, delta_time);
+			if (value < 1) //a collision occur
+			{
+				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
+				{
+					m_collisionX = true;
+				}
+				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
+				{
+					m_collisionY = true;
+					accel.y = 0.0f;
+					m_action = stand;
+				}
+				break;
+			}
+		}
+	}
 	//update state
 	if (CGameKeyboard::getInstance()->IsKeyDown(DIK_DOWN))
 	{
@@ -51,6 +83,8 @@ void CMario::Update(float delta_time)
 	{
 		if (CGameKeyboard::getInstance()->IsKeyDown(DIK_RIGHT))
 		{
+			if (m_collisionX == true && direction == -1)
+				velocity.x = 0;
 			direction = 1;
 			if (velocity.x < maxVelocity.x)
 			{
@@ -66,7 +100,10 @@ void CMario::Update(float delta_time)
 		}
 		else if (CGameKeyboard::getInstance()->IsKeyDown(DIK_LEFT))
 		{
+			if (m_collisionX == true && direction == 1)
+				velocity.x = 0;
 			direction = -1;
+			
 			if (velocity.x > direction * maxVelocity.x)
 			{
 				accel.x = direction * maxAccel.x;
@@ -81,17 +118,11 @@ void CMario::Update(float delta_time)
 		}
 		else
 		{
-			if (m_action != jump) m_action = stand;
-			if (velocity.x != 0)
-			{
-				accel.x = -1.0f * direction * maxAccel.x;
-			}
-
+			accel.x = -1.0f * direction * maxAccel.x;
 			if (direction * velocity.x <= 0)
 			{
 				velocity.x = 0;
 				accel.x = 0;
-				
 			}
 		}
 	}
@@ -105,7 +136,7 @@ void CMario::Update(float delta_time)
 		{
 			direction = -1;
 		}
-		
+
 		if (!CGameKeyboard::getInstance()->IsKeyDown(DIK_DOWN))
 		{
 			m_action = stand;
@@ -115,20 +146,23 @@ void CMario::Update(float delta_time)
 	if (CGameKeyboard::getInstance()->IsKeyDown(DIK_SPACE))
 	{
 		if (m_action != down && m_action != jump)
-		{			
+		{
 			accel.y = maxAccel.y;
 			m_action = jump;
 		}
+		velocityY = velocity.y;
 	}
+	
 
-	UpdatePosition(delta_time);
-
-	if (m_action == jump)
+	if (m_action == jump || m_action != jump && position.y < 125)
 	{
-		if (velocity.y >= maxVelocity.y)
+		
+		if (velocity.y >= maxVelocity.y || velocity.y >= velocityY + maxVelocity.y)
 		{
 			accel.y = -1.0f * maxAccel.y;
 		}
+
+		//nếu đang đứng trên pipe
 
 		if (position.y < 125)
 		{
@@ -141,15 +175,17 @@ void CMario::Update(float delta_time)
 	}
 
 	UpdateAnimation(delta_time);
+	UpdatePosition(delta_time);
 }
-
 void CMario::UpdatePosition(float delta_time)
-{	
-	position.x += velocity.x * delta_time + 1.0f / 2 * accel.x * delta_time * delta_time;
+{
 	velocity.x += accel.x * delta_time;
-		
-	position.y += velocity.y * delta_time + 1.0f / 2 * accel.y * delta_time * delta_time;
 	velocity.y += accel.y * delta_time;
+
+	if (!m_collisionX)
+		position.x += velocity.x * delta_time + 1.0f / 2 * accel.x * delta_time * delta_time;
+	if (!m_collisionY)
+		position.y += velocity.y * delta_time + 1.0f / 2 * accel.y * delta_time * delta_time;
 }
 
 void CMario::UpdateAnimation(float delta_time)

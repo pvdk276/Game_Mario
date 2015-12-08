@@ -7,12 +7,14 @@ float SweptAABB(CBox first, CBox second, float& normalx, float& normaly, float d
 	float dxExit, dyExit;
 
 	// find the distance between the objects on the near and far sides for both x and y
-	if (first.vx > 0.0f)
+	if (first.vx > 0.0f)	// Nếu box1 đang di chuyển
 	{
+		//Khoảng cách gần nhất từ box1 và box2
 		dxEntry = (second.x - second.w / 2) - (first.x + first.w / 2);
+		//Khoảng cách xa nhất từ box1 đến box2
 		dxExit = (second.x + second.w / 2) - (first.x - first.w / 2);
 	}
-	else
+	else //Nếu box2 di chuyển, box1 không di chuyển
 	{
 		dxEntry = (second.x + second.w / 2) - (first.x - first.w / 2);
 		dxExit = (second.x - second.w / 2) - (first.x + first.w / 2);
@@ -40,8 +42,10 @@ float SweptAABB(CBox first, CBox second, float& normalx, float& normaly, float d
 	}
 	else
 	{
-		txEntry = dxEntry / (first.vx * deltaTime);
-		txExit = dxExit / (first.vx * deltaTime);
+		txEntry = dxEntry / first.vx;
+		txExit = dxExit / first.vx;
+		/*txEntry = dxEntry / (first.vx * deltaTime);
+		txExit = dxExit / (first.vx * deltaTime);*/
 	}
 
 	if (first.vy == 0.0f)
@@ -51,11 +55,13 @@ float SweptAABB(CBox first, CBox second, float& normalx, float& normaly, float d
 	}
 	else
 	{
-		tyEntry = dyEntry / (first.vy * deltaTime);
-		tyExit = dyExit / (first.vy * deltaTime);
+		tyEntry = dyEntry / first.vy;
+		tyExit = dyExit / first.vy;
+		/*tyEntry = dyEntry / (first.vy * deltaTime);
+		tyExit = dyExit / (first.vy * deltaTime);*/
 	}
 
-	// find the earliest/latest times of collision
+	// Tìm khoảng thời gian va chạm sớm nhất và va chạm trễ nhất
 	float entryTime = max(txEntry, tyEntry);
 	float exitTime = min(txExit, tyExit);
 

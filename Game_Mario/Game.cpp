@@ -14,6 +14,7 @@ CGame::~CGame()
 
 int CGame::Init(HINSTANCE hInstance)
 {
+	//Khởi tạo GameWindow
 	if (!CGameWindow::getInstance()->Init(hInstance))
 	{
 		OutputDebugString("[Game.cpp] Cannot init Window.");
@@ -45,7 +46,6 @@ int CGame::Init(HINSTANCE hInstance)
 	m_pTimer = CTimer::GetInstance();
 	m_pTimer->SetMaxFps((float)GAME_FPS);
 
-	CBinaryTree::getInstance()->Init("Resources/Maps/map1_ListObject.txt", "Resources/Maps/map1_BinaryTree.txt");
 	return 1;
 }
 

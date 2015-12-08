@@ -1,10 +1,12 @@
 #include "Turtle.h"
+#include "BinaryTree.h"
 
 CTurtle::CTurtle(int id, ObjectName type, D3DXVECTOR2 position, CSprite * sprite) : CLivingObject(id, position, sprite)
 {
 	this->type = type;
 	this->width = 50;
 	this->height = 50;
+	this->velocity = D3DXVECTOR2(-5.0f, 0.0f);
 }
 
 CTurtle::~CTurtle()
@@ -13,6 +15,27 @@ CTurtle::~CTurtle()
 
 void CTurtle::Update(float delta_time)
 {
+	
+
+	//Check collision
+	for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
+	{
+		if (CBinaryTree::getInstance()->listCurrentObject->at(i)->type == PIPE || CBinaryTree::getInstance()->listCurrentObject->at(i)->type == STONE)
+		{
+			float normalx, normaly;
+			float value = CCollision::getInstance()->CheckCollision(
+				this->GetBox(),
+				CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(),
+				normalx, normaly, delta_time);
+			if (value < 1) //a collision occur
+			{
+				this->velocity.x *= -1;
+				this->direction *= -1;
+				break;
+			}
+		}
+	}
+
 	if (type == WING_TURTLE)
 	{
 		if (direction == 1)
@@ -25,15 +48,17 @@ void CTurtle::Update(float delta_time)
 	{
 		if (direction == 1)
 		{
-			UpdateAnimation(delta_time, 2, 3, direction);
+			UpdateAnimation(delta_time, 8, 9, direction);
 		}
-		else UpdateAnimation(delta_time, 8, 9, direction);
+		else UpdateAnimation(delta_time, 2, 3, direction);
 	}
 	else
 	{
 		UpdateAnimation(delta_time, 4, 5, direction);
 	}
-	
+
+	//update position
+	this->position.x += this->velocity.x*delta_time;
 }
 
 void CTurtle::Render()
