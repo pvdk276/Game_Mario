@@ -43,44 +43,34 @@ void CMario::Render()
 /// <param name="delta_time">The delta_time.</param>
 void CMario::Update(float delta_time)
 {
-	
-	//collision
-	m_iscollision = false;
-	for (int i = 0; i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
+	for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
 	{
+		m_collisionX = false;
+		m_collisionY = false;
+		// va chạm với ống
 		if (CBinaryTree::getInstance()->listCurrentObject->at(i)->type == PIPE)
 		{
-			float value = CCollision::getInstance()->AABBCheck(
+			float normalx, normaly;
+			float value = CCollision::getInstance()->CheckCollision(
 				CMario::getInstance()->GetBox(),
-				CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox());
-			if (value == true) //a collision occur
-			{		
-				this->m_iscollision = true;
-				velocity.x = 0;
-				accel.x = 0;
-				if(direction == 1)
-					this->position.x -= 2;
-				else
-					this->position.x += 2;
+				CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(),
+				normalx, normaly, delta_time);
+			if (value < 1) //a collision occur
+			{
+				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
+				{
+					m_collisionX = true;
+				}
+				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
+				{
+					m_collisionY = true;
+					accel.y = 0.0f;
+					m_action = stand;
+				}
 				break;
 			}
 		}
-
-		if (CBinaryTree::getInstance()->listCurrentObject->at(i)->type == ENEMY)
-		{
-			float value = CCollision::getInstance()->AABBCheck(
-				CMario::getInstance()->GetBox(),
-				CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox());
-			if (value == true) //a collision occur
-			{
-				if(this->sprite == this->smallMario)
-					this->sprite = this->bigMario;
-				else
-					this->sprite = this->smallMario;
-			}
-		}
 	}
-
 	//update state
 	if (CGameKeyboard::getInstance()->IsKeyDown(DIK_DOWN))
 	{
@@ -95,8 +85,8 @@ void CMario::Update(float delta_time)
 	{
 		if (CGameKeyboard::getInstance()->IsKeyDown(DIK_RIGHT))
 		{
-			if (m_collisionX == true && direction == -1)
-				velocity.x = 0;
+			//if (m_collisionX == true && direction == -1)
+			//	velocity.x = 0;
 			direction = 1;
 			if (velocity.x < maxVelocity.x)
 			{
@@ -112,8 +102,8 @@ void CMario::Update(float delta_time)
 		}
 		else if (CGameKeyboard::getInstance()->IsKeyDown(DIK_LEFT))
 		{
-			if (m_collisionX == true && direction == 1)
-				velocity.x = 0;
+			//if (m_collisionX == true && direction == 1)
+			//	velocity.x = 0;
 			direction = -1;
 			
 			if (velocity.x > direction * maxVelocity.x)
@@ -168,7 +158,7 @@ void CMario::Update(float delta_time)
 			accel.y = maxAccel.y;
 			m_action = jump;
 		}
-		velocityY = velocity.y;
+		//velocityY = velocity.y;
 	}
 	
 
@@ -176,7 +166,7 @@ void CMario::Update(float delta_time)
 	if (m_action == jump)
 	{
 		
-		if (velocity.y >= maxVelocity.y || velocity.y >= velocityY + maxVelocity.y)
+		if (velocity.y >= maxVelocity.y)
 		{
 			accel.y = -1.0f * maxAccel.y;
 		}
@@ -195,7 +185,6 @@ void CMario::Update(float delta_time)
 	
 	UpdatePosition(delta_time);
 	UpdateAnimation(delta_time);
-	UpdatePosition(delta_time);
 }
 void CMario::UpdatePosition(float delta_time)
 {	

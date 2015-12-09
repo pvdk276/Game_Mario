@@ -24,6 +24,8 @@ class CMario : public CSingleton<CMario>, public CLivingObject
 {
 private:
 	bool m_iscollision = false;
+	bool m_collisionX;
+	bool m_collisionY;
 public:
 	D3DXVECTOR2 accel;
 	D3DXVECTOR2 maxVelocity;

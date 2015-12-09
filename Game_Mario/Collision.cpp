@@ -1,7 +1,7 @@
 /*+===================================================================
 File:      Collision.cpp
 
-Summary:   ??nh ngh?a c�c ph??ng th?c c?a CCollision.
+Summary:   ??nh ngh?a các ph??ng th?c c?a CCollision.
 ===================================================================+*/
 
 #include "Collision.h"
@@ -37,13 +37,13 @@ float CCollision::SweepAABB(CBox b1, CBox b2, float& normalx, float& normaly, fl
 	float xInvEntry, yInvEntry;
 	float xInvExit, yInvExit;
 
-	// X�c ??nh kho?ng c�ch b?t ??u v� k?t th�c va ch?m theo hay chi?u x, y.
+	// Xác ??nh kho?ng cách b?t ??u và k?t thúc va ch?m theo hay chi?u x, y.
 	if (b1.vx > 0.0f)
 	{
 		xInvEntry = b2.x - (b1.x + b1.w);
 		xInvExit = (b2.x + b2.w) - b1.x;
 	}
-	else //Nếu box2 di chuyển, box1 không di chuyển
+	else //Náº¿u box2 di chuyá»ƒn, box1 khÃ´ng di chuyá»ƒn
 	{
 		xInvEntry = (b2.x + b2.w) - b1.x;
 		xInvExit = b2.x - (b1.x + b1.w);
@@ -63,7 +63,7 @@ float CCollision::SweepAABB(CBox b1, CBox b2, float& normalx, float& normaly, fl
 	float xEntry, xExit;
 	float yEntry, yExit;
 
-	// T�m th?i gian b?t ??u v� k?t th�c va ch?m theo 2 tr?c x, y.
+	// Tìm th?i gian b?t ??u và k?t thúc va ch?m theo 2 tr?c x, y.
 	if (b1.vx == 0.0f)
 	{
 		xEntry = -std::numeric_limits<float>::infinity();
@@ -86,12 +86,12 @@ float CCollision::SweepAABB(CBox b1, CBox b2, float& normalx, float& normaly, fl
 		yExit = yInvExit / b1.vy;
 	}
 
-	// K?t h?p th?i gian b?t ??u v� k?t th�c va ch?m theo 2 tr?c x, y
-	// T�m th?i gian b?t ??u v� k?t th�c va ch?m t?ng h?p.
+	// K?t h?p th?i gian b?t ??u và k?t thúc va ch?m theo 2 tr?c x, y
+	// Tìm th?i gian b?t ??u và k?t thúc va ch?m t?ng h?p.
 	float entryTime = __max(xEntry, yEntry);
 	float exitTime = __min(xExit, yExit);
 
-	// Khi kh�ng c� va ch?m trong frame n�y.
+	// Khi không có va ch?m trong frame này.
 	if (entryTime > exitTime || xEntry < 0.0f && yEntry < 0.0f || xEntry > timeFrame || yEntry > timeFrame)
 	{
 		normalx = 0.0f;
@@ -103,27 +103,27 @@ float CCollision::SweepAABB(CBox b1, CBox b2, float& normalx, float& normaly, fl
 		// Va ch?m theo chi?u x.
 		if (xEntry > yEntry)
 		{
-			// Va ch?m t? tr�i qua ph?i.
+			// Va ch?m t? trái qua ph?i.
 			if (b1.vx > 0.0f)
 			{
 				normalx = -1.0f;
 				normaly = 0.0f;
 			}
-			else // Va ch?m t? ph?i qua tr�i.
+			else // Va ch?m t? ph?i qua trái.
 			{
 				normalx = 1.0f;
 				normaly = 0.0f;
 			}
 		}
-		else // Va ch?m theo chi?u y.
+		else // Va chạm theo chiều y
 		{
-			// Va ch?m t? d??i l�n.
+			// Va chạm từ dưới lên
 			if (b1.vy > 0.0f)
 			{
 				normalx = 0.0f;
 				normaly = -1.0f;
 			}
-			else // Va ch?m t? tr�n xu?ng.
+			else // Va chạm từ trên xuống
 			{
 				normalx = 0.0f;
 				normaly = 1.0f;
