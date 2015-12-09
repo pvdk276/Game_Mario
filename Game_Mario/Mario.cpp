@@ -81,12 +81,12 @@ void CMario::Update(float delta_time)
 			accel = D3DXVECTOR2(0.0f, 0.0f);
 		}
 	}
-	if (m_action != down) //?ang di chuy?n
+	if (m_action != down) //Đang di chuyển
 	{
 		if (CGameKeyboard::getInstance()->IsKeyDown(DIK_RIGHT))
 		{
-			//if (m_collisionX == true && direction == -1)
-			//	velocity.x = 0;
+			if (m_collisionX == true && direction == -1)
+				velocity.x = 0;
 			direction = 1;
 			if (velocity.x < maxVelocity.x)
 			{
@@ -102,8 +102,8 @@ void CMario::Update(float delta_time)
 		}
 		else if (CGameKeyboard::getInstance()->IsKeyDown(DIK_LEFT))
 		{
-			//if (m_collisionX == true && direction == 1)
-			//	velocity.x = 0;
+			if (m_collisionX == true && direction == 1)
+				velocity.x = 0;
 			direction = -1;
 			
 			if (velocity.x > direction * maxVelocity.x)
@@ -188,7 +188,8 @@ void CMario::Update(float delta_time)
 }
 void CMario::UpdatePosition(float delta_time)
 {	
-	position.x += velocity.x * delta_time + 1.0f / 2 * accel.x * delta_time * delta_time;	
+	if(!m_collisionX)
+		position.x += velocity.x * delta_time + 1.0f / 2 * accel.x * delta_time * delta_time;	
 	velocity.x += accel.x * delta_time;
 
 	position.y += velocity.y * delta_time + 1.0f / 2 * accel.y * delta_time * delta_time;
