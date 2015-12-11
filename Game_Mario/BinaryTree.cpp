@@ -197,7 +197,7 @@ std::vector<CBaseObject*> loadListObject(std::string listObjectPath)
 			break;
 
 		case 5:
-			gameObject = new CPipe(id, position, pipe);
+			gameObject = new CPipe(id, PIPE, position, pipe, nullptr);
 			break;
 
 		case 6: 
@@ -225,7 +225,10 @@ std::vector<CBaseObject*> loadListObject(std::string listObjectPath)
 			break;
 
 		case 12: 
-			//gameObject = new CFlowerPipe();
+			//gameObject = new CCarnivorousFlower(id, position, carnivorousFlower); 
+			gameObject = new CPipe(id, CARNIVOROUS_FLOWER_PIPE, position, pipe, carnivorousFlower);
+		
+		
 			break;
 
 		case 13: 
