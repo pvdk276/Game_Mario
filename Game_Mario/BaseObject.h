@@ -15,6 +15,7 @@ public:
 	float width;
 	float height;
 	CSprite* sprite;
+	bool isDead;
 
 	CBaseObject(int id, D3DXVECTOR2 position, CSprite* sprite);
 	~CBaseObject();

@@ -6,7 +6,6 @@
 class CLivingObject : public CDynamicObject
 {
 public:
-	bool isDead;
 
 	CLivingObject(int id, D3DXVECTOR2 position, CSprite* sprite);
 	~CLivingObject();
