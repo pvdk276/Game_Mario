@@ -37,8 +37,8 @@ enum ObjectName
 #define MARIO_GRAVITY = 0.5f
 
 #define GAME_NAME "Game_Mario"
-#define SCREEN_WIDTH 750
-#define SCREEN_HEIGHT 750
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 600
 #define GAME_FPS 60
 #define GRAVITY  -600.0f
 

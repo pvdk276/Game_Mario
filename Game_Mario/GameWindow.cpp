@@ -37,7 +37,7 @@ int CGameWindow::Init(HINSTANCE hInstance)
 	// ??ng ký l?p c?a s?.
 	RegisterClassEx(&wc);
 
-	RECT clientRect = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+	RECT clientRect = { 0, 0, 750, 750 };
 	AdjustWindowRect(&clientRect, WS_OVERLAPPEDWINDOW, FALSE);
 
 	// T?o c?a s?.
@@ -49,8 +49,8 @@ int CGameWindow::Init(HINSTANCE hInstance)
 		CW_USEDEFAULT,
 		/*clientRect.right - clientRect.left,
 		clientRect.bottom - clientRect.top,*/
-		800,
-		600,
+		SCREEN_WIDTH,
+		SCREEN_HEIGHT,
 		NULL,
 		NULL,
 		m_hInstance,
