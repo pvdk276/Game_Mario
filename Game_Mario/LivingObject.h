@@ -3,6 +3,7 @@
 #include "DynamicObject.h"
 #include "Camera.h"
 
+
 class CLivingObject : public CDynamicObject
 {
 public:
