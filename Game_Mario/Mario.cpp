@@ -107,6 +107,23 @@ void CMario::Update(float delta_time)
 			}
 		}
 	}
+	//va cham gach
+	for (int i = 0; i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
+	{
+		if (CBinaryTree::getInstance()->listCurrentObject->at(i)->type == BRICK)
+		{
+			float normalx, normaly;
+			float value = CCollision::getInstance()->CheckCollision(
+				CMario::getInstance()->GetBox(),
+				CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(),
+				normalx, normaly, delta_time);
+			if (value < 1) //a collision occur
+			{
+				CBinaryTree::getInstance()->listCurrentObject->at(i)->isCollision = true;
+				break;
+			}
+		}
+	}
 	//update state
 	if (CGameKeyboard::getInstance()->IsKeyDown(DIK_DOWN))
 	{
