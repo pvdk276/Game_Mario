@@ -7,8 +7,8 @@ CBrick::CBrick(int id, D3DXVECTOR2 position, CSprite* sprite) : CStaticObject(id
 	this->width = 50;
 	this->height = 50;
 
-	maxVelocity = D3DXVECTOR2(0.0f, 20.0f);
-	maxAccel = D3DXVECTOR2(0.0f, 9.8f);
+	maxVelocity = D3DXVECTOR2(0.0f, 120.0f);
+	maxAccel = D3DXVECTOR2(0, -9.8);
 
 	this->isCollision = false;
 	//gach no
@@ -38,18 +38,19 @@ CBrick::~CBrick()
 void CBrick::Update(float delta_time)
 {
 	 if (this->isCollision) 
-	{
+	{		
 		for (int i = 0; i < 4; i++)
 		{
-			if (i == 0 || i == 3) // m?nh bên trái
+			if (i == 0 || i==3) // m?nh bên trái
 			{
-				_smallBrickPos[i].x -= 1.5f;
+				_smallBrickPos[i].x -= 2.5f;
 			}
-			else
+			else if (i == 1 || i == 2)
 			{
-				_smallBrickPos[i].x += 1.5f;
+				_smallBrickPos[i].x += 2.5f;	
 			}
-			_smallBrickPos[i].y -= maxVelocity.y * delta_time + 1.0f / 2 * maxAccel.y * delta_time * delta_time;
+			maxVelocity.y += maxAccel.y * delta_time;
+			_smallBrickPos[i].y += maxVelocity.y * delta_time;
 		}
 	}
 }
