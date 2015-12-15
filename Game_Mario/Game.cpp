@@ -1,6 +1,5 @@
 ﻿#include "Game.h"
 
-#define FRAME_RATE 60
 CGame::CGame()
 {
 
@@ -8,8 +7,6 @@ CGame::CGame()
 
 CGame::~CGame()
 {
-	if (m_pTimer)
-		delete m_pTimer;
 }
 
 int CGame::Init(HINSTANCE hInstance)
@@ -42,10 +39,6 @@ int CGame::Init(HINSTANCE hInstance)
 		return 0;
 	}
 
-	//	Khởi tạo đối tượng Timer
-	m_pTimer = CTimer::GetInstance();
-	m_pTimer->SetMaxFps((float)GAME_FPS);
-
 	return 1;
 }
 
@@ -53,10 +46,35 @@ void CGame::Run()
 {
 	MSG msg;
 	int done = 0;
-	m_pTimer->StartCount();
+	float frame_start = GetTickCount();;
 
-	float frame_start = GetTickCount();
-	float tick_per_frame = 1000 / FRAME_RATE; 
+	float tick_per_frame = 1000 / GAME_FPS;
+
+	while (!done)
+	{
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{
+			if (msg.message == WM_QUIT) done = 1;
+
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+
+		float now = GetTickCount();
+		float _DeltaTime = now - frame_start;
+		if (_DeltaTime >= tick_per_frame)
+		{
+			frame_start = now;
+			CGameStateManager::getInstance()->GetCurrentState()->Run(_DeltaTime);
+		}
+		CGameKeyboard::getInstance()->PollKeyboard();
+	}
+	/*MSG msg;
+	int done = 0;
+
+	DWORD now = GetTickCount();
+
+	float tick_per_frame = 1000 / GAME_FPS; 
 
 	while (!done)
 	{
@@ -79,5 +97,5 @@ void CGame::Run()
 				CGameStateManager::getInstance()->GetCurrentState()->Run(_DeltaTime);
 			}
 		}
-	}
+	}*/
 }

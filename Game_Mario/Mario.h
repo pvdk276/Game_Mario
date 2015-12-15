@@ -12,7 +12,8 @@ enum ActionMario
 	stand,
 	jump,
 	run,
-	down
+	down,
+	drop
 };
 enum StatusMario
 {
@@ -25,7 +26,8 @@ class CMario : public CSingleton<CMario>, public CLivingObject
 private:
 	bool m_collisionX;
 	bool m_collisionY;
-	bool m_inAir;
+	CBox mario;
+	CBox land;
 public:
 	D3DXVECTOR2 accel;
 	D3DXVECTOR2 maxVelocity;

@@ -124,6 +124,8 @@ CBox GetSweptBroadphaseBox(CBox b, float deltaTime)
 //check if b2 within b1(broadphase box)
 bool AABBCheck(CBox b1, CBox b2)
 {
+	CBox a = b1;
+	CBox b = b2;
 	return !(b1.x + b1.w / 2 < b2.x - b2.w / 2 ||
 		b1.x - b1.w / 2 > b2.x + b2.w / 2 ||
 		b1.y + b1.h / 2 < b2.y - b2.h / 2 ||
