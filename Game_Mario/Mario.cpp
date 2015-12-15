@@ -31,7 +31,7 @@ void CMario::Init()
 	this->smallMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/SmallMario.png", 50, 50, 10, 5, NULL);
 	this->bigMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/BigMario.png", 50, 100, 10, 5, NULL);
 
-	this->sprite = this->smallMario;
+	this->sprite = this->bigMario;
 }
 
 void CMario::Render()
@@ -119,7 +119,10 @@ void CMario::Update(float delta_time)
 				normalx, normaly, delta_time);
 			if (value < 1) //a collision occur
 			{
-				CBinaryTree::getInstance()->listCurrentObject->at(i)->isCollision = true;
+				if(this->sprite == bigMario)
+					CBinaryTree::getInstance()->listCurrentObject->at(i)->isDead = true;
+				else if (this->sprite == smallMario) // Khi mario nho va cham
+					CBinaryTree::getInstance()->listCurrentObject->at(i)->isCollision = true;
 				break;
 			}
 		}

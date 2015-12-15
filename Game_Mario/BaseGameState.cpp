@@ -19,7 +19,6 @@ void CBaseGameState::Run(float deltaTime)
 	// Vẽ thế giới
 	if (CGameGraphic::getInstance()->beginRender())
 	{
-		//CInput::GetInstance()->ProcessKeyBroad();
 		this->Render();
 		CGameGraphic::getInstance()->endRender();
 	}	

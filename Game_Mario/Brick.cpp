@@ -6,11 +6,14 @@ CBrick::CBrick(int id, D3DXVECTOR2 position, CSprite* sprite) : CStaticObject(id
 	this->type = BRICK;
 	this->width = 50;
 	this->height = 50;
-
+	
 	maxVelocity = D3DXVECTOR2(0.0f, 120.0f);
 	maxAccel = D3DXVECTOR2(0, -9.8);
 
+	this->isDead = false;
 	this->isCollision = false;
+	this->pos = position.y;
+	this->direct = 1;
 	//gach no
 	_smallBrick[0] = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/ExploredBrick.png", 26, 24, 1, 1, NULL);
 	_smallBrick[1] = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/ExploredBrick.png", 26, 24, 1, 1, NULL);
@@ -37,11 +40,11 @@ CBrick::~CBrick()
 
 void CBrick::Update(float delta_time)
 {
-	 if (this->isCollision) 
-	{		
+	if (this->isDead) 
+	{	
 		for (int i = 0; i < 4; i++)
 		{
-			if (i == 0 || i==3) // m?nh bên trái
+			if (i == 0 || i==3) // máº£nh bÃªn trÃ¡i
 			{
 				_smallBrickPos[i].x -= 2.5f;
 			}
@@ -53,12 +56,26 @@ void CBrick::Update(float delta_time)
 			_smallBrickPos[i].y += maxVelocity.y * delta_time;
 		}
 	}
+	if (this->isCollision)
+	{
+		position.y += direct;
+		if (position.y > pos + 5)
+			direct = -1;
+		if (position.y == pos)
+		{
+			this->isCollision = false;
+			direct = 1;
+		}
+			
+	}
+
 }
 
 void CBrick::Render()
 {
-	sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, 0);
-	if (this->isCollision)
+	if(!this->isDead)
+		sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, 0);
+	else
 	{
 		for (int i = 0; i < 4; i++)
 		{
