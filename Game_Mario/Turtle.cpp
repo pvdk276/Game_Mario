@@ -30,7 +30,7 @@ void CTurtle::Update(float delta_time)
 			if (value < 1) //a collision occur
 			{
 				this->velocity.x *= -1;
-				this->direction *= -1;
+				direction *= -1;
 				break;
 			}
 		}

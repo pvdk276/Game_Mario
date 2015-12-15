@@ -7,9 +7,6 @@
 class CLivingObject : public CDynamicObject
 {
 public:
-	bool isDead;
-	//int direction;
-	//D3DXVECTOR2 velocity;
 
 	CLivingObject(int id, D3DXVECTOR2 position, CSprite* sprite);
 	~CLivingObject();

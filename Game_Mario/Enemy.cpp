@@ -6,7 +6,7 @@ CEnemy::CEnemy(int id, D3DXVECTOR2 position, CSprite * sprite) : CLivingObject(i
 	this->type = ENEMY;
 	this->width = 50;
 	this->height = 50;
-
+	this->isDead = false;
 	this->velocity = D3DXVECTOR2(-5.0f, 0.0f);
 }
 
@@ -26,21 +26,25 @@ void CEnemy::Update(float delta_time)
 			float value = CCollision::getInstance()->CheckCollision(
 				this->GetBox(),
 				CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(),
-				normalx,normaly,delta_time);
+				normalx, normaly, delta_time);
 			if (value < 1) //a collision occur
 			{
 				this->velocity.x *= -1;
-				this->direction *= -1;
 				break;
 			}
 		}
 	}
 	
-	//update animation
-	UpdateAnimation(delta_time, 0, 1, direction);
-
-	//update position
-	this->position.x += this->velocity.x*delta_time;
+	
+	if (!this->isDead)
+	{
+		//update animation
+		UpdateAnimation(delta_time, 0, 1, direction);
+		//update position
+		this->position.x += this->velocity.x*delta_time;
+	}
+	else
+		UpdateAnimation(delta_time, 3, 3, direction);
 }
 
 void CEnemy::Render()

@@ -16,6 +16,7 @@ public:
 	float height;
 	CSprite* sprite;
 	bool isCollision;
+	bool isDead;
 	CBaseObject(int id, D3DXVECTOR2 position, CSprite* sprite);
 	~CBaseObject();
 	
