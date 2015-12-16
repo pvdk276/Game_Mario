@@ -7,6 +7,7 @@
 #include "GameStateManager.h"
 #include "Camera.h"
 #include "Mario.h"
+#include "GameOverState.h"
 
 class CPlayState : public CBaseGameState
 {
@@ -20,7 +21,7 @@ public:
 	void LoadResource();
 	void Update(float deltaTime);
 	void Render();
-	void End();
+	void End(int status);
 
 };
 

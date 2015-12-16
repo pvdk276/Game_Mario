@@ -24,6 +24,8 @@ CMario::CMario() : CLivingObject(0, D3DXVECTOR2(120.0f, 225.0f), NULL)
 
 CMario::~CMario()
 {
+	if (this->sprite)
+		delete this->sprite;
 }
 
 void CMario::Init()
@@ -96,7 +98,10 @@ void CMario::Update(float delta_time)
 				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
 				{
 					//Mario chết
-					this->isDead = true;
+					if (this->sprite == smallMario)
+						this->isDead = true;
+					else //Nếu là mario lớn
+						this->sprite = smallMario;
 				}
 				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
 				{

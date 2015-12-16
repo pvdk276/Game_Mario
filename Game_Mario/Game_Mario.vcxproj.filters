@@ -161,6 +161,9 @@
     <ClCompile Include="PlayState.cpp">
       <Filter>Source Files\Game Mario\StateManagement</Filter>
     </ClCompile>
+    <ClCompile Include="GameOverState.cpp">
+      <Filter>Source Files\Game Mario\StateManagement</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameWindow.h">
@@ -299,6 +302,9 @@
       <Filter>Source Files\Game Mario\StateManagement</Filter>
     </ClInclude>
     <ClInclude Include="PlayState.h">
+      <Filter>Source Files\Game Mario\StateManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverState.h">
       <Filter>Source Files\Game Mario\StateManagement</Filter>
     </ClInclude>
   </ItemGroup>

@@ -8,7 +8,6 @@ CPlayState::CPlayState()
 
 CPlayState::~CPlayState()
 {
-
 }
 
 void CPlayState::Init()
@@ -51,7 +50,11 @@ void CPlayState::Update(float deltaTime)
 	CCamera::getInstance()->Update(CMario::getInstance()->position.x, CMario::getInstance()->position.y);
 	if (CGameKeyboard::getInstance()->IsKeyDown(DIK_ESCAPE))
 	{
-		this->End();
+		this->End(1);	//Pause State
+	}
+	if (CMario::getInstance()->isDead)
+	{
+		this->End(2);	//GameOver State
 	}
 }
 
@@ -67,13 +70,27 @@ void CPlayState::Render()
 	
 }
 
-void CPlayState::End()
+/// <summary>
+/// Ends the specified status.
+/// </summary>
+/// <param name="status">Kiểu kết thúc của game: 1-Pause game, 2-GameOver</param>
+void CPlayState::End(int status)
 {
 	//Khi state kết thúc m_bFinished = true
 	this->m_bFinished = true;
 	//Xóa con trỏ m_pNextState
 	delete m_pNextState;
-	m_pNextState = new CMenuState();
+	switch (status)
+	{
+	case 1:
+		m_pNextState = new CMenuState();
+		break;
+	case 2:
+		m_pNextState = new CGameOverState();
+		break;
+	default:
+		m_pNextState = new CMenuState();
+	}
 	CGameStateManager::getInstance()->ChangeState(m_pNextState);
 }
 
