@@ -8,6 +8,6 @@ public:
 	CStone(int id, D3DXVECTOR2 position, CSprite* sprite);
 	~CStone();
 
-	void Update();
+	void Update(float delta_time);
 	void Render();
 };

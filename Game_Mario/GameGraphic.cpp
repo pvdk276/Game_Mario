@@ -19,8 +19,8 @@ int CGameGraphic::Init(HWND hWnd)
 	ZeroMemory(&d3dpp, sizeof(d3dpp));
 	d3dpp.BackBufferCount = 1;
 	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
-	d3dpp.BackBufferWidth = SCREEN_WIDTH;
-	d3dpp.BackBufferHeight = SCREEN_HEIGHT;
+	d3dpp.BackBufferWidth = 750;
+	d3dpp.BackBufferHeight = 750;
 	d3dpp.hDeviceWindow = hWnd;
 	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
 	d3dpp.Windowed = true;
@@ -111,20 +111,26 @@ void CGameGraphic::destroy()
 	}
 }
 
-void CGameGraphic::beginRender()
+int CGameGraphic::beginRender()
 {
+	if (this->d3ddv->BeginScene())
+		return 0;
 	if (NULL == d3ddv)
 	{
 		OutputDebugString("[GameGraphic.cpp] Cannot begin render.");
-		return;
+		return 0;
 	}
 
 	// Clear the backbuffer to a black color
 	d3ddv->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+	this->spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+	return 1;
 }
 
 void CGameGraphic::endRender()
 {
+	this->spriteHandler->End();
+	this->d3ddv->EndScene();
 	// Present the backbuffer contents to the display
 	d3ddv->Present(NULL, NULL, NULL, NULL);
 }
@@ -141,6 +147,16 @@ LPDIRECT3DSURFACE9 CGameGraphic::getBackbuffer()
 		return NULL;
 	else
 		return backbuffer;
+}
+
+LPD3DXSPRITE CGameGraphic::getSpriteHander()
+{
+	return this->spriteHandler;
+}
+
+LPDIRECT3DDEVICE9 CGameGraphic::GetDevice()
+{
+	return this->d3ddv;
 }
 
 void CGameGraphic::strectRect(LPDIRECT3DSURFACE9 srcSurface, const RECT * srcRect, const RECT * destRect)

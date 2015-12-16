@@ -15,7 +15,7 @@ public:
 	CBinaryTree();
 
 	//build a binary tree
-	bool init(std::string listObjectPath, std::string binaryTreePath);
+	bool Init(std::string listObjectPath, std::string binaryTreePath);
 
 	//get list current object in view port
 	void loadListCurrentObject(CBinaryNode* node, int posX, int posY, int width, int height);

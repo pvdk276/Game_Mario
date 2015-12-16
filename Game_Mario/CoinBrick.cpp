@@ -11,7 +11,7 @@ CCoinBrick::~CCoinBrick()
 {
 }
 
-void CCoinBrick::Update()
+void CCoinBrick::Update(float delta_time)
 {
 
 }

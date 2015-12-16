@@ -5,7 +5,6 @@ CCloud::CCloud(int id, D3DXVECTOR2 position, CSprite* sprite) : CDynamicObject(i
 	this->type = CLOUD;
 	this->width = 150;
 	this->height = 100;
-	direction = 1;
 }
 
 CCloud::~CCloud()
@@ -19,8 +18,5 @@ void CCloud::Update(float delta_time)
 }
 void CCloud::Render()
 {
-	if (curTime == 0)
-	{
-		sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, curIndex);
-	}
+	sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, curIndex);
 }

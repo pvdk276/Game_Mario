@@ -5,7 +5,7 @@
 #include "Global.h"
 #include "Singleton.h"
 
-class CGameGraphic : public CSingleton<CGameGraphic>
+class CGameGraphic :public CSingleton<CGameGraphic>
 {
 public:
 	LPDIRECT3D9 d3d;
@@ -30,7 +30,7 @@ public:
 	void destroy();
 
 	//clear backbuffer tr??c khi render
-	void beginRender();
+	int beginRender();
 
 	//??a hình ?nh t? backfuffer lên frontbuffer
 	//g?i ??n hàm Present
@@ -38,6 +38,8 @@ public:
 
 	//l?y con tr? ??n backbuffer hi?n th?i
 	LPDIRECT3DSURFACE9 getBackbuffer();
+	LPD3DXSPRITE getSpriteHander();
+	LPDIRECT3DDEVICE9 GetDevice();
 
 	//v? hình ?nh lên backbuffer hi?n th?i
 	//srcSurface surface c?n v?

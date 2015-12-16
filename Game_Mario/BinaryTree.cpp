@@ -6,16 +6,16 @@
 #include "Pipe.h"
 #include "Grass.h"
 #include "Brick.h"
-#include "MushroomBlock.h"
+#include "Block.h"
 #include "CoinBrick.h"
-#include "CoinBlock.h"
-#include "Coin.h"
+#include "Bonus.h"
 #include "CarnivorousFlower.h"
 #include "Stone.h"
-#include "PipeUp1.h"
 #include "Enemy.h"
 #include "Turtle.h"
 #include "FireTurtle.h"
+#include "Spring.h"
+#include "Bar.h"
 
 
 //load data from binary_tree_file_text to a list of binary node
@@ -33,7 +33,7 @@ CBinaryTree::CBinaryTree()
 	listCurrentObject = new std::vector<CBaseObject*>();
 }
 
-bool CBinaryTree::init(std::string listObjectPath, std::string binaryTreePath)
+bool CBinaryTree::Init(std::string listObjectPath, std::string binaryTreePath)
 {
 	std::vector<CBaseObject*> listObject = loadListObject(listObjectPath);
 
@@ -177,41 +177,95 @@ std::vector<CBaseObject*> loadListObject(std::string listObjectPath)
 		D3DXVECTOR2 position = D3DXVECTOR2(x, y);
 		switch (typeId)
 		{
-		case 4:  
-			//gameObject = new CLand(position, land);
+		case 1:  
+			gameObject = new CLand(id, LEFT_LAND, position, land);
 			break;
 
-		case 112: gameObject = new CCloud(id, position, cloud);
+		case 2: 
+			gameObject = new CLand(id, CENTER_LAND, position, land);
 			break;
 
-		/*case 7: gameObject = new CPipe();
-			break;*/
-
-		case 59: gameObject = new CGrass(id, position, grass);
+		case 3: 
+			gameObject = new CLand(id, RIGHT_LAND, position, land);
 			break;
 
-		//case 62: gameObject = new CBrick();
-		//	break;
-		//case 218: gameObject = new CMushroomBlock();
-		//	break;
-		//case 221: gameObject = new CCoinBrick();
-		//	break;
-		//case 222: gameObject = new CCoinBlock();
-		//	break;
-		//case 223: gameObject = new CCoin();
-		//	break;
-		////case 115: gameObject = new CFlowerPipe();//Ch?a có
-		//	break;
-		////case 147: gameObject = new CpipeDown1();//Ch?a  có
-		//	break;
-		//case 42: gameObject = new CStone();
-		//	break;
-		//case 61: gameObject = new CFlower();
-		//	break;
-		//case 169: gameObject = new CPipeUp1();
-		//	break;
+		case 4:
+			gameObject = new CCloud(id, position, cloud);
+			break;
+
+		case 5:
+			gameObject = new CPipe(id, PIPE, position, pipe, nullptr);
+			break;
+
+		case 6: 
+			gameObject = new CGrass(id, position, grass);
+			break;
+
+		case 7: 
+			gameObject = new CBrick(id, position, brick);
+			break;
+
+		case 8: 
+			gameObject = new CBlock(id, RED_MUSHROOM_BLOCK, position, secretBlock, mushroom);
+			break;
+
+		case 9: 
+			gameObject = new CCoinBrick(id, position, brick);
+			break;
+
+		case 10: 
+			gameObject = new CBlock(id, COIN_BLOCK, position, secretBlock, coin);
+			break;
+
+		case 11: 
+			gameObject = new CBonus(id, COIN, position, coin);
+			break;
+
+		case 12: 
+			gameObject = new CPipe(id, CARNIVOROUS_FLOWER_PIPE, position, pipe, carnivorousFlower);		
+			break;
+
+		case 13: 
+			gameObject = new CPipe(id, PIPE_DOWN, position, pipe, NULL);
+			break;
+
+		case 14: 
+			gameObject = new CStone(id, position, stone);
+			break;
+
+		case 15: 
+			gameObject = new CCarnivorousFlower(id, position, carnivorousFlower);
+			break;
+
+		case 16: 
+			gameObject = new CPipe(id, PIPE_UP, position, pipe, NULL);
+			break;
+
+		case 17:
+			gameObject = new CSpring(id, position, spring);
+			break;
+
+		case 18:
+			gameObject = new CBar(id, position, bar);
+			break;
+
+		case 19:
+			gameObject = new CEnemy(id, position, enemy);
+			break;
+			
+		case 20:
+			gameObject = new CTurtle(id, TURTLE, position, turtle);
+			break;
+
+		case 21:
+			gameObject = new CTurtle(id, WING_TURTLE, position, turtle);
+			break;
+
+		case 22:
+			gameObject = new CFireTurtle(id, position, turtle2);
+			break;
 		}
-		//= new CBaseObject(id, typeId, x, y, width, height);
+
 		listObject.push_back(gameObject);
 	}
 

@@ -47,11 +47,11 @@ int CGameKeyboard::Init(HINSTANCE hInstance, HWND hWnd)
 	}
 
 	result = keyboard->Acquire();
-	if (FAILED(result))
+	/*if (FAILED(result))
 	{
 		MessageBox(NULL, "Cannot acquire keyboard", "Error", MB_OK);
 		return 0;
-	}
+	}*/
 
 	return 1;
 }
@@ -122,17 +122,17 @@ bool CGameKeyboard::IsKeyDown(int KeyCode)
 	return (keyStates[KeyCode] & 0x80) > 0;
 }
 
-//bool CGameKeyboard::IsKeyUp(int KeyCode)
-//{
-//	if (keyStates[key] & 0x80)
-//		return false;
-//	return true;
-//}
+bool CGameKeyboard::IsKeyUp(int KeyCode)
+{
+	if (keyStates[KeyCode] & 0x80)
+		return false;
+	return true;
+}
 
 void CGameKeyboard::PollKeyboard()
 {
 	keyboard->Poll();
-	if (keyboard->GetDeviceState(sizeof(keyStates), (LPVOID)&keyStates))
+	if (keyboard->GetDeviceState(sizeof(keyStates), (LPVOID)&keyStates) != DI_OK)
 	{
 		//keyboard device lost, try to re-acquire
 		keyboard->Acquire();
