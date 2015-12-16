@@ -6,14 +6,11 @@
 #include "Pipe.h"
 #include "Grass.h"
 #include "Brick.h"
-#include "MushroomBlock.h"
+#include "Block.h"
 #include "CoinBrick.h"
-#include "CoinBlock.h"
-#include "Coin.h"
+#include "Bonus.h"
 #include "CarnivorousFlower.h"
 #include "Stone.h"
-#include "PipeUp1.h"
-#include "PipeDown1.h"
 #include "Enemy.h"
 #include "Turtle.h"
 #include "FireTurtle.h"
@@ -209,7 +206,7 @@ std::vector<CBaseObject*> loadListObject(std::string listObjectPath)
 			break;
 
 		case 8: 
-			gameObject = new CMushroomBlock(id, position, mushroom);
+			gameObject = new CBlock(id, RED_MUSHROOM_BLOCK, position, secretBlock, mushroom);
 			break;
 
 		case 9: 
@@ -217,22 +214,19 @@ std::vector<CBaseObject*> loadListObject(std::string listObjectPath)
 			break;
 
 		case 10: 
-			gameObject = new CCoinBlock(id, position, secretBlock);
+			gameObject = new CBlock(id, COIN_BLOCK, position, secretBlock, coin);
 			break;
 
 		case 11: 
-			gameObject = new CCoin(id, position, coin);
+			gameObject = new CBonus(id, COIN, position, coin);
 			break;
 
 		case 12: 
-			//gameObject = new CCarnivorousFlower(id, position, carnivorousFlower); 
-			gameObject = new CPipe(id, CARNIVOROUS_FLOWER_PIPE, position, pipe, carnivorousFlower);
-		
-		
+			gameObject = new CPipe(id, CARNIVOROUS_FLOWER_PIPE, position, pipe, carnivorousFlower);		
 			break;
 
 		case 13: 
-			gameObject = new CPipeDown1(id, position, pipe);
+			gameObject = new CPipe(id, PIPE_DOWN, position, pipe, NULL);
 			break;
 
 		case 14: 
@@ -244,7 +238,7 @@ std::vector<CBaseObject*> loadListObject(std::string listObjectPath)
 			break;
 
 		case 16: 
-			gameObject = new CPipeUp1(id, position, pipe);
+			gameObject = new CPipe(id, PIPE_UP, position, pipe, NULL);
 			break;
 
 		case 17:
