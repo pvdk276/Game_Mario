@@ -8,6 +8,21 @@
 
 CMario::CMario() : CLivingObject(0, D3DXVECTOR2(120.0f, 225.0f), NULL)
 {
+	this->Init();
+}
+
+CMario::~CMario()
+{
+	if (this->sprite)
+		delete this->sprite;
+	if (smallMario)
+		delete smallMario;
+	if (bigMario)
+		delete bigMario;
+}
+
+void CMario::Init()
+{
 	velocity = D3DXVECTOR2(0.0f, -10.0f);
 	accel = D3DXVECTOR2(0.0f, 0.0f);
 	maxVelocity = D3DXVECTOR2(40.0f, 80.0f);
@@ -20,16 +35,7 @@ CMario::CMario() : CLivingObject(0, D3DXVECTOR2(120.0f, 225.0f), NULL)
 	height = 50;
 
 	this->isDead = false;
-}
 
-CMario::~CMario()
-{
-	if (this->sprite)
-		delete this->sprite;
-}
-
-void CMario::Init()
-{
 	this->smallMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/SmallMario.png", 50, 50, 10, 5, NULL);
 	this->bigMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/BigMario.png", 50, 100, 10, 5, NULL);
 
@@ -361,4 +367,10 @@ void CMario::UpdateAnimation(float delta_time)
 			CAnimation::UpdateAnimation(delta_time, 8, 8, direction);
 		}
 	}
+}
+
+void CMario::Reset()
+{
+	position = D3DXVECTOR2(120.0f, 225.0f);
+	this->Init();
 }

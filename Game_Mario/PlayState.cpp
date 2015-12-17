@@ -8,6 +8,10 @@ CPlayState::CPlayState()
 
 CPlayState::~CPlayState()
 {
+	if (CCamera::getInstance()) delete CCamera::getInstance();
+	if (CMario::getInstance()) delete CMario::getInstance();
+	if (CBinaryTree::getInstance()) delete CBinaryTree::getInstance();
+	if (CGameGraphic::getInstance()) delete CGameGraphic::getInstance();
 }
 
 void CPlayState::Init()
@@ -83,7 +87,11 @@ void CPlayState::End(int status)
 	switch (status)
 	{
 	case 1:
+	{
+		//delete CMario::getInstance();
+		CMario::getInstance()->Reset();
 		m_pNextState = new CMenuState();
+	}		
 		break;
 	case 2:
 		m_pNextState = new CGameOverState();
