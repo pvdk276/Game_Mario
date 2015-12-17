@@ -78,7 +78,17 @@ void CMenuState::End()
 {
 	this->m_bFinished = true;
 	delete m_pNextState;
-	m_pNextState = new CPlayState();
+	switch (m_indexMenu)
+	{
+	case 0:
+		m_pNextState = new CPlayState();
+		break;
+	case 4:
+		exit(0);
+		break;
+	default:
+		break;
+	}	
 	CGameStateManager::getInstance()->ChangeState(m_pNextState);
 }
 
