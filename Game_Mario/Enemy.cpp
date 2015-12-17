@@ -20,7 +20,9 @@ void CEnemy::Update(float delta_time)
 	//Check collision
 	for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
 	{
-		if (CBinaryTree::getInstance()->listCurrentObject->at(i)->type == PIPE || CBinaryTree::getInstance()->listCurrentObject->at(i)->type == STONE)
+		if (CBinaryTree::getInstance()->listCurrentObject->at(i)->type == PIPE || 
+			CBinaryTree::getInstance()->listCurrentObject->at(i)->type == STONE ||
+			CBinaryTree::getInstance()->listCurrentObject->at(i)->type == CARNIVOROUS_FLOWER_PIPE)
 		{
 			float normalx, normaly;
 			float value = CCollision::getInstance()->CheckCollision(
@@ -35,6 +37,10 @@ void CEnemy::Update(float delta_time)
 		}
 	}
 	
+	if (this->isDead)
+	{
+		position.y += 0;
+	}
 	
 	if (!this->isDead)
 	{
