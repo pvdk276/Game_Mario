@@ -49,4 +49,5 @@ public:
 	void Update(float delta_time);
 	void UpdatePosition(float delta_time);
 	void UpdateAnimation(float delta_time);
+	void Reset();
 };

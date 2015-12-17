@@ -8,6 +8,15 @@
 
 CMario::CMario() : CLivingObject(0, D3DXVECTOR2(120.0f, 225.0f), NULL)
 {
+	this->Init();
+}
+
+CMario::~CMario()
+{
+}
+
+void CMario::Init()
+{
 	velocity = D3DXVECTOR2(0.0f, -10.0f);
 	accel = D3DXVECTOR2(0.0f, 0.0f);
 	maxVelocity = D3DXVECTOR2(40.0f, 80.0f);
@@ -20,17 +29,9 @@ CMario::CMario() : CLivingObject(0, D3DXVECTOR2(120.0f, 225.0f), NULL)
 	height = 50;
 
 	this->isDead = false;
-}
 
-CMario::~CMario()
-{
-}
-
-void CMario::Init()
-{
 	this->smallMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/SmallMario.png", 50, 50, 10, 5, NULL);
 	this->bigMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/BigMario.png", 50, 100, 10, 5, NULL);
-
 	this->sprite = this->bigMario;
 }
 
@@ -96,7 +97,10 @@ void CMario::Update(float delta_time)
 				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
 				{
 					//Mario chết
-					this->isDead = true;
+					if (this->sprite == smallMario)
+						this->isDead = true;
+					else //Nếu là mario lớn
+						this->sprite = smallMario;
 				}
 				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
 				{
@@ -289,8 +293,6 @@ void CMario::Update(float delta_time)
 	{
 		isDead = true;
 	}
-		
-
 	UpdatePosition(delta_time);
 	UpdateAnimation(delta_time);
 }
@@ -357,4 +359,9 @@ void CMario::UpdateAnimation(float delta_time)
 			CAnimation::UpdateAnimation(delta_time, 8, 8, direction);
 		}
 	}
+}
+void CMario::Reset()
+{
+	position = D3DXVECTOR2(120.0f, 225.0f);
+	this->Init();
 }

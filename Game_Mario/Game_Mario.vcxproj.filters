@@ -152,6 +152,9 @@
     <ClCompile Include="Bonus.cpp">
       <Filter>Source Files\Game Mario\Game Object\Living Object</Filter>
     </ClCompile>
+    <ClCompile Include="GameOverState.cpp">
+      <Filter>Source Files\Game Mario\StateManagement</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameWindow.h">
@@ -282,6 +285,9 @@
     </ClInclude>
     <ClInclude Include="Bonus.h">
       <Filter>Source Files\Game Mario\Game Object\Living Object</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverState.h">
+      <Filter>Source Files\Game Mario\StateManagement</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -7,12 +7,13 @@
 #include "GameStateManager.h"
 #include "Camera.h"
 #include "Mario.h"
+#include "GameOverState.h"
 
 class CPlayState : public CBaseGameState
 {
 private:
 	CSprite* sprMenu;
-	int x;
+	int status;
 public:
 	CPlayState();
 	~CPlayState();
@@ -21,7 +22,4 @@ public:
 	void Update(float deltaTime);
 	void Render();
 	void End();
-
 };
-
-
