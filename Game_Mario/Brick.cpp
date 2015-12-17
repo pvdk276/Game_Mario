@@ -56,6 +56,7 @@ void CBrick::Update(float delta_time)
 			_smallBrickPos[i].y += maxVelocity.y * delta_time;
 		}
 	}
+	//Khi va chạm của mario nhỏ
 	if (this->isCollision)
 	{
 		position.y += direct;

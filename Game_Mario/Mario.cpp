@@ -6,7 +6,7 @@
 #include <sstream>
 
 
-CMario::CMario() : CLivingObject(0, D3DXVECTOR2(120.0f, 225.0f), NULL)
+CMario::CMario() : CLivingObject(0, D3DXVECTOR2(120.0f, 600.0f), NULL)
 {
 	this->Init();
 }
@@ -17,22 +17,16 @@ CMario::~CMario()
 
 void CMario::Init()
 {
-	velocity = D3DXVECTOR2(0.0f, -10.0f);
+	velocity = D3DXVECTOR2(0.0f, -20.0f);
 	accel = D3DXVECTOR2(0.0f, 0.0f);
 	maxVelocity = D3DXVECTOR2(40.0f, 80.0f);
 	maxAccel = D3DXVECTOR2(5.0f, 30.0f);
-
 	m_action = stand;
-	animationTime = TIME_ANIMATION;
-
-	width = 50;
-	height = 50;
-
 	this->isDead = false;
 
 	this->smallMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/SmallMario.png", 50, 50, 10, 5, NULL);
 	this->bigMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/BigMario.png", 50, 100, 10, 5, NULL);
-	this->sprite = this->bigMario;
+	changeMario(smallMario);
 }
 
 void CMario::Render()
@@ -46,20 +40,28 @@ void CMario::Render()
 /// <param name="delta_time">The delta_time.</param>
 void CMario::Update(float delta_time)
 {
+#pragma region Xử lý va chạm của Mario
 	m_collisionX = false;
 	m_collisionY = false;
-	m_inAir = false;
-	for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
+	for (int i = 0; i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
 	{
-		// va chạm với ống
-		if (CBinaryTree::getInstance()->listCurrentObject->at(i)->type == PIPE)
+		mario = CMario::getInstance()->GetBox();
+		object = CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox();
+		float normalx, normaly;
+		float value = CCollision::getInstance()->CheckCollision(
+			mario, object, normalx, normaly, delta_time);
+		if (value < 1) //a collision occur
 		{
-			float normalx, normaly;
-			float value = CCollision::getInstance()->CheckCollision(
-				CMario::getInstance()->GetBox(),
-				CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(),
-				normalx, normaly, delta_time);
-			if (value < 1) //a collision occur
+			objectName = CBinaryTree::getInstance()->listCurrentObject->at(i)->type;
+			switch (CBinaryTree::getInstance()->listCurrentObject->at(i)->type)
+			{
+
+			//Va chạm với ống
+			case PIPE:
+			case STONE:
+			case CARNIVOROUS_FLOWER_PIPE:
+			case PIPE_UP:
+			case PIPE_DOWN:
 			{
 				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
 				{
@@ -68,31 +70,20 @@ void CMario::Update(float delta_time)
 				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
 				{
 					m_collisionY = true;
-					if (m_action == jump)
+					if (m_action == jump || m_action == drop)
 					{
 						if (velocity.x != 0) m_action = run;
 						else m_action = stand;
-						velocity.y = -10.0f;
-						accel.y = 0.0f;
-						/*if (position.y > 125)
-						position.y = 125;*/
+						accel.y = - 2;
 					}
+					if (position.y > object.y + object.h / 2 + height / 2)
+						position.y = object.y + object.h / 2 + height / 2;
 				}
-				break;
 			}
-		}
-	}
-	//va chạm vs enemy
-	for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
-	{
-		if (CBinaryTree::getInstance()->listCurrentObject->at(i)->type == ENEMY)
-		{
-			float normalx, normaly;
-			float value = CCollision::getInstance()->CheckCollision(
-				CMario::getInstance()->GetBox(),
-				CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(),
-				normalx, normaly, delta_time);
-			if (value < 1) //a collision occur
+			break;
+
+			//Va chạm với Enemy
+			case ENEMY:
 			{
 				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
 				{
@@ -100,54 +91,112 @@ void CMario::Update(float delta_time)
 					if (this->sprite == smallMario)
 						this->isDead = true;
 					else //Nếu là mario lớn
-						this->sprite = smallMario;
+					{
+						changeMario(smallMario);
+					}
+						
 				}
 				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
 				{
+					//if (this->sprite == bigMario)
+					//	this->sprite = smallMario;
+					//else
+					//	this->sprite = bigMario;
 					//Enemy chết
 					CBinaryTree::getInstance()->listCurrentObject->at(i)->isDead = true;
 				}
-				break;
 			}
-		}
-	}
-	//va cham gach
-	for (int i = 0; i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
-	{
-		if (CBinaryTree::getInstance()->listCurrentObject->at(i)->type == BRICK)
-		{
-			float normalx, normaly;
-			float value = CCollision::getInstance()->CheckCollision(
-				CMario::getInstance()->GetBox(),
-				CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(),
-				normalx, normaly, delta_time);
-			if (value < 1) //a collision occur
+			break;
+			
+			//Va chạm với gạch
+			case BRICK:
 			{
-				if(this->sprite == bigMario)
-					CBinaryTree::getInstance()->listCurrentObject->at(i)->isDead = true;
-				else if (this->sprite == smallMario) // Khi mario nho va cham
-					CBinaryTree::getInstance()->listCurrentObject->at(i)->isCollision = true;
+				/*if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)*/
+				if(normalx == 0.0f && normaly == -1.0f)
+				{
+					if (this->sprite == bigMario)
+						CBinaryTree::getInstance()->listCurrentObject->at(i)->isDead = true;
+					else if (this->sprite == smallMario) // Khi mario nho va cham
+						CBinaryTree::getInstance()->listCurrentObject->at(i)->isCollision = true;
+				}
+				if (normalx == 0.0f && normaly == 1.0f)
+				{
+					m_collisionY = true;	
+					if (m_action == jump || m_action == drop)
+					{
+						if (velocity.x != 0) m_action = run;
+						else m_action = stand;
+						accel.y = -2;
+
+					}
+					if (position.y > object.y + object.h / 2 + height / 2 + 1)
+						position.y = object.y + object.h / 2 + height / 2 + 1;
+				}
+				
+			}
+			break;
+
+			//Va chạm với đất
+			case LEFT_LAND:
+			case RIGHT_LAND:
+			case CENTER_LAND:
+			{
+				/*if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
+				{
+					m_collisionX = true;
+				}*/
+				if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
+				{
+					m_collisionY = true;
+					if (m_action == jump || m_action == drop)
+					{
+						if (velocity.x != 0) m_action = run;
+						else m_action = stand;
+						accel.y = -2;
+
+					}
+					if (position.y > object.y + object.h / 2 + height / 2)
+						position.y = object.y + object.h / 2 + height / 2;
+				}
+			}
+			break;
+
+			default:
 				break;
 			}
 		}
 	}
 
+	//Va chạm với tường
+	if (position.x < 50.0f)
+	{
+		m_collisionX = true;
+	}
+#pragma endregion
+	
+
+#pragma region Di chuyển của Mario
 	//update state
 	if (CGameKeyboard::getInstance()->IsKeyDown(DIK_DOWN))
 	{
-		if (m_action != jump)
+		if (m_action != jump && m_action != drop)
 		{
 			m_action = down;
-			velocity = D3DXVECTOR2(0.0f, 0.0f);
-			accel = D3DXVECTOR2(0.0f, 0.0f);
+			velocity.x = 0;
+			accel.x = 0;
 		}
 	}
-	if (m_action != down) //Đang di chuyển
+	if (m_action != down && m_action != drop) //Đang di chuyển
 	{
 		if (CGameKeyboard::getInstance()->IsKeyDown(DIK_RIGHT))
 		{
 			if (m_collisionX == true && direction == -1)
+			{
+				if (position.x < 50)
+					position.x = 50;
 				velocity.x = 0;
+			}
+				
 			direction = 1;
 			if (velocity.x < maxVelocity.x)
 			{
@@ -164,7 +213,12 @@ void CMario::Update(float delta_time)
 		else if (CGameKeyboard::getInstance()->IsKeyDown(DIK_LEFT))
 		{
 			if (m_collisionX == true && direction == 1)
+			{
+				if (position.x < 50)
+					position.x = 50;
 				velocity.x = 0;
+			}
+				
 			direction = -1;
 			
 			if (velocity.x > direction * maxVelocity.x)
@@ -181,7 +235,7 @@ void CMario::Update(float delta_time)
 		}
 		else // KHông nhấn nút (trượt)
 		{
-			if (m_action != jump) m_action = stand;
+			if (m_action != jump && m_action != drop) m_action = stand;
 			if (velocity.x != 0)
 			{
 				accel.x = -1.0f * direction * maxAccel.x;
@@ -210,54 +264,13 @@ void CMario::Update(float delta_time)
 			m_action = stand;
 		}
 	}
-	
-	//Va chạm với đất
-	for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
-	{
-		if (CBinaryTree::getInstance()->listCurrentObject->at(i)->type == LEFT_LAND ||
-			CBinaryTree::getInstance()->listCurrentObject->at(i)->type == RIGHT_LAND ||
-			CBinaryTree::getInstance()->listCurrentObject->at(i)->type == CENTER_LAND)
-		{
-			CBox mario = CMario::getInstance()->GetBox();
-			CBox land = CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox();
-			float normalx, normaly;
-			float value = CCollision::getInstance()->CheckCollision(
-				mario,
-				land,
-				normalx, normaly, delta_time);
-			if (value < 1) //a collision occur
-			{
-				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
-				{
-					m_collisionX = true;
-				}
-				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
-				{
-					this->m_inAir = false;
-					m_collisionY = true;
-					if (m_action == jump)
-					{
-						if (velocity.x != 0) m_action = run;
-						else m_action = stand;
-						velocity.y = -10.0f;
-						accel.y = 0.0f;
-						
-					}
-					if (position.y > 125)
-						position.y = 125;
-				}
-				break;
-			}
-			else
-				this->m_inAir = true;
-		}
-	}
+
 	//Sự kiện nhấn phím khi nhảy
 	if (CGameKeyboard::getInstance()->IsKeyDown(DIK_SPACE))
 	{
-		if (m_action != down && m_action != jump)
+		if (m_action != down && m_action != jump && m_action != drop)
 		{
-			if (!this->m_inAir)
+			if (m_collisionY)
 			{
 				m_collisionY = false;
 				velocity.y = 0;
@@ -266,7 +279,6 @@ void CMario::Update(float delta_time)
 			}
 			
 		}
-		//velocityY = velocity.y;
 	}
 	//Khi mario nhảy
 	if (m_action == jump)
@@ -275,24 +287,24 @@ void CMario::Update(float delta_time)
 		{
 			accel.y = -1.0f * maxAccel.y;
 		}
-
-		//nếu đang đứng trên pipe
-
-
-		/*if (position.y < 125)
-		{
-		if (velocity.x != 0) m_action = run;
-		else m_action = stand;
-		velocity.y = 0.0f;
-		accel.y = 0.0f;
-		position.y = 125;
-		}*/
+	}
+	//Nếu mario đang rơi xuống
+	if (m_collisionY == false && m_action != jump)
+	{
+		m_action = drop;
+		accel.y = -2;
+		if (direction == 1)
+			velocity.x = 2;
+		else
+			velocity.x = -2;
 	}
 	//Mario dead
 	if (position.y <= 0.0f)
 	{
 		isDead = true;
 	}
+#pragma endregion
+
 	UpdatePosition(delta_time);
 	UpdateAnimation(delta_time);
 }
@@ -303,7 +315,6 @@ void CMario::UpdatePosition(float delta_time)
 		position.x += velocity.x * delta_time + 1.0f / 2 * accel.x * delta_time * delta_time;
 		velocity.x += accel.x * delta_time;
 	}
-		
 
 	if (!m_collisionY)
 	{
@@ -348,20 +359,54 @@ void CMario::UpdateAnimation(float delta_time)
 			CAnimation::UpdateAnimation(delta_time, 7, 7, direction);
 		}
 	}
+	else if (m_action == drop)
+	{
+		if (direction == 1)
+		{
+			CAnimation::UpdateAnimation(delta_time, 2, 2, direction);
+		}
+		else
+		{
+			CAnimation::UpdateAnimation(delta_time, 7, 7, direction);
+		}
+	}
 	else //if(m_action == down)
 	{
 		if (direction == 1)
 		{
-			CAnimation::UpdateAnimation(delta_time, 3, 3, direction);
+			if(this->sprite == smallMario)
+				CAnimation::UpdateAnimation(delta_time, 3, 3, direction);
+			else
+				CAnimation::UpdateAnimation(delta_time, 4, 4, direction);
 		}
 		else
 		{
-			CAnimation::UpdateAnimation(delta_time, 8, 8, direction);
+			if(this->sprite == smallMario)
+				CAnimation::UpdateAnimation(delta_time, 8, 8, direction);
+			else
+				CAnimation::UpdateAnimation(delta_time, 9, 9, direction);
 		}
 	}
 }
 void CMario::Reset()
 {
-	position = D3DXVECTOR2(120.0f, 225.0f);
+	position = D3DXVECTOR2(120.0f, 600.0f);
 	this->Init();
+}
+void CMario::changeMario(CSprite* mario)
+{
+	this->sprite = mario;
+	width = mario->width;
+	height = mario->height;
+	if (mario == smallMario)
+	{
+		maxVelocity = D3DXVECTOR2(35.0f, 60.0f);
+		maxAccel = D3DXVECTOR2(4.0f, 25.0f);
+	}
+	else
+	{
+		maxVelocity = D3DXVECTOR2(40.0f, 80.0f);
+		maxAccel = D3DXVECTOR2(5.0f, 30.0f);
+	}
+		
 }

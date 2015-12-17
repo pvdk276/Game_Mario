@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Singleton.h"
 #include "LivingObject.h"
 #include "Sprite.h"
@@ -12,7 +12,8 @@ enum ActionMario
 	stand,
 	jump,
 	run,
-	down
+	down,
+	drop
 };
 enum StatusMario
 {
@@ -23,9 +24,11 @@ enum StatusMario
 class CMario : public CSingleton<CMario>, public CLivingObject
 {
 private:
-	bool m_collisionX;
-	bool m_collisionY;
-	bool m_inAir;
+	bool m_collisionX; // 1: va chạm bên phải, -1: va chạm bên trái
+	bool m_collisionY; // 1: va chạm phía dưới, -1: va chạm phía trên
+	CBox mario;
+	CBox object;
+	ObjectName objectName;
 public:
 	D3DXVECTOR2 accel;
 	D3DXVECTOR2 maxVelocity;
@@ -50,4 +53,5 @@ public:
 	void UpdatePosition(float delta_time);
 	void UpdateAnimation(float delta_time);
 	void Reset();
+	void changeMario(CSprite* mario);
 };
