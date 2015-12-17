@@ -138,6 +138,7 @@ void CMario::Update(float delta_time)
 			}
 		}
 	}
+
 	//update state
 	if (CGameKeyboard::getInstance()->IsKeyDown(DIK_DOWN))
 	{

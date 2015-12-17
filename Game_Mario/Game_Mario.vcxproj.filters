@@ -104,14 +104,8 @@
     <ClCompile Include="Turtle.cpp">
       <Filter>Source Files\Game Mario\Game Object\Living Object</Filter>
     </ClCompile>
-    <ClCompile Include="PipeUp1.cpp">
-      <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
-    </ClCompile>
     <ClCompile Include="CarnivorousFlower.cpp">
       <Filter>Source Files\Game Mario\Game Object\Living Object</Filter>
-    </ClCompile>
-    <ClCompile Include="PipeDown1.cpp">
-      <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
     </ClCompile>
     <ClCompile Include="Cloud.cpp">
       <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
@@ -121,9 +115,6 @@
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Source Files\Game Mario\Game Object\Living Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Coin.cpp">
-      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
     </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>Source Files\Game Mario</Filter>
@@ -140,14 +131,8 @@
     <ClCompile Include="Bar.cpp">
       <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
     </ClCompile>
-    <ClCompile Include="CoinBlock.cpp">
-      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
-    </ClCompile>
     <ClCompile Include="Land.cpp">
       <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
-    </ClCompile>
-    <ClCompile Include="MushroomBlock.cpp">
-      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
     </ClCompile>
     <ClCompile Include="BaseGameState.cpp">
       <Filter>Source Files\Game Mario\StateManagement</Filter>
@@ -163,6 +148,11 @@
     </ClCompile>
     <ClCompile Include="GameOverState.cpp">
       <Filter>Source Files\Game Mario\StateManagement</Filter>
+    <ClCompile Include="Block.cpp">
+      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Bonus.cpp">
+      <Filter>Source Files\Game Mario\Game Object\Living Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -247,14 +237,8 @@
     <ClInclude Include="Turtle.h">
       <Filter>Source Files\Game Mario\Game Object\Living Object</Filter>
     </ClInclude>
-    <ClInclude Include="PipeUp1.h">
-      <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
-    </ClInclude>
     <ClInclude Include="CarnivorousFlower.h">
       <Filter>Source Files\Game Mario\Game Object\Living Object</Filter>
-    </ClInclude>
-    <ClInclude Include="PipeDown1.h">
-      <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
     </ClInclude>
     <ClInclude Include="Cloud.h">
       <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
@@ -264,9 +248,6 @@
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Source Files\Game Mario\Game Object\Living Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Coin.h">
-      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
     </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Source Files\Game Mario</Filter>
@@ -283,14 +264,8 @@
     <ClInclude Include="Bar.h">
       <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
     </ClInclude>
-    <ClInclude Include="CoinBlock.h">
-      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
-    </ClInclude>
     <ClInclude Include="Land.h">
       <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
-    </ClInclude>
-    <ClInclude Include="MushroomBlock.h">
-      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
     </ClInclude>
     <ClInclude Include="BaseGameState.h">
       <Filter>Source Files\Game Mario\StateManagement</Filter>
@@ -306,6 +281,11 @@
     </ClInclude>
     <ClInclude Include="GameOverState.h">
       <Filter>Source Files\Game Mario\StateManagement</Filter>
+    <ClInclude Include="Block.h">
+      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Bonus.h">
+      <Filter>Source Files\Game Mario\Game Object\Living Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

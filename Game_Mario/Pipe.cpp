@@ -20,7 +20,6 @@ CPipe::~CPipe()
 void CPipe::Update(float delta_time)
 {
 	if(type == CARNIVOROUS_FLOWER_PIPE) flower->Update(delta_time);
-
 }
 
 void CPipe::Render()
