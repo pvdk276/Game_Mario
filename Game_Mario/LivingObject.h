@@ -15,4 +15,6 @@ public:
 	virtual void Render() = 0;
 
 	std::string GetType();
+
+	bool isDead;
 };

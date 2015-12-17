@@ -8,7 +8,10 @@ CPlayState::CPlayState()
 
 CPlayState::~CPlayState()
 {
-
+	if (CCamera::getInstance()) delete CCamera::getInstance();
+	if (CMario::getInstance()) delete CMario::getInstance();
+	if (CBinaryTree::getInstance()) delete CBinaryTree::getInstance();
+	if (CGameGraphic::getInstance()) delete CGameGraphic::getInstance();
 }
 
 void CPlayState::Init()
@@ -16,6 +19,7 @@ void CPlayState::Init()
 	this->m_bFinished = false;
 	//sprMenu = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Other/Background.png", 800, 600, 1, 1, NULL);
 	this->LoadResource();
+	status = 0;
 }
 
 void CPlayState::LoadResource()
@@ -51,7 +55,13 @@ void CPlayState::Update(float deltaTime)
 	CCamera::getInstance()->Update(CMario::getInstance()->position.x, CMario::getInstance()->position.y);
 	if (CGameKeyboard::getInstance()->IsKeyDown(DIK_ESCAPE))
 	{
-		this->End();
+		status = 1;
+		this->End();	//Pause State
+	}
+	if (CMario::getInstance()->isDead)
+	{
+		status = 2;
+		this->End();	//GameOver State
 	}
 }
 
@@ -73,7 +83,21 @@ void CPlayState::End()
 	this->m_bFinished = true;
 	//Xóa con trỏ m_pNextState
 	delete m_pNextState;
-	m_pNextState = new CMenuState();
+	switch (status)
+	{
+	case 1:		
+		m_pNextState = new CMenuState();
+	break;
+	case 2:
+	{
+		//delete CMario::getInstance();
+		CMario::getInstance()->Reset();
+		m_pNextState = new CGameOverState();
+	}	
+		break;
+	default:
+		m_pNextState = new CMenuState();
+	}
 	CGameStateManager::getInstance()->ChangeState(m_pNextState);
 }
 

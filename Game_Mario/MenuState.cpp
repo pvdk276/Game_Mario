@@ -1,7 +1,6 @@
 #include "MenuState.h"
 #include "GameGraphic.h"
 
-
 CMenuState::CMenuState()
 {
 	
@@ -10,7 +9,8 @@ CMenuState::CMenuState()
 
 CMenuState::~CMenuState()
 {
-
+	if (sprMenu)
+		delete sprMenu;
 }
 
 void CMenuState::Init()
