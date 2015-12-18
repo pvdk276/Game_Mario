@@ -5,6 +5,9 @@
 
 class CBonus : public CLivingObject
 {
+private:
+	bool m_collisionX;
+	bool m_collisionY;
 public:
 	CBonus(int id, ObjectName type, D3DXVECTOR2 position, CSprite* sprite);
 	~CBonus();

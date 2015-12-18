@@ -27,7 +27,7 @@ private:
 	bool m_collisionX; // 1: va chạm bên phải, -1: va chạm bên trái
 	bool m_collisionY; // 1: va chạm phía dưới, -1: va chạm phía trên
 	CBox mario;
-	CBox object;
+	CBaseObject* object;
 	ObjectName objectName;
 public:
 	D3DXVECTOR2 accel;
