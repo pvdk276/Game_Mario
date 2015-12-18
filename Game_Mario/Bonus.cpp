@@ -1,14 +1,15 @@
-#include "Bonus.h"
+﻿#include "Bonus.h"
 #include "BinaryTree.h"
 
-CBonus::CBonus(int id, ObjectName type, D3DXVECTOR2 position, CSprite * sprite) : CLivingObject(id, position, sprite)
+CBonus::CBonus(int id, ObjectName typeObj, D3DXVECTOR2 position, CSprite * sprite) : CLivingObject(id, position, sprite)
 {
-	type = type;
+	type = typeObj;
 	width = 50;
 	height = 50;
-	isOutOfBlock = false;
 	posOfBlock = position;
-	velocity = D3DXVECTOR2(0.0f, 0.0f);
+	velocity = D3DXVECTOR2(0.0f, 2.0f);
+	maxAccel = D3DXVECTOR2(10.0f, 10.0f);
+	MaxVelocity = D3DXVECTOR2(15.0f, 50.0f);
 }
 
 CBonus::~CBonus()
@@ -20,80 +21,122 @@ void CBonus::Update(float delta_time)
 	//Check collision
 	m_collisionX = false;
 	m_collisionY = false;
+
 	for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
 	{
-		if (//CBinaryTree::getInstance()->listCurrentObject->at(i)->type == BRICK ||
-			//CBinaryTree::getInstance()->listCurrentObject->at(i)->type == COIN_BRICK ||
-			CBinaryTree::getInstance()->listCurrentObject->at(i)->type == LEFT_LAND ||
-			CBinaryTree::getInstance()->listCurrentObject->at(i)->type == CENTER_LAND ||
-			CBinaryTree::getInstance()->listCurrentObject->at(i)->type == RIGHT_LAND
-			)
+		m_pObject = CBinaryTree::getInstance()->listCurrentObject->at(i);
+		float normalx, normaly;
+		float value = CCollision::getInstance()->CheckCollision(
+			this->GetBox(),
+			m_pObject->GetBox(),
+			normalx, normaly, delta_time);
+		if (value < 1) //a collision occur
 		{
-			float normalx, normaly;
-			float value = CCollision::getInstance()->CheckCollision(
-				this->GetBox(),
-				CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(),
-				normalx, normaly, delta_time);
-			if (value < 1) //a collision occur
+			switch (m_pObject->type)
 			{
-				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
+			case PIPE:
+			case STONE:
+			case CARNIVOROUS_FLOWER_PIPE:
+			case PIPE_UP:
+			case PIPE_DOWN:
+			{
+				if (normalx == 1.0f && normaly == 0.0f || normalx == -1.0f && normaly == 0.0f)
 				{
 					m_collisionX = true;
 				}
-				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
+			}
+			break;
+			case BRICK:
+			case COIN_BRICK:
+			case LEFT_LAND:
+			case CENTER_LAND:
+			case RIGHT_LAND:
+			{
+				if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
 				{
 					m_collisionY = true;
-					if (position.y > CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox().y + 
-						CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox().h / 2 + height / 2)
-						position.y = CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox().y + 
-						CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox().h / 2 + height / 2;
+					if(velocity.x == 0.0f)
+						velocity.x = MaxVelocity.x;
+					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
+						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
 				}
+			}
+			break;
+			default:
+				break;
 			}
 		}
 	}
 
-	if (!isOutOfBlock)
-	{		
-		if (position.y < posOfBlock.y + width)
-		{
-			position.y += velocity.y * delta_time;
-		}
+	if (position.y > posOfBlock.y + width + 50)
+	{
+		if (velocity.y > 0) velocity.y *= -1;
+	}
+
+	//Tính vận tốc cho bonus
+	if (m_collisionX)
+		velocity.x *= -1;
+	if (velocity.y < MaxVelocity.y && velocity.y > 0 || velocity.y > - MaxVelocity.y && velocity.y < 0)
+	{
+		if (velocity.y > 0)
+			accel.y = maxAccel.y;
 		else
-		{
-			position.y = posOfBlock.y + width;
-			velocity.y = 0.0f;
-			isOutOfBlock = true;
-		}
+			accel.y = - maxAccel.y;
+	}
+	else
+	{
+		if(velocity.y > 0)
+			velocity.y = MaxVelocity.y;
+		else
+			velocity.y = - MaxVelocity.y;
+		accel.y = 0;
 	}
 	
-	if (type == COIN)
+	//Cập nhật vị trí và sprite cho từng loại đối tượng
+	switch (type)
+	{
+	case RED_MUSHROOM:
+	case GREEN_MUSHROOM:
+	{
+		updatePosition(delta_time);
+		updateAnimation(delta_time);
+	}
+	break;
+	case COIN:
 	{
 		UpdateAnimation(delta_time, 0, 1, direction);
-		if (isOutOfBlock) isDead = true;
 	}
-	else if (type == FLOWER)
+	break;
+	case FLOWER:
 	{
 		UpdateAnimation(delta_time, 0, 3, direction);
 	}
-	else if (type == STAR)
+	break;
+	case STAR:
 	{
 		UpdateAnimation(delta_time, 0, 3, direction);
 	}
-	else if (type == RED_MUSHROOM || type == GREEN_MUSHROOM)
-	{
-		if (isOutOfBlock) velocity.x = -10.0f;
-	}
-
-	if (isOutOfBlock)
-	{
-		if (velocity.y > 0) velocity.y = -velocity.y;
-		if (!m_collisionX)
-			position.x += velocity.x * delta_time;
-		if (!m_collisionY)
-			position.y += velocity.y * delta_time;
+	break;
+	default:
+		break;
 	}
 }
+void CBonus::updatePosition(float delta_time)
+{
+	if (!m_collisionY)
+	{
+		position.y += velocity.y * delta_time + 1.0f / 2 * accel.y * delta_time * delta_time;
+		velocity.y += accel.y * delta_time;
+	}
+	else
+	{
+		position.x += velocity.x * delta_time;
+	}
+}
+void CBonus::updateAnimation(float delta_time)
+{
 
+}
 void CBonus::Render()
 {
 	if(type == RED_MUSHROOM) sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, 0);

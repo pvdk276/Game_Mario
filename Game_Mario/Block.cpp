@@ -25,7 +25,6 @@ void CBlock::Update(float delta_time)
 	if (this->isDead)
 	{
 		bonus->Update(delta_time);
-		ActiveBonus();
 	}
 }
 

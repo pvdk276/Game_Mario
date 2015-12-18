@@ -8,13 +8,18 @@ class CBonus : public CLivingObject
 private:
 	bool m_collisionX;
 	bool m_collisionY;
+	CBaseObject* m_pObject;
+	D3DXVECTOR2 accel;
+	D3DXVECTOR2 maxAccel;
+	D3DXVECTOR2 MaxVelocity;
+	D3DXVECTOR2 posOfBlock;
+
+	void updatePosition(float delta_time);
+	void updateAnimation(float delta_time);
 public:
-	CBonus(int id, ObjectName type, D3DXVECTOR2 position, CSprite* sprite);
+	CBonus(int id, ObjectName typeObj, D3DXVECTOR2 position, CSprite* sprite);
 	~CBonus();
 
 	void Update(float delta_time);
 	void Render();
-	
-	bool isOutOfBlock;
-	D3DXVECTOR2 posOfBlock;
 };
