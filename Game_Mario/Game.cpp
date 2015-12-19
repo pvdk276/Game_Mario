@@ -69,33 +69,4 @@ void CGame::Run()
 		}
 		CGameKeyboard::getInstance()->PollKeyboard();
 	}
-	/*MSG msg;
-	int done = 0;
-
-	DWORD now = GetTickCount();
-
-	float tick_per_frame = 1000 / GAME_FPS; 
-
-	while (!done)
-	{
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-		{
-			if (msg.message == WM_QUIT) done = 1;
-
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
-		else
-		{
-			float now = GetTickCount();
-			float _DeltaTime = now - frame_start;
-			if (_DeltaTime >= tick_per_frame)
-			{
-				frame_start = now;
-
-				CGameKeyboard::getInstance()->PollKeyboard();
-				CGameStateManager::getInstance()->GetCurrentState()->Run(_DeltaTime);
-			}
-		}
-	}*/
 }

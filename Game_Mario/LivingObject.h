@@ -2,7 +2,7 @@
 
 #include "DynamicObject.h"
 #include "Camera.h"
-
+#include "Animation.h"
 
 class CLivingObject : public CDynamicObject
 {

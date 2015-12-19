@@ -10,6 +10,8 @@ CBonus::CBonus(int id, ObjectName typeObj, D3DXVECTOR2 position, CSprite * sprit
 	velocity = D3DXVECTOR2(0.0f, 2.0f);
 	maxAccel = D3DXVECTOR2(10.0f, 10.0f);
 	MaxVelocity = D3DXVECTOR2(15.0f, 50.0f);
+	this->isDead = false;
+	this->isCollision = false;
 }
 
 CBonus::~CBonus()
@@ -18,59 +20,92 @@ CBonus::~CBonus()
 
 void CBonus::Update(float delta_time)
 {
+#pragma region Mushroom
 	//Check collision
 	m_collisionX = false;
 	m_collisionY = false;
 
-	for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
+	//Nếu là RED_MUSHROOM hoặc GREEN_MUSHROOM thì xét va chạm
+	if (type == RED_MUSHROOM || type == GREEN_MUSHROOM)
 	{
-		m_pObject = CBinaryTree::getInstance()->listCurrentObject->at(i);
-		float normalx, normaly;
-		float value = CCollision::getInstance()->CheckCollision(
-			this->GetBox(),
-			m_pObject->GetBox(),
-			normalx, normaly, delta_time);
-		if (value < 1) //a collision occur
+		for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
 		{
-			switch (m_pObject->type)
+			m_pObject = CBinaryTree::getInstance()->listCurrentObject->at(i);
+			float normalx, normaly;
+			float value = CCollision::getInstance()->CheckCollision(
+				this->GetBox(),
+				m_pObject->GetBox(),
+				normalx, normaly, delta_time);
+			if (value < 1) //a collision occur
 			{
-			case PIPE:
-			case STONE:
-			case CARNIVOROUS_FLOWER_PIPE:
-			case PIPE_UP:
-			case PIPE_DOWN:
-			{
-				if (normalx == 1.0f && normaly == 0.0f || normalx == -1.0f && normaly == 0.0f)
+				switch (m_pObject->type)
 				{
-					m_collisionX = true;
-				}
-			}
-			break;
-			case BRICK:
-			case COIN_BRICK:
-			case LEFT_LAND:
-			case CENTER_LAND:
-			case RIGHT_LAND:
-			{
-				if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
+				case PIPE:
+				case STONE:
+				case CARNIVOROUS_FLOWER_PIPE:
+				case PIPE_UP:
+				case PIPE_DOWN:
 				{
-					m_collisionY = true;
-					if(velocity.x == 0.0f)
-						velocity.x = MaxVelocity.x;
-					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
-						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+					if (normalx == 1.0f && normaly == 0.0f || normalx == -1.0f && normaly == 0.0f)
+					{
+						m_collisionX = true;
+					}
 				}
-			}
-			break;
-			default:
 				break;
+				case BRICK:
+				case COIN_BRICK:
+				case LEFT_LAND:
+				case CENTER_LAND:
+				case RIGHT_LAND:
+				{
+					if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
+					{
+						m_collisionY = true;
+						if (velocity.x == 0.0f)
+							velocity.x = MaxVelocity.x;
+						if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
+							position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+					}
+				}
+				break;
+				default:
+					break;
+				}
 			}
 		}
-	}
+	}	
+#pragma endregion
 
+	//Bonus khi di chuyển lên lên
 	if (position.y > posOfBlock.y + width + 50)
 	{
-		if (velocity.y > 0) velocity.y *= -1;
+		switch (type)
+		{
+		case RED_MUSHROOM:
+		case GREEN_MUSHROOM:
+		{
+			if (velocity.y > 0) velocity.y *= -1;
+		}
+		break;
+		case COIN:
+		{
+			this->isDead = true;
+		}
+		break;
+		case FLOWER:
+		{
+			
+		}
+		break;
+		case STAR:
+		{
+			
+		}
+		break;
+		default:
+			break;
+		}
+		
 	}
 
 	//Tính vận tốc cho bonus
@@ -92,18 +127,33 @@ void CBonus::Update(float delta_time)
 		accel.y = 0;
 	}
 	
+	//update Postion and Animation
+	updatePosAnima(delta_time);
+}
+void CBonus::updatePosAnima(float delta_time)
+{
 	//Cập nhật vị trí và sprite cho từng loại đối tượng
 	switch (type)
 	{
 	case RED_MUSHROOM:
 	case GREEN_MUSHROOM:
 	{
-		updatePosition(delta_time);
-		updateAnimation(delta_time);
+		if (!m_collisionY)
+		{
+			position.y += velocity.y * delta_time + 1.0f / 2 * accel.y * delta_time * delta_time;
+			velocity.y += accel.y * delta_time;
+		}
+		else
+		{
+			position.x += velocity.x * delta_time;
+		}
 	}
 	break;
 	case COIN:
 	{
+		position.y += velocity.y * delta_time + 1.0f / 2 * accel.y * delta_time * delta_time;
+		velocity.y += accel.y * delta_time;
+
 		UpdateAnimation(delta_time, 0, 1, direction);
 	}
 	break;
@@ -121,25 +171,13 @@ void CBonus::Update(float delta_time)
 		break;
 	}
 }
-void CBonus::updatePosition(float delta_time)
-{
-	if (!m_collisionY)
-	{
-		position.y += velocity.y * delta_time + 1.0f / 2 * accel.y * delta_time * delta_time;
-		velocity.y += accel.y * delta_time;
-	}
-	else
-	{
-		position.x += velocity.x * delta_time;
-	}
-}
-void CBonus::updateAnimation(float delta_time)
-{
 
-}
 void CBonus::Render()
 {
-	if(type == RED_MUSHROOM) sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, 0);
-	else if(type == GREEN_MUSHROOM) sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, 1);
-	else sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, curIndex);
+	if (!this->isDead)
+	{
+		if (type == RED_MUSHROOM) sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, 0);
+		else if (type == GREEN_MUSHROOM) sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, 1);
+		else sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, curIndex);
+	}	
 }

@@ -6,6 +6,9 @@ CBlock::CBlock(int id, ObjectName type, D3DXVECTOR2 position, CSprite* sprite1, 
 	this->width = 50;
 	this->height = 50;
 	this->isDead = false;
+	this->isCollision = false;
+	this->pos = position.y;
+	this->direct = 1;
 
 	if (type == COIN_BLOCK) bonus = new CBonus(id, COIN, position, sprite2);
 	else if (type == FLOWER_BLOCK) bonus = new CBonus(id, FLOWER, position, sprite2);
@@ -20,11 +23,26 @@ CBlock::~CBlock()
 
 void CBlock::Update(float delta_time)
 {
-	UpdateAnimation(delta_time, 0, 1, direction);
+	if (this->isCollision)
+	{
+		position.y += direct;
+		if (position.y > pos + 5)
+			direct = -1;
+		if (position.y == pos)
+		{
+			this->isCollision = false;
+			direct = 1;
+		}
+	}
 
 	if (this->isDead)
 	{
 		bonus->Update(delta_time);
+		UpdateAnimation(delta_time, 2, 2, direction);
+	}
+	else
+	{
+		UpdateAnimation(delta_time, 0, 1, direction);
 	}
 }
 
@@ -32,9 +50,4 @@ void CBlock::Render()
 {
 	if (!bonus->isDead) bonus->Render();
 	sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, curIndex);
-}
-
-void CBlock::ActiveBonus()
-{
-	bonus->velocity = D3DXVECTOR2(5.0f, 10.0f);
 }

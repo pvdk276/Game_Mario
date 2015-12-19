@@ -74,9 +74,6 @@
     <ClCompile Include="Brick.cpp">
       <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
     </ClCompile>
-    <ClCompile Include="CoinBrick.cpp">
-      <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
-    </ClCompile>
     <ClCompile Include="Stone.cpp">
       <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
     </ClCompile>
@@ -155,6 +152,9 @@
     <ClCompile Include="GameOverState.cpp">
       <Filter>Source Files\Game Mario\StateManagement</Filter>
     </ClCompile>
+    <ClCompile Include="CoinBrick.cpp">
+      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameWindow.h">
@@ -206,9 +206,6 @@
       <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
     </ClInclude>
     <ClInclude Include="Brick.h">
-      <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
-    </ClInclude>
-    <ClInclude Include="CoinBrick.h">
       <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
     </ClInclude>
     <ClInclude Include="Stone.h">
@@ -288,6 +285,9 @@
     </ClInclude>
     <ClInclude Include="GameOverState.h">
       <Filter>Source Files\Game Mario\StateManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="CoinBrick.h">
+      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

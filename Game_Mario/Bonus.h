@@ -14,8 +14,7 @@ private:
 	D3DXVECTOR2 MaxVelocity;
 	D3DXVECTOR2 posOfBlock;
 
-	void updatePosition(float delta_time);
-	void updateAnimation(float delta_time);
+	void updatePosAnima(float delta_time);	//update position and Animation
 public:
 	CBonus(int id, ObjectName typeObj, D3DXVECTOR2 position, CSprite* sprite);
 	~CBonus();

@@ -46,14 +46,14 @@ void CMario::Update(float delta_time)
 	for (int i = 0; i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
 	{
 		mario = CMario::getInstance()->GetBox();
-		object = CBinaryTree::getInstance()->listCurrentObject->at(i);
+		m_pObject = CBinaryTree::getInstance()->listCurrentObject->at(i);
 		float normalx, normaly;
 		float value = CCollision::getInstance()->CheckCollision(
-			mario, object->GetBox(), normalx, normaly, delta_time);
+			mario, m_pObject->GetBox(), normalx, normaly, delta_time);
 		if (value < 1) //a collision occur
 		{
 			//objectName = CBinaryTree::getInstance()->listCurrentObject->at(i)->type;
-			switch (object->type)
+			switch (m_pObject->type)
 			{
 			//Va chạm với ống
 			case PIPE:
@@ -75,8 +75,8 @@ void CMario::Update(float delta_time)
 						else m_action = stand;
 						accel.y = - 2;
 					}
-					if (position.y > object->GetBox().y + object->GetBox().h / 2 + height / 2)
-						position.y = object->GetBox().y + object->GetBox().h / 2 + height / 2;
+					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
+						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
 				}
 			}
 			break;
@@ -109,7 +109,6 @@ void CMario::Update(float delta_time)
 			
 			//Va chạm với gạch
 			case BRICK:
-			case COIN_BRICK:
 			{
 				/*if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)*/
 				if(normalx == 0.0f && normaly == -1.0f)
@@ -129,22 +128,17 @@ void CMario::Update(float delta_time)
 						accel.y = -2;
 
 					}
-					if (position.y > object->GetBox().y + object->GetBox().h / 2 + height / 2)
-						position.y = object->GetBox().y + object->GetBox().h / 2 + height / 2;
+					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
+						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
 				}
 				
 			}
 			break;
-			//Va chạm với block
-			case COIN_BLOCK:
-			case RED_MUSHROOM_BLOCK:
-			case FLOWER_BLOCK:
-			case GREEN_MUSHROOM_BLOCK:
-			case STAR_BLOCK:
+			case COIN_BRICK:
 			{
 				if (normalx == 0.0f && normaly == -1.0f)
 				{
-					CBinaryTree::getInstance()->listCurrentObject->at(i)->isDead = true;
+					m_pObject->isCollision = true;
 				}
 				if (normalx == 0.0f && normaly == 1.0f)
 				{
@@ -156,8 +150,37 @@ void CMario::Update(float delta_time)
 						accel.y = -2;
 
 					}
-					if (position.y > object->GetBox().y + object->GetBox().h / 2 + height / 2)
-						position.y = object->GetBox().y + object->GetBox().h / 2 + height / 2;
+					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
+						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+				}
+			}
+			break;
+			//Va chạm với block
+			case COIN_BLOCK:
+			case RED_MUSHROOM_BLOCK:
+			case FLOWER_BLOCK:
+			case GREEN_MUSHROOM_BLOCK:
+			case STAR_BLOCK:
+			{
+				if (normalx == 0.0f && normaly == -1.0f)
+				{
+					if (m_pObject->type == COIN_BLOCK)
+						m_pObject->isCollision = true;
+					else
+						m_pObject->isDead = true;
+				}
+				if (normalx == 0.0f && normaly == 1.0f)
+				{
+					m_collisionY = true;
+					if (m_action == jump || m_action == drop)
+					{
+						if (velocity.x != 0) m_action = run;
+						else m_action = stand;
+						accel.y = -2;
+
+					}
+					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
+						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
 				}
 			}
 			break;
@@ -180,8 +203,8 @@ void CMario::Update(float delta_time)
 						accel.y = -2;
 
 					}
-					if (position.y > object->GetBox().y + object->GetBox().h / 2 + height / 2)
-						position.y = object->GetBox().y + object->GetBox().h / 2 + height / 2;
+					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
+						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
 				}
 			}
 			break;

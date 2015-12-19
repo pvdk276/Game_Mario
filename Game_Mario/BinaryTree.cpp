@@ -210,7 +210,7 @@ std::vector<CBaseObject*> loadListObject(std::string listObjectPath)
 			break;
 
 		case 9: 
-			gameObject = new CCoinBrick(id, position, brick);
+			gameObject = new CCoinBrick(id , COIN_BRICK, position, brick, coin);
 			break;
 
 		case 10: 
