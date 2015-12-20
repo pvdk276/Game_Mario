@@ -29,6 +29,7 @@ private:
 	CBox mario;
 	CBaseObject* m_pObject;
 	ObjectName objectName;
+	D3DXVECTOR2 posVelocity;
 public:
 	D3DXVECTOR2 accel;
 	D3DXVECTOR2 maxVelocity;

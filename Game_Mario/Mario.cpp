@@ -17,10 +17,9 @@ CMario::~CMario()
 
 void CMario::Init()
 {
-	velocity = D3DXVECTOR2(0.0f, -20.0f);
+	velocity = D3DXVECTOR2(0.0f, 0.0f);
 	accel = D3DXVECTOR2(0.0f, 0.0f);
-	maxVelocity = D3DXVECTOR2(40.0f, 80.0f);
-	maxAccel = D3DXVECTOR2(5.0f, 30.0f);
+
 	m_action = stand;
 	this->isDead = false;
 
@@ -40,9 +39,11 @@ void CMario::Render()
 /// <param name="delta_time">The delta_time.</param>
 void CMario::Update(float delta_time)
 {
-#pragma region Xử lý va chạm của Mario
 	m_collisionX = false;
 	m_collisionY = false;
+	accel.y = - maxAccel.y;
+#pragma region Xử lý va chạm của Mario
+
 	for (int i = 0; i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
 	{
 		mario = CMario::getInstance()->GetBox();
@@ -62,9 +63,17 @@ void CMario::Update(float delta_time)
 			case PIPE_UP:
 			case PIPE_DOWN:
 			{
-				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
+				if (normalx == -1.0f && normaly == 0.0f) // va chạm trái
 				{
 					m_collisionX = true;
+					if (position.x > m_pObject->GetBox().x + m_pObject->GetBox().w / 2 + width / 2)
+						position.x = m_pObject->GetBox().x + m_pObject->GetBox().w / 2 + width / 2;
+				}
+				else if (normalx == 1.0f && normaly == 0.0f)	// va chạm phải
+				{
+					m_collisionX = true;
+					if (position.x < m_pObject->GetBox().x - m_pObject->GetBox().w / 2 - width / 2)
+						position.x = m_pObject->GetBox().x - m_pObject->GetBox().w / 2 - width / 2;
 				}
 				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
 				{
@@ -73,10 +82,12 @@ void CMario::Update(float delta_time)
 					{
 						if (velocity.x != 0) m_action = run;
 						else m_action = stand;
-						accel.y = - 2;
 					}
 					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
+					{
 						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+					}
+						
 				}
 			}
 			break;
@@ -129,7 +140,9 @@ void CMario::Update(float delta_time)
 
 					}
 					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
+					{
 						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+					}
 				}
 				
 			}
@@ -147,11 +160,13 @@ void CMario::Update(float delta_time)
 					{
 						if (velocity.x != 0) m_action = run;
 						else m_action = stand;
-						accel.y = -2;
 
 					}
 					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
+					{
 						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+					}
+						
 				}
 			}
 			break;
@@ -176,11 +191,11 @@ void CMario::Update(float delta_time)
 					{
 						if (velocity.x != 0) m_action = run;
 						else m_action = stand;
-						accel.y = -2;
-
 					}
 					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
+					{
 						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+					}				
 				}
 			}
 			break;
@@ -196,15 +211,12 @@ void CMario::Update(float delta_time)
 				if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
 				{
 					m_collisionY = true;
-					if (m_action == jump || m_action == drop)
-					{
-						if (velocity.x != 0) m_action = run;
-						else m_action = stand;
-						accel.y = -2;
-
-					}
+					if (velocity.x != 0) m_action = run;
+					else m_action = stand;
 					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
+					{
 						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+					}
 				}
 			}
 			break;
@@ -234,7 +246,7 @@ void CMario::Update(float delta_time)
 			accel.x = 0;
 		}
 	}
-	if (m_action != down && m_action != drop) //Đang di chuyển
+	if (m_action != down && m_action != drop && m_action != jump) //Đang di chuyển
 	{
 		if (CGameKeyboard::getInstance()->IsKeyDown(DIK_RIGHT))
 		{
@@ -256,7 +268,7 @@ void CMario::Update(float delta_time)
 				velocity.x = maxVelocity.x;
 			}
 
-			if (m_action != jump) m_action = run;		
+			m_action = run;		
 		}
 		else if (CGameKeyboard::getInstance()->IsKeyDown(DIK_LEFT))
 		{
@@ -279,22 +291,26 @@ void CMario::Update(float delta_time)
 				accel.x = 0;
 			}
 
-			if (m_action != jump) m_action = run;
+			m_action = run;
 		}
 		else // KHông nhấn nút (trượt)
 		{
-			if (m_action != jump && m_action != drop) m_action = stand;
-			if (velocity.x != 0)
+			m_action = stand;
+			if (velocity.x != 0 && m_action == stand)
 			{
 				accel.x = -1.0f * direction * maxAccel.x;
 			}
 
-			if (direction * velocity.x <= 0)
+			if (velocity.x * direction <= 0)
 			{
 				velocity.x = 0;
-				accel.x = 0;			
-			}
+				accel.x = 0;
+			}	
 		}
+	}
+	else if (m_action == jump || m_action == drop)
+	{
+		velocity.x = posVelocity.x/1.15;
 	}
 	else //m_action = down
 	{
@@ -312,40 +328,25 @@ void CMario::Update(float delta_time)
 			m_action = stand;
 		}
 	}
-
+#pragma region Mario nhảy
 	//Sự kiện nhấn phím khi nhảy
 	if (CGameKeyboard::getInstance()->IsKeyDown(DIK_SPACE))
 	{
-		if (m_action != down && m_action != jump && m_action != drop)
+		if (m_collisionY)
 		{
-			if (m_collisionY)
-			{
-				m_collisionY = false;
-				velocity.y = 0;
-				accel.y = maxAccel.y;
-				m_action = jump;
-			}
-			
-		}
+			position.y += 1;
+			m_action = jump;
+			velocity.y = maxVelocity.y;
+			accel.x = 0;
+			posVelocity.x = velocity.x;
+		}	
 	}
-	//Khi mario nhảy
-	if (m_action == jump)
-	{
-		if (velocity.y >= maxVelocity.y)
-		{
-			accel.y = -1.0f * maxAccel.y;
-		}
-	}
-	//Nếu mario đang rơi xuống
-	if (m_collisionY == false && m_action != jump)
+	if (!m_collisionY && m_action != jump)
 	{
 		m_action = drop;
-		accel.y = -2;
-		if (direction == 1)
-			velocity.x = 2;
-		else
-			velocity.x = -2;
-	}
+		posVelocity.x = velocity.x;
+	}		
+#pragma endregion
 	//Mario dead
 	if (position.y <= 0.0f)
 	{
@@ -361,10 +362,9 @@ void CMario::UpdatePosition(float delta_time)
 	if (!m_collisionX)
 	{
 		position.x += velocity.x * delta_time + 1.0f / 2 * accel.x * delta_time * delta_time;
-		velocity.x += accel.x * delta_time;
+		velocity.x += accel.x * delta_time;		
 	}
-
-	if (!m_collisionY)
+	if(!m_collisionY)
 	{
 		position.y += velocity.y * delta_time + 1.0f / 2 * accel.y * delta_time * delta_time;
 		velocity.y += accel.y * delta_time;
@@ -448,13 +448,13 @@ void CMario::changeMario(CSprite* mario)
 	height = mario->height;
 	if (mario == smallMario)
 	{
-		maxVelocity = D3DXVECTOR2(35.0f, 60.0f);
-		maxAccel = D3DXVECTOR2(4.0f, 25.0f);
+		maxVelocity = D3DXVECTOR2(35.0f, 47.5f); // 35.0 47.5
+		maxAccel = D3DXVECTOR2(4.0f, 7.0f);		// 4.0 7.0
 	}
 	else
 	{
-		maxVelocity = D3DXVECTOR2(40.0f, 80.0f);
-		maxAccel = D3DXVECTOR2(5.0f, 30.0f);
+		maxVelocity = D3DXVECTOR2(35.0f, 50.0f);	//45.0 50.0
+		maxAccel = D3DXVECTOR2(4.0f, 7.0f);			//5.0 7.0
 	}
 		
 }

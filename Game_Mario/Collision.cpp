@@ -14,7 +14,7 @@ float SweptAABB(CBox first, CBox second, float& normalx, float& normaly, float d
 		//Khoảng cách xa nhất từ box1 đến box2
 		dxExit = (second.x + second.w / 2) - (first.x - first.w / 2);
 	}
-	else 
+	else
 	{
 		dxEntry = (second.x + second.w / 2) - (first.x - first.w / 2);
 		dxExit = (second.x - second.w / 2) - (first.x + first.w / 2);
@@ -35,7 +35,7 @@ float SweptAABB(CBox first, CBox second, float& normalx, float& normaly, float d
 	float txEntry, tyEntry;
 	float txExit, tyExit;
 
-	if (first.vx == 0.0f && dxEntry > 0)
+	if (first.vx == 0.0f)
 	{
 		txEntry = -std::numeric_limits<float>::infinity();
 		txExit = std::numeric_limits<float>::infinity();
@@ -48,7 +48,7 @@ float SweptAABB(CBox first, CBox second, float& normalx, float& normaly, float d
 		txExit = dxExit / (first.vx * deltaTime);
 	}
 
-	if (first.vy == 0.0f && dyEntry > 0)
+	if (first.vy == 0.0f)
 	{
 		tyEntry = -std::numeric_limits<float>::infinity();
 		tyExit = std::numeric_limits<float>::infinity();

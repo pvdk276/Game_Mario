@@ -113,16 +113,16 @@ void CBonus::Update(float delta_time)
 		velocity.x *= -1;
 	if (velocity.y < MaxVelocity.y && velocity.y > 0 || velocity.y > - MaxVelocity.y && velocity.y < 0)
 	{
-		if (velocity.y > 0)
+		/*if (velocity.y > 0)
 			accel.y = maxAccel.y;
-		else
+		else*/
 			accel.y = - maxAccel.y;
 	}
 	else
 	{
-		if(velocity.y > 0)
+		/*if(velocity.y > 0)
 			velocity.y = MaxVelocity.y;
-		else
+		else*/
 			velocity.y = - MaxVelocity.y;
 		accel.y = 0;
 	}
