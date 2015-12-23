@@ -2,7 +2,6 @@
 
 CDynamicObject::CDynamicObject(int id, D3DXVECTOR2 position, CSprite* sprite) : CBaseObject(id, position, sprite)
 {
-	animationTime = TIME_ANIMATION;
 	curIndex = 0;
 	curTime = 0;
 	direction = 1;

@@ -48,10 +48,10 @@ void CPlayState::Update(float deltaTime)
 	//Update các đối tượng trong binary tree
 	for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
 	{
-		CBinaryTree::getInstance()->listCurrentObject->at(i)->Update(deltaTime / 100);
+		CBinaryTree::getInstance()->listCurrentObject->at(i)->Update(deltaTime);
 	}
 
-	CMario::getInstance()->Update(deltaTime / 100);
+	CMario::getInstance()->Update(deltaTime);
 	CCamera::getInstance()->Update(CMario::getInstance()->position.x, CMario::getInstance()->position.y);
 	if (CGameKeyboard::getInstance()->IsKeyDown(DIK_ESCAPE))
 	{

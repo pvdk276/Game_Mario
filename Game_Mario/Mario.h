@@ -29,11 +29,25 @@ private:
 	CBox mario;
 	CBaseObject* m_pObject;
 	ObjectName objectName;
-public:
+
+	float magicCounter;	//biến đếm số lần thực hiện chuyển đổi
+	int posIndex;		//index của mario cũ
+	bool doingChanging;	//Mario đang thay đổi
+	CSprite* currentSprite;	//Sprite hiện tại
+
+	float timer;
+	float deltaPosition;
+	float masat;
+	float preDeltaPosition;
+	bool isSlowing;
+
 	D3DXVECTOR2 accel;
 	D3DXVECTOR2 maxVelocity;
 	D3DXVECTOR2 maxAccel;
+	D3DXVECTOR2 posMasat;
 	ActionMario m_action;
+public:
+	
 	//D3DXVECTOR2 m_MaxVeloc;//luu tru maxveloc ban dau,khi va cham cho maxvecloc ve 0
 
 	//D3DXVECTOR2 m_lastPos;
@@ -53,5 +67,5 @@ public:
 	void UpdatePosition(float delta_time);
 	void UpdateAnimation(float delta_time);
 	void Reset();
-	void changeMario(CSprite* mario);
+	void changeMario(CSprite* mario, float number);
 };

@@ -1,8 +1,8 @@
-#include "Animation.h"
+﻿#include "Animation.h"
 
-void CAnimation::UpdateAnimation(float delta_time, int spriteBegin, int spriteEnd, int flag)
+void CAnimation::UpdateAnimation(float delta_time, int spriteBegin, int spriteEnd, int flag, float timeAnimation)
 {
-	if (curTime >= animationTime)
+	if (curTime >= timeAnimation)	//sau animationTime thì sẽ chuyển
 	{
 		if (flag == -1)
 		{

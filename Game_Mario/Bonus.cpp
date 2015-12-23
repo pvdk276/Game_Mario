@@ -136,6 +136,19 @@ void CBonus::updatePosAnima(float delta_time)
 	switch (type)
 	{
 	case RED_MUSHROOM:
+	{
+		if (!m_collisionY)
+		{
+			position.y += velocity.y * delta_time + 1.0f / 2 * accel.y * delta_time * delta_time;
+			velocity.y += accel.y * delta_time;
+		}
+		else
+		{
+			position.x += velocity.x * delta_time;
+		}
+		UpdateAnimation(delta_time, 0, 0, direction);
+	}
+	break;
 	case GREEN_MUSHROOM:
 	{
 		if (!m_collisionY)
@@ -147,6 +160,7 @@ void CBonus::updatePosAnima(float delta_time)
 		{
 			position.x += velocity.x * delta_time;
 		}
+		UpdateAnimation(delta_time, 1, 1, direction);
 	}
 	break;
 	case COIN:
@@ -176,8 +190,6 @@ void CBonus::Render()
 {
 	if (!this->isDead)
 	{
-		if (type == RED_MUSHROOM) sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, 0);
-		else if (type == GREEN_MUSHROOM) sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, 1);
-		else sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, curIndex);
+		sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, curIndex);
 	}	
 }
