@@ -6,6 +6,7 @@ CDynamicObject::CDynamicObject(int id, D3DXVECTOR2 position, CSprite* sprite) : 
 	curTime = 0;
 	direction = 1;
 	velocity = D3DXVECTOR2(0.0f, 0.0f);
+	accel = D3DXVECTOR2(0.0f, 0.0f);
 }
 
 CDynamicObject::~CDynamicObject()
@@ -15,7 +16,7 @@ CDynamicObject::~CDynamicObject()
 
 CBox CDynamicObject::GetBox()
 {
-	CBox box(position.x, position.y, width, height, velocity.x, velocity.y);
+	CBox box(position.x, position.y, width, height, velocity.x, velocity.y, accel.x, accel.y);
 	return box;
 }
 

@@ -28,7 +28,7 @@ void CEnemy::Update(float delta_time)
 			float value = CCollision::getInstance()->CheckCollision(
 				this->GetBox(),
 				CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(),
-				normalx, normaly, delta_time);
+				normalx, normaly, D3DXVECTOR2(0.0f, 0.0f), delta_time);
 			if (value < 1) //a collision occur
 			{
 				this->velocity.x *= -1;

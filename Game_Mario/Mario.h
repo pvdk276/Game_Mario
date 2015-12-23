@@ -35,15 +35,14 @@ private:
 	bool doingChanging;	//Mario đang thay đổi
 	CSprite* currentSprite;	//Sprite hiện tại
 
-	float timer;
+	D3DXVECTOR2 timer;
 	float deltaPosition;
 	float masat;
 	float preDeltaPosition;
 	bool isSlowing;
-
-	D3DXVECTOR2 accel;
-	D3DXVECTOR2 maxVelocity;
-	D3DXVECTOR2 maxAccel;
+	D3DXVECTOR2 tVelocity;
+	D3DXVECTOR2 preVelocity;
+	D3DXVECTOR2 flagAccel;
 	D3DXVECTOR2 posMasat;
 	ActionMario m_action;
 public:

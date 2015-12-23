@@ -9,6 +9,7 @@ class CDynamicObject : public CBaseObject, public CAnimation
 public:
 	int direction;
 	D3DXVECTOR2 velocity;
+	D3DXVECTOR2 accel;
 
 	CDynamicObject(int id, D3DXVECTOR2 position, CSprite* sprite);
 	~CDynamicObject();

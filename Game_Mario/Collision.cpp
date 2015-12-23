@@ -1,13 +1,13 @@
 #include "Collision.h"
 
 //SweptAABB 
-float SweptAABB(CBox first, CBox second, float& normalx, float& normaly, float deltaTime)
+float CCollision::SweptAABB(CBox first, CBox second, float& normalx, float& normaly, D3DXVECTOR2 timer, float deltaTime)
 {
 	float dxEntry, dyEntry;
 	float dxExit, dyExit;
 
 	// find the distance between the objects on the near and far sides for both x and y
-	if (first.vx > 0.0f)	// Nếu box1 đang di chuyển
+	if (first.vx >= 0.0f && first.ax > 0.0f || first.vx > 0 && first.ax < 0)	// Nếu box1 đang di chuyển sang phải ( nhanh dần và chậm dần)
 	{
 		//Khoảng cách gần nhất từ box1 và box2
 		dxEntry = (second.x - second.w / 2) - (first.x + first.w / 2);
@@ -20,7 +20,7 @@ float SweptAABB(CBox first, CBox second, float& normalx, float& normaly, float d
 		dxExit = (second.x - second.w / 2) - (first.x + first.w / 2);
 	}
 
-	if (first.vy > 0.0f)
+	if (first.vy >= 0.0f && first.ay > 0.0f || first.vy > 0 && first.ay < 0)
 	{
 		dyEntry = (second.y - second.h / 2) - (first.y + first.h / 2);
 		dyExit = (second.y + second.h / 2) - (first.y - first.h / 2);
@@ -35,7 +35,7 @@ float SweptAABB(CBox first, CBox second, float& normalx, float& normaly, float d
 	float txEntry, tyEntry;
 	float txExit, tyExit;
 
-	if (first.vx == 0.0f && dxEntry > 0)
+	if (first.vx == 0.0f && first.ax == 0.0f && dxEntry > 0)
 	{
 		txEntry = -std::numeric_limits<float>::infinity();
 		txExit = std::numeric_limits<float>::infinity();
@@ -44,19 +44,19 @@ float SweptAABB(CBox first, CBox second, float& normalx, float& normaly, float d
 	{
 		/*txEntry = dxEntry / first.vx;
 		txExit = dxExit / first.vx;*/
-		txEntry = dxEntry / (first.vx * deltaTime);
-		txExit = dxExit / (first.vx * deltaTime);
+		txEntry = dxEntry / m_deltaPosition.x;
+		txExit = dxExit / m_deltaPosition.x;
 	}
 
-	if (first.vy == 0.0f && dyEntry > 0)
+	if (first.vy == 0.0f && first.ay == 0.0f && dyEntry > 0)
 	{
 		tyEntry = -std::numeric_limits<float>::infinity();
 		tyExit = std::numeric_limits<float>::infinity();
 	}
 	else
 	{
-		tyEntry = dyEntry / (first.vy * deltaTime);
-		tyExit = dyExit / (first.vy * deltaTime);
+		tyEntry = dyEntry / m_deltaPosition.y;
+		tyExit = dyExit / m_deltaPosition.y;
 	}
 
 	// Tìm khoảng thời gian va chạm sớm nhất và va chạm trễ nhất
@@ -107,15 +107,34 @@ float SweptAABB(CBox first, CBox second, float& normalx, float& normaly, float d
 
 //Broadphase box : if block is not within broadphase box, there is not a collision.
 //If block is within broadphase box , there is maybe a collision
-CBox GetSweptBroadphaseBox(CBox b, float deltaTime)
+CBox CCollision::GetSweptBroadphaseBox(CBox b)
 {
 	CBox broadphasebox;
 	float posX;
 	float posY;
-	posX = b.vx > 0 ? (b.x - b.w / 2) : (b.x - b.w / 2) + b.vx * deltaTime;
-	posY = b.vy > 0 ? (b.y + b.h / 2) + b.vy * deltaTime : (b.y + b.h / 2);
-	broadphasebox.w = b.vx > 0 ? b.vx * deltaTime + b.w : b.w - b.vx * deltaTime;
-	broadphasebox.h = b.vy > 0 ? b.vy * deltaTime + b.h : b.h - b.vy * deltaTime;
+
+	if (b.vx >= 0.0f && b.ax > 0.0f || b.vx > 0 && b.ax < 0)
+	{
+		posX = (b.x - b.w / 2);
+		broadphasebox.w = m_deltaPosition.x + b.w;	
+	}
+	else
+	{
+		posX = (b.x - b.w / 2) + m_deltaPosition.x;
+		broadphasebox.w = b.w - m_deltaPosition.x;
+		
+	}
+	if (b.vy >= 0.0f && b.ay > 0.0f || b.vy > 0 && b.ay < 0)
+	{
+		posY = (b.y + b.h / 2) + m_deltaPosition.y;
+		broadphasebox.h = m_deltaPosition.y + b.h;
+	}
+	else
+	{
+		posY = (b.y + b.h / 2);
+		broadphasebox.h = b.h - m_deltaPosition.y;
+	}
+
 	broadphasebox.x = posX + broadphasebox.w / 2;
 	broadphasebox.y = posY - broadphasebox.h / 2;
 	return broadphasebox;
@@ -132,20 +151,21 @@ bool AABBCheck(CBox b1, CBox b2)
 		b1.y - b1.h / 2 > b2.y + b2.h / 2);
 }
 
-float CCollision::CheckCollision(CBox first, CBox second, float& normalx, float& normaly, float deltaTime)
+float CCollision::CheckCollision(CBox first, CBox second, float& normalx, float& normaly, D3DXVECTOR2 timer, float deltaTime)
 {
 	CBox box1 = first;;
 	CBox box2 = second;
 
-	if (first.vx != 0 && second.vx != 0)
+	if (!(first.vx == 0.0f && first.ax == 0.0f) && !(second.vx == 0.0f && second.ax == 0.0f))
 	{
-		second.x += second.vx * deltaTime;
+		second.x += second.vx * deltaTime + 0.5 * second.ax * deltaTime * deltaTime;
 	}
-	if (first.vy != 0 && second.vy != 0)
+	if (!(first.vy == 0.0f && first.ay == 0.0f) && !(second.vy == 0.0f && second.ay == 0.0f))
 	{
-		second.y += second.vy * deltaTime;
+		second.y += second.vy * deltaTime + 0.5* second.ay * deltaTime * deltaTime;
 	}
-	if (first.vx == 0 && second.vx != 0 || first.vy == 0 && second.vy != 0)
+	if (((first.vx == 0 && first.ax == 0) && !(second.vx == 0 && second.ax == 0) ) || 
+		((first.vy == 0 && first.ay == 0) && !(second.vy == 0 && second.ay == 0)))
 	{
 		box1 = second;
 		box2 = first;
@@ -154,12 +174,25 @@ float CCollision::CheckCollision(CBox first, CBox second, float& normalx, float&
 	{
 		box1 = first;
 		box2 = second;
+		//m_timer = timer;
 	}
 
-	CBox broadphasebox = GetSweptBroadphaseBox(box1, deltaTime);
+	DeltaPosition(box1, box2, timer, deltaTime);
+	CBox broadphasebox = GetSweptBroadphaseBox(box1);
+
 	if (AABBCheck(broadphasebox, box2))
 	{
-		return SweptAABB(box1, box2, normalx, normaly, deltaTime);
+		return SweptAABB(box1, box2, normalx, normaly, timer, deltaTime);
 	}
-	else return 1.0f;
+	return 1;
+	//else return 1.0f;
+}
+
+void CCollision::DeltaPosition(CBox first, CBox second, D3DXVECTOR2 timer, float deltaTime)
+{
+	m_deltaPosition.x = (first.vx * (timer.x + deltaTime) + 0.5 * first.ax * (timer.x + deltaTime) * (timer.x + deltaTime)) -
+		(first.vx * timer.x + 0.5 * first.ax * timer.x * timer.x);
+
+	m_deltaPosition.y = (first.vy * (timer.y + deltaTime) + 0.5 * first.ay * (timer.y + deltaTime) * (timer.y + deltaTime)) -
+		(first.vy * timer.y + 0.5 * first.ay * timer.y * timer.y);
 }
