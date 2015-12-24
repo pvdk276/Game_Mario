@@ -24,8 +24,8 @@ void CMario::Init()
 	this->smallMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/SmallMario.png", 50, 50, 10, 5, NULL);
 	this->bigMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/BigMario.png", 50, 100, 10, 5, NULL);
 	changeMario(bigMario, 0);
-	velocity = D3DXVECTOR2(0.0f, preVelocity.y);
-	accel = D3DXVECTOR2(0, flagAccel.y);
+	velocity = D3DXVECTOR2(0.0f, - preVelocity.y);
+	accel = D3DXVECTOR2(0, - flagAccel.y);
 	prePosition = D3DXVECTOR2(0.0f, 0.0f);
 	timer = D3DXVECTOR2(0.0f,0.0f);
 	posMasat = D3DXVECTOR2(5.0f, 0.0f);
@@ -62,7 +62,8 @@ void CMario::Update(float delta_time)
 		if(value < 1)
 			value = CCollision::getInstance()->CheckCollision(
 				mario, m_pObject->GetBox(), normalx, normaly, timer, delta_time);
-		if(m_pObject->type == CENTER_LAND && ((m_pObject->GetBox().x < mario.x + 50) && (m_pObject->GetBox().x > mario.x - 50)) && value >= 1)
+		/*if(m_pObject->type == CENTER_LAND && ((m_pObject->GetBox().x < mario.x + 50) && (m_pObject->GetBox().x > mario.x - 50)) && value >= 1)*/
+		if (m_pObject->type == PIPE && ((m_pObject->GetBox().x < mario.x + 50) && (m_pObject->GetBox().x > mario.x - 50)) && value >= 1)
 			CCollision::getInstance()->CheckCollision(
 				mario, m_pObject->GetBox(), normalx, normaly, timer, delta_time);
 		//float v = value; 
@@ -88,7 +89,6 @@ void CMario::Update(float delta_time)
 					{
 						if (velocity.x != 0) m_action = run;
 						else m_action = stand;
-						accel.y = -2;
 					}
 					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
 						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
@@ -391,9 +391,9 @@ void CMario::Update(float delta_time)
 			if (m_collisionY)
 			{
 				m_collisionY = false;
-				//velocity.y = 0;
-				//velocity.y = maxVelocity
-				accel.y = flagAccel.y;
+				velocity.y = preVelocity.y;
+				accel.y =   - flagAccel.y;
+				timer.y = 0.0f;
 				m_action = jump;
 			}
 
@@ -402,15 +402,17 @@ void CMario::Update(float delta_time)
 	//Khi mario nhảy
 	if (m_action == jump)
 	{
-		if (accel.y*timer.y + preVelocity.y >= preVelocity.y * 3)
-			accel.y = -1.0f*accel.y;
+		if ((velocity.y + accel.y * timer.y) < 400 && m_action == jump)
+		{
+			m_action = drop;
+			timer.y = 0.0f;
+			velocity.y = - (velocity.y + accel.y * timer.y);
+			accel.y = flagAccel.y;
+			flagPosition.y = position.y;
+		}
+			
 	}
 
-	//Nếu mario đang rơi xuống
-	if (m_collisionY == false && m_action != jump)
-	{
-		m_action = drop;
-	}
 	//Mario dead
 	if (position.y <= 0.0f)
 	{
@@ -588,7 +590,7 @@ void CMario::changeMario(CSprite* mario, float number)
 	}
 	else
 	{
-		preVelocity = D3DXVECTOR2(0.0f, -200.0f);
-		flagAccel = D3DXVECTOR2(200.0f, -200.0f);
+		preVelocity = D3DXVECTOR2(0.0f, 600.0f);
+		flagAccel = D3DXVECTOR2(400.0f, 550.0f);
 	}
 }
