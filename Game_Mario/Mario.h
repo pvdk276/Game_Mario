@@ -35,7 +35,6 @@ private:
 	bool doingChanging;	//Mario đang thay đổi
 	CSprite* currentSprite;	//Sprite hiện tại
 
-	D3DXVECTOR2 timer;
 	D3DXVECTOR2 prePosition;
 	float deltaPosition;
 	float masat;

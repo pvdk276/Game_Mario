@@ -27,7 +27,6 @@ void CMario::Init()
 	velocity = D3DXVECTOR2(0.0f, - preVelocity.y);
 	accel = D3DXVECTOR2(0, - flagAccel.y);
 	prePosition = D3DXVECTOR2(0.0f, 0.0f);
-	timer = D3DXVECTOR2(0.0f,0.0f);
 	posMasat = D3DXVECTOR2(5.0f, 0.0f);
 	deltaPosition = 0.0f;
 	masat = posMasat.x;
@@ -44,7 +43,7 @@ void CMario::Render()
 /// <param name="delta_time">The delta_time.</param>
 void CMario::Update(float delta_time)
 {
-	delta_time = 0.016667;
+	//delta_time = 0.016667;
 
 #pragma region Xử lý va chạm của Mario
 
@@ -63,7 +62,7 @@ void CMario::Update(float delta_time)
 			value = CCollision::getInstance()->CheckCollision(
 				mario, m_pObject->GetBox(), normalx, normaly, timer, delta_time);
 		/*if(m_pObject->type == CENTER_LAND && ((m_pObject->GetBox().x < mario.x + 50) && (m_pObject->GetBox().x > mario.x - 50)) && value >= 1)*/
-		if (m_pObject->type == PIPE && ((m_pObject->GetBox().x < mario.x + 50) && (m_pObject->GetBox().x > mario.x - 50)) && value >= 1)
+		if (m_pObject->type == CENTER_LAND && mario.y < 160)
 			CCollision::getInstance()->CheckCollision(
 				mario, m_pObject->GetBox(), normalx, normaly, timer, delta_time);
 		//float v = value; 
@@ -81,6 +80,7 @@ void CMario::Update(float delta_time)
 				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
 				{
 					m_collisionX = true;
+					//position.x = position.x - 1;
 				}
 				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
 				{
@@ -276,74 +276,82 @@ void CMario::Update(float delta_time)
 	{
 		if (CGameKeyboard::getInstance()->IsKeyDown(DIK_RIGHT))
 		{
-			direction = 1;
-
-			if (m_collisionX == true && direction == -1)
+			if (m_collisionX == true && direction == - 1)
 			{
-				if (position.x < 50)
-					position.x = 50;
-				velocity.x = 0;
-			}
-			
-			if (deltaPosition < 0)		//Nếu đang chuyển động sang trái
-			{
-				if (isSlowing == false)
-				{
-					velocity.x = accel.x*timer.x + preVelocity.x;
-					preVelocity.x = velocity.x;
-					flagPosition.x = position.x;
-					accel.x = direction * (flagAccel.x);
-					timer.x = 0.0f;
-					isSlowing = true;
-				}
-				else
-				{
-					accel.x = direction * (flagAccel.x + masat * 2);
-				}
-			}
-			else if(deltaPosition == 0.0f)
-			{
-				isSlowing = false;
 				velocity.x = 0.0f;
+				m_collisionX = false;
+				isSlowing = false;
+				timer.x = 0.0f;
 				accel.x = flagAccel.x;
+				flagPosition.x = position.x;
 			}
+			else
+			{
+				direction = 1;
 
+				if (deltaPosition < 0)		//Nếu đang chuyển động sang trái
+				{
+					if (isSlowing == false)
+					{
+						velocity.x = accel.x*timer.x + preVelocity.x;
+						preVelocity.x = velocity.x;
+						flagPosition.x = position.x;
+						accel.x = direction * (flagAccel.x);
+						timer.x = 0.0f;
+						isSlowing = true;
+					}
+					else
+					{
+						accel.x = direction * (flagAccel.x + masat * 2);
+					}
+				}
+				else if (deltaPosition == 0.0f)
+				{
+					isSlowing = false;
+					velocity.x = 0.0f;
+					accel.x = flagAccel.x;
+				}
+			}		
 			if (m_action != jump) m_action = run;
 		}
 		else if (CGameKeyboard::getInstance()->IsKeyDown(DIK_LEFT))
 		{
-			direction = -1;
-
 			if (m_collisionX == true && direction == 1)
 			{
-				if (position.x < 50)
-					position.x = 50;
-				velocity.x = 0;
+				velocity.x = 0.0f;
+				m_collisionX = false;
+				isSlowing = false;
+				timer.x = 0.0f;
+				accel.x = - flagAccel.x;
+				flagPosition.x = position.x;
 			}
-
-			if (deltaPosition > 0)		//Nếu đang chuyển động sang phải
+			else
 			{
-				if (isSlowing == false)
+				direction = -1;
+
+				if (deltaPosition > 0)		//Nếu đang chuyển động sang phải
 				{
-					velocity.x = accel.x*timer.x + preVelocity.x;
-					preVelocity.x = velocity.x;
-					flagPosition.x = position.x;
-					accel.x = direction * (flagAccel.x);
-					timer.x = 0.0f;
-					isSlowing = true;
+					if (isSlowing == false)
+					{
+						velocity.x = accel.x*timer.x + preVelocity.x;
+						preVelocity.x = velocity.x;
+						flagPosition.x = position.x;
+						accel.x = direction * (flagAccel.x);
+						timer.x = 0.0f;
+						isSlowing = true;
+					}
+					else
+					{
+						accel.x = direction * (flagAccel.x + masat * 2);
+					}
 				}
-				else
+				else if (deltaPosition == 0.0f)
 				{
-					accel.x = direction * (flagAccel.x + masat*2);
+					isSlowing = false;
+					velocity.x = 0.0f;
+					accel.x = -flagAccel.x;
 				}
 			}	
-			else if (deltaPosition == 0.0f)
-			{
-				isSlowing = false;		
-				velocity.x = 0.0f;
-				accel.x = - flagAccel.x;
-			}
-
 			if (m_action != jump) m_action = run;
 		}
 		else // KHông nhấn nút (trượt)
@@ -402,7 +410,7 @@ void CMario::Update(float delta_time)
 	//Khi mario nhảy
 	if (m_action == jump)
 	{
-		if ((velocity.y + accel.y * timer.y) < 400 && m_action == jump)
+		if ((velocity.y + accel.y * timer.y) < 400)
 		{
 			m_action = drop;
 			timer.y = 0.0f;
@@ -464,10 +472,7 @@ void CMario::UpdatePosition(float delta_time)
 	}
 	else
 	{
-		isSlowing = false;
-		velocity.x = 0.0f;
-		accel.x = 0.0f;
-		timer.x = 0.0f;
+		timer.x = delta_time;
 		flagPosition.x = position.x;
 		//deltaPosition = 0;
 	}
@@ -585,8 +590,8 @@ void CMario::changeMario(CSprite* mario, float number)
 	}
 	if (mario == smallMario)
 	{
-		preVelocity = D3DXVECTOR2(500.0f, 500.0f);
-		flagAccel = D3DXVECTOR2(100.0f, 100.0f);
+		preVelocity = D3DXVECTOR2(0.0f, 600.0f);
+		flagAccel = D3DXVECTOR2(400.0f, 550.0f);
 	}
 	else
 	{

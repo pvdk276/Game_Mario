@@ -7,6 +7,7 @@ CDynamicObject::CDynamicObject(int id, D3DXVECTOR2 position, CSprite* sprite) : 
 	direction = 1;
 	velocity = D3DXVECTOR2(0.0f, 0.0f);
 	accel = D3DXVECTOR2(0.0f, 0.0f);
+	timer = D3DXVECTOR2(0.0f, 0.0f);
 }
 
 CDynamicObject::~CDynamicObject()

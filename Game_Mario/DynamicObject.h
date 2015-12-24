@@ -10,6 +10,7 @@ public:
 	int direction;
 	D3DXVECTOR2 velocity;
 	D3DXVECTOR2 accel;
+	D3DXVECTOR2 timer;
 
 	CDynamicObject(int id, D3DXVECTOR2 position, CSprite* sprite);
 	~CDynamicObject();

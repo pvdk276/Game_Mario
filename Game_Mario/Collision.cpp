@@ -135,28 +135,27 @@ CBox CCollision::GetSweptBroadphaseBox(CBox b)
 
 	if (b.vx >= 0.0f && b.ax > 0.0f || b.vx > 0 && b.ax < 0)
 	{
-		posX = (b.x - b.w / 2);
-		broadphasebox.w = m_deltaPosition.x + b.w;	
+		broadphasebox.x = b.x + m_deltaPosition.x;
+		broadphasebox.w = 2 * (0.5*b.w + m_deltaPosition.x);
 	}
 	else
 	{
-		posX = (b.x - b.w / 2) + m_deltaPosition.x;
-		broadphasebox.w = b.w - m_deltaPosition.x;
-		
-	}
-	if (b.vy >= 0.0f && b.ay > 0.0f || b.vy > 0 && b.ay < 0)
-	{
-		posY = (b.y + b.h / 2) + m_deltaPosition.y;
-		broadphasebox.h = m_deltaPosition.y + b.h;
-	}
-	else
-	{
-		posY = (b.y + b.h / 2);
-		broadphasebox.h = b.h - m_deltaPosition.y;
+		broadphasebox.x = b.x + m_deltaPosition.x;
+		broadphasebox.w = 2 * (0.5*b.w + abs(m_deltaPosition.x));
+
 	}
 
-	broadphasebox.x = posX + broadphasebox.w / 2;
-	broadphasebox.y = posY - broadphasebox.h / 2;
+	if (b.vy >= 0.0f && b.ay > 0.0f || b.vy > 0 && b.ay < 0)
+	{
+		broadphasebox.y = b.y + m_deltaPosition.y;
+		broadphasebox.h = 2 * (0.5*b.h + m_deltaPosition.y);
+	}
+	else
+	{
+		broadphasebox.y = b.y + m_deltaPosition.y;
+		broadphasebox.h = 2 * (0.5*b.h + abs(m_deltaPosition.y));
+	}
+
 	return broadphasebox;
 }
 
