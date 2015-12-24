@@ -28,7 +28,7 @@ void CMario::Init()
 	accel = D3DXVECTOR2(0, flagAccel.y);
 	prePosition = D3DXVECTOR2(0.0f, 0.0f);
 	timer = D3DXVECTOR2(0.0f,0.0f);
-	posMasat = D3DXVECTOR2(0.001f, 0.0f);
+	posMasat = D3DXVECTOR2(5.0f, 0.0f);
 	deltaPosition = 0.0f;
 	masat = posMasat.x;
 }
@@ -258,10 +258,7 @@ void CMario::Update(float delta_time)
 		m_collisionX = true;
 	}
 #pragma endregion
-	if (m_collisionY == false)
-	{
-		m_collisionY = false;
-	}
+
 #pragma region Di chuyển của Mario
 
 	//update state
@@ -288,17 +285,26 @@ void CMario::Update(float delta_time)
 				velocity.x = 0;
 			}
 			
-			if (deltaPosition < 0)
+			if (deltaPosition < 0)		//Nếu đang chuyển động sang trái
 			{
-				velocity.x = accel.x*timer.x + preVelocity.x;
-				flagPosition.x = position.x;
-				accel.x = -1.0f * direction * (flagAccel.x);
-				isSlowing = true;
+				if (isSlowing == false)
+				{
+					velocity.x = accel.x*timer.x + preVelocity.x;
+					preVelocity.x = velocity.x;
+					flagPosition.x = position.x;
+					accel.x = direction * (flagAccel.x);
+					timer.x = 0.0f;
+					isSlowing = true;
+				}
+				else
+				{
+					accel.x = direction * (flagAccel.x + masat * 2);
+				}
 			}
-				
-			else
+			else if(deltaPosition == 0.0f)
 			{
-				velocity.x = preVelocity.x;
+				isSlowing = false;
+				velocity.x = 0.0f;
 				accel.x = flagAccel.x;
 			}
 
@@ -315,17 +321,26 @@ void CMario::Update(float delta_time)
 				velocity.x = 0;
 			}
 
-			if (deltaPosition > 0)
+			if (deltaPosition > 0)		//Nếu đang chuyển động sang phải
 			{
-				velocity.x = accel.x*timer.x + preVelocity.x;
-				flagPosition.x = position.x;
-				accel.x = -1.0f * direction * (flagAccel.x);
-				isSlowing = true;
+				if (isSlowing == false)
+				{
+					velocity.x = accel.x*timer.x + preVelocity.x;
+					preVelocity.x = velocity.x;
+					flagPosition.x = position.x;
+					accel.x = direction * (flagAccel.x);
+					timer.x = 0.0f;
+					isSlowing = true;
+				}
+				else
+				{
+					accel.x = direction * (flagAccel.x + masat*2);
+				}
 			}	
-			else
+			else if (deltaPosition == 0.0f)
 			{
-				
-				velocity.x = preVelocity.x;
+				isSlowing = false;		
+				velocity.x = 0.0f;
 				accel.x = - flagAccel.x;
 			}
 
@@ -416,19 +431,19 @@ void CMario::UpdatePosition(float delta_time)
 		preDeltaPosition = deltaPosition;
 		deltaPosition = (flagPosition.x + velocity.x * timer.x + 1.0f / 2 * accel.x * timer.x * timer.x) - position.x;
 
-		if (deltaPosition > preDeltaPosition)
-		{
-			deltaPosition += 0;
-		}
 		//Giới hạn tốc độ cho Mario
-		/*if (abs(deltaPosition) > abs(flagAccel.x*delta_time * 100) && isSlowing == false)
+		if (abs(preVelocity.x + accel.x*timer.x) >= 300 && isSlowing == false)	//Giới hạn vận tốc nhỏ hơn 300
 		{
-			deltaPosition += preDeltaPosition;
-			timer.x -= delta_time;
-		}	*/
-		
-		if ((isSlowing == true && deltaPosition < 0 && direction == 1) ||
-			(isSlowing == true && deltaPosition > 0 && direction == -1) ||
+			//Chuyển thành chuyển động đều
+			velocity.x = preVelocity.x + accel.x*(timer.x - delta_time);
+			accel.x = 0.0f;
+			preVelocity.x = velocity.x;
+			timer.x = delta_time;
+			flagPosition.x = position.x;
+		}	
+
+		if ((isSlowing == true && accel.x < 0 && deltaPosition < 0) ||
+			(isSlowing == true && accel.x > 0 && deltaPosition > 0) ||
 			deltaPosition == 0) //mario đang dừng
 		{
 			velocity.x = 0.0f;
@@ -452,7 +467,7 @@ void CMario::UpdatePosition(float delta_time)
 		accel.x = 0.0f;
 		timer.x = 0.0f;
 		flagPosition.x = position.x;
-		deltaPosition = 0;
+		//deltaPosition = 0;
 	}
 
 	//Di chuyển dọc
@@ -573,9 +588,7 @@ void CMario::changeMario(CSprite* mario, float number)
 	}
 	else
 	{
-		/*preVelocity = D3DXVECTOR2(0.0f, 0.0f);
-		maxAccel = D3DXVECTOR2(10.0f, -5.0f);*/
-		preVelocity = D3DXVECTOR2(0.0f, -60.0f);
-		flagAccel = D3DXVECTOR2(60.0f, -50.0f);
+		preVelocity = D3DXVECTOR2(0.0f, -200.0f);
+		flagAccel = D3DXVECTOR2(200.0f, -200.0f);
 	}
 }

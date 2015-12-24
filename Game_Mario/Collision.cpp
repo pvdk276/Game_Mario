@@ -7,7 +7,8 @@ float CCollision::SweptAABB(CBox first, CBox second, float& normalx, float& norm
 	float dxExit, dyExit;
 
 	// find the distance between the objects on the near and far sides for both x and y
-	if (first.vx >= 0.0f && first.ax > 0.0f || first.vx > 0 && first.ax < 0)	// Nếu box1 đang di chuyển sang phải ( nhanh dần và chậm dần)
+	if (first.vx >= 0.0f && first.ax > 0.0f || first.vx > 0 && first.ax < 0 ||
+		first.vx > 0.0f && first.ax == 0)	// Nếu box1 đang di chuyển sang phải ( nhanh dần và chậm dần)
 	{
 		//Khoảng cách gần nhất từ box1 và box2
 		dxEntry = (second.x - second.w / 2) - (first.x + first.w / 2);
@@ -20,7 +21,8 @@ float CCollision::SweptAABB(CBox first, CBox second, float& normalx, float& norm
 		dxExit = (second.x - second.w / 2) - (first.x + first.w / 2);
 	}
 
-	if (first.vy >= 0.0f && first.ay > 0.0f || first.vy > 0 && first.ay < 0)
+	if (first.vy >= 0.0f && first.ay > 0.0f || first.vy > 0 && first.ay < 0 ||
+		first.vy > 0.0f && first.ay == 0)
 	{
 		dyEntry = (second.y - second.h / 2) - (first.y + first.h / 2);
 		dyExit = (second.y + second.h / 2) - (first.y - first.h / 2);
