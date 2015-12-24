@@ -36,10 +36,12 @@ private:
 	CSprite* currentSprite;	//Sprite hiện tại
 
 	D3DXVECTOR2 timer;
+	D3DXVECTOR2 prePosition;
 	float deltaPosition;
 	float masat;
 	float preDeltaPosition;
 	bool isSlowing;
+	float value;
 	D3DXVECTOR2 tVelocity;
 	D3DXVECTOR2 preVelocity;
 	D3DXVECTOR2 flagAccel;

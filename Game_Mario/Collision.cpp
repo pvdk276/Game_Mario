@@ -35,7 +35,7 @@ float CCollision::SweptAABB(CBox first, CBox second, float& normalx, float& norm
 	float txEntry, tyEntry;
 	float txExit, tyExit;
 
-	if (first.vx == 0.0f && first.ax == 0.0f && dxEntry > 0)
+	if (m_deltaPosition.x == 0 && abs(dxEntry) != 0)
 	{
 		txEntry = -std::numeric_limits<float>::infinity();
 		txExit = std::numeric_limits<float>::infinity();
@@ -44,19 +44,37 @@ float CCollision::SweptAABB(CBox first, CBox second, float& normalx, float& norm
 	{
 		/*txEntry = dxEntry / first.vx;
 		txExit = dxExit / first.vx;*/
-		txEntry = dxEntry / m_deltaPosition.x;
-		txExit = dxExit / m_deltaPosition.x;
+		if (dxEntry == 0 && m_deltaPosition.x == 0)
+		{
+			txEntry = 0;
+			txExit = 0;
+		}
+		else
+		{
+			txEntry = dxEntry / m_deltaPosition.x;
+			txExit = dxExit / m_deltaPosition.x;
+		}
 	}
 
-	if (first.vy == 0.0f && first.ay == 0.0f && dyEntry > 0)
+	if (m_deltaPosition.y == 0 && abs(dyEntry) != 0)
 	{
 		tyEntry = -std::numeric_limits<float>::infinity();
 		tyExit = std::numeric_limits<float>::infinity();
 	}
 	else
 	{
-		tyEntry = dyEntry / m_deltaPosition.y;
-		tyExit = dyExit / m_deltaPosition.y;
+		if (dyEntry == 0 && m_deltaPosition.y == 0)
+		{
+			tyEntry = 0;
+			tyExit = 0;
+		}		
+		else
+		{
+			tyEntry = dyEntry / m_deltaPosition.y;
+			tyExit = dyExit / m_deltaPosition.y;
+		}
+		
+		
 	}
 
 	// Tìm khoảng thời gian va chạm sớm nhất và va chạm trễ nhất
@@ -75,7 +93,7 @@ float CCollision::SweptAABB(CBox first, CBox second, float& normalx, float& norm
 		// calculate normal of collided surface
 		if (txEntry > tyEntry)
 		{
-			if (dxEntry < 0.0f)
+			if (dxEntry <= 0.0f)
 			{
 				normalx = 1.0f;
 				normaly = 0.0f;
@@ -88,7 +106,7 @@ float CCollision::SweptAABB(CBox first, CBox second, float& normalx, float& norm
 		}
 		else
 		{
-			if (dyEntry < 0.0f)
+			if (dyEntry <= 0.0f)
 			{
 				normalx = 0.0f;
 				normaly = 1.0f;
@@ -190,8 +208,17 @@ float CCollision::CheckCollision(CBox first, CBox second, float& normalx, float&
 
 void CCollision::DeltaPosition(CBox first, CBox second, D3DXVECTOR2 timer, float deltaTime)
 {
+	CBox a = first;
+	CBox b = second;
+
 	m_deltaPosition.x = (first.vx * (timer.x + deltaTime) + 0.5 * first.ax * (timer.x + deltaTime) * (timer.x + deltaTime)) -
 		(first.vx * timer.x + 0.5 * first.ax * timer.x * timer.x);
+
+	if (first.vx > 0 && first.ax < 0 && m_deltaPosition.x < 0 ||
+		first.vx < 0 && first.ax > 0 && m_deltaPosition.x > 0)
+	{
+		m_deltaPosition.x = 0;
+	}
 
 	m_deltaPosition.y = (first.vy * (timer.y + deltaTime) + 0.5 * first.ay * (timer.y + deltaTime) * (timer.y + deltaTime)) -
 		(first.vy * timer.y + 0.5 * first.ay * timer.y * timer.y);
