@@ -155,6 +155,9 @@
     <ClCompile Include="CoinBrick.cpp">
       <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
     </ClCompile>
+    <ClCompile Include="MapManager.cpp">
+      <Filter>Source Files\Game Mario\StateManagement</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameWindow.h">
@@ -288,6 +291,9 @@
     </ClInclude>
     <ClInclude Include="CoinBrick.h">
       <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
+    </ClInclude>
+    <ClInclude Include="MapManager.h">
+      <Filter>Source Files\Game Mario\StateManagement</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

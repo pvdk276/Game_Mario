@@ -185,6 +185,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="PlayState.cpp" />
+    <ClCompile Include="MapManager.cpp" />
     <ClCompile Include="Spring.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="StaticObject.cpp" />
@@ -230,6 +231,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="PlayState.h" />
+    <ClInclude Include="MapManager.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Spring.h" />
     <ClInclude Include="Sprite.h" />

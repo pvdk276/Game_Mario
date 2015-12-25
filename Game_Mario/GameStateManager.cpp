@@ -16,7 +16,7 @@ CGameStateManager::~CGameStateManager()
 
 int CGameStateManager::Init(CBaseGameState* state)
 {
-	//m_pResourceManager = CResourcesManager::GetInstance();
+	//m_pResourceManager = CMapManager::GetInstance();
 	m_currentState = state;
 	return 1;
 }

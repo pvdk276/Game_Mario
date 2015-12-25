@@ -16,6 +16,7 @@
 #include "FireTurtle.h"
 #include "Spring.h"
 #include "Bar.h"
+#include "MapManager.h"
 
 
 //load data from binary_tree_file_text to a list of binary node
@@ -130,36 +131,36 @@ void CBinaryTree::loadListCurrentObject(CBinaryNode* node, int posX, int posY, i
 
 std::vector<CBaseObject*> loadListObject(std::string listObjectPath)
 {
-	//Bonus
-	CSprite* coin = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Bonus/Coin.png", 50, 50, 2, 2, NULL);
-	CSprite* flower = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Bonus/Flower.png", 50, 50, 4, 4, NULL);
-	CSprite* mushroom = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Bonus/Mushroom.png", 50, 50, 2, 2, NULL);
-	CSprite* star = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Bonus/Star.png", 50, 50, 4, 4, NULL);
+	////Bonus
+	//CSprite* coin = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Bonus/Coin.png", 50, 50, 2, 2, NULL);
+	//CSprite* flower = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Bonus/Flower.png", 50, 50, 4, 4, NULL);
+	//CSprite* mushroom = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Bonus/Mushroom.png", 50, 50, 2, 2, NULL);
+	//CSprite* star = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Bonus/Star.png", 50, 50, 4, 4, NULL);
 
-	//Bullet
-	CSprite* bullet = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Bullet/Bullet.png", 30, 30, 4, 4, NULL);
-	CSprite* machineBullet = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Bullet/MachineBullet.png", 75, 50, 4, 2, NULL);
+	////Bullet
+	//CSprite* bullet = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Bullet/Bullet.png", 30, 30, 4, 4, NULL);
+	//CSprite* machineBullet = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Bullet/MachineBullet.png", 75, 50, 4, 2, NULL);
 
-	//Enemy
-	CSprite* carnivorousFlower = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Enemy/CarnivorousFlower.png", 50, 50, 3, 3, NULL);
-	CSprite* enemy = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Enemy/Enemy.png", 50, 50, 4, 4, NULL);
-	CSprite* turtle = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Enemy/Turtle.png", 50, 50, 11, 6, NULL);
-	CSprite* turtle2 = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Enemy/Turtle2.png", 50, 50, 4, 4, NULL);
+	////Enemy
+	//CSprite* carnivorousFlower = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Enemy/CarnivorousFlower.png", 50, 50, 3, 3, NULL);
+	//CSprite* enemy = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Enemy/Enemy.png", 50, 50, 4, 4, NULL);
+	//CSprite* turtle = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Enemy/Turtle.png", 50, 50, 11, 6, NULL);
+	//CSprite* turtle2 = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Enemy/Turtle2.png", 50, 50, 4, 4, NULL);
 
-	//Mario
-	
-	//Other
-	CSprite* bar = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Bar.png", 200, 32, 1, 1, NULL);
-	CSprite* brick = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Brick.png", 50, 50, 2, 2, NULL);
-	CSprite* cloud = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Cloud.png", 150, 100, 3, 3, NULL);
-	CSprite* grass = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Grass.png", 100, 50, 3, 3, NULL);
-	CSprite* land = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Land.png", 50, 50, 3, 3, NULL);
-	CSprite* pipe = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Pipe.png", 100, 150, 1, 1, NULL);
-	CSprite* horizontalPipe = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/HorizontalPipe.png", 150, 100, 1, 1, NULL);
-	CSprite* secretBlock = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/SecretBlock.png", 50, 50, 3, 3, NULL);
-	CSprite* spring = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Spring.png", 50, 100, 3, 3, NULL);
-	CSprite* stone = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Stone.png", 50, 50, 1, 1, NULL);
-	CSprite* tower = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Tower.png", 300, 400, 1, 1, NULL);
+	////Mario
+	//
+	////Other
+	//CSprite* bar = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Bar.png", 200, 32, 1, 1, NULL);
+	//CSprite* brick = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Brick.png", 50, 50, 2, 2, NULL);
+	//CSprite* cloud = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Cloud.png", 150, 100, 3, 3, NULL);
+	//CSprite* grass = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Grass.png", 100, 50, 3, 3, NULL);
+	//CSprite* land = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Land.png", 50, 50, 3, 3, NULL);
+	//CSprite* pipe = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Pipe.png", 100, 150, 1, 1, NULL);
+	//CSprite* horizontalPipe = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/HorizontalPipe.png", 150, 100, 1, 1, NULL);
+	//CSprite* secretBlock = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/SecretBlock.png", 50, 50, 3, 3, NULL);
+	//CSprite* spring = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Spring.png", 50, 100, 3, 3, NULL);
+	//CSprite* stone = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Stone.png", 50, 50, 1, 1, NULL);
+	//CSprite* tower = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Tower.png", 300, 400, 1, 1, NULL);
 
 	std::vector<CBaseObject*> listObject;
 	//= new std::vector<GameObject*>();
@@ -178,91 +179,91 @@ std::vector<CBaseObject*> loadListObject(std::string listObjectPath)
 		switch (typeId)
 		{
 		case 1:  
-			gameObject = new CLand(id, LEFT_LAND, position, land);
+			gameObject = new CLand(id, LEFT_LAND, position, CMapManager::getInstance()->land);
 			break;
 
 		case 2: 
-			gameObject = new CLand(id, CENTER_LAND, position, land);
+			gameObject = new CLand(id, CENTER_LAND, position, CMapManager::getInstance()->land);
 			break;
 
 		case 3: 
-			gameObject = new CLand(id, RIGHT_LAND, position, land);
+			gameObject = new CLand(id, RIGHT_LAND, position, CMapManager::getInstance()->land);
 			break;
 
 		case 4:
-			gameObject = new CCloud(id, position, cloud);
+			gameObject = new CCloud(id, position, CMapManager::getInstance()->cloud);
 			break;
 
 		case 5:
-			gameObject = new CPipe(id, PIPE, position, pipe, nullptr);
+			gameObject = new CPipe(id, PIPE, position, CMapManager::getInstance()->pipe, nullptr);
 			break;
 
 		case 6: 
-			gameObject = new CGrass(id, position, grass);
+			gameObject = new CGrass(id, position, CMapManager::getInstance()->grass);
 			break;
 
 		case 7: 
-			gameObject = new CBrick(id, position, brick);
+			gameObject = new CBrick(id, position, CMapManager::getInstance()->brick);
 			break;
 
 		case 8: 
-			gameObject = new CBlock(id, RED_MUSHROOM_BLOCK, position, secretBlock, mushroom);
+			gameObject = new CBlock(id, RED_MUSHROOM_BLOCK, position, CMapManager::getInstance()->secretBlock, CMapManager::getInstance()->mushroom);
 			break;
 
 		case 9: 
-			gameObject = new CCoinBrick(id , COIN_BRICK, position, brick, coin);
+			gameObject = new CCoinBrick(id , COIN_BRICK, position, CMapManager::getInstance()->brick, CMapManager::getInstance()->coin);
 			break;
 
 		case 10: 
-			gameObject = new CBlock(id, COIN_BLOCK, position, secretBlock, coin);
+			gameObject = new CBlock(id, COIN_BLOCK, position, CMapManager::getInstance()->secretBlock, CMapManager::getInstance()->coin);
 			break;
 
 		case 11: 
-			gameObject = new CBonus(id, COIN, position, coin);
+			gameObject = new CBonus(id, COIN, position, CMapManager::getInstance()->coin);
 			break;
 
 		case 12: 
-			gameObject = new CPipe(id, CARNIVOROUS_FLOWER_PIPE, position, pipe, carnivorousFlower);		
+			gameObject = new CPipe(id, CARNIVOROUS_FLOWER_PIPE, position, CMapManager::getInstance()->pipe, CMapManager::getInstance()->carnivorousFlower);
 			break;
 
 		case 13: 
-			gameObject = new CPipe(id, PIPE_DOWN, position, pipe, NULL);
+			gameObject = new CPipe(id, PIPE_DOWN, position, CMapManager::getInstance()->pipe, NULL);
 			break;
 
 		case 14: 
-			gameObject = new CStone(id, position, stone);
+			gameObject = new CStone(id, position, CMapManager::getInstance()->stone);
 			break;
 
 		case 15: 
-			gameObject = new CCarnivorousFlower(id, position, carnivorousFlower);
+			gameObject = new CCarnivorousFlower(id, position, CMapManager::getInstance()->carnivorousFlower);
 			break;
 
 		case 16: 
-			gameObject = new CPipe(id, PIPE_UP, position, pipe, NULL);
+			gameObject = new CPipe(id, PIPE_UP, position, CMapManager::getInstance()->pipe, NULL);
 			break;
 
 		case 17:
-			gameObject = new CSpring(id, position, spring);
+			gameObject = new CSpring(id, position, CMapManager::getInstance()->spring);
 			break;
 
 		case 18:
-			gameObject = new CBar(id, position, bar);
+			gameObject = new CBar(id, position, CMapManager::getInstance()->bar);
 			break;
 
 		case 19:
-			gameObject = new CEnemy(id, position, enemy);
+			gameObject = new CEnemy(id, position, CMapManager::getInstance()->enemy);
 			break;
 			
 		case 20:
-			gameObject = new CTurtle(id, TURTLE, position, turtle);
+			gameObject = new CTurtle(id, TURTLE, position, CMapManager::getInstance()->turtle);
 			break;
 
 		case 21:
-			gameObject = new CTurtle(id, WING_TURTLE, position, turtle);
+			gameObject = new CTurtle(id, WING_TURTLE, position, CMapManager::getInstance()->turtle);
 			break;
 
 		case 22:
-			gameObject = new CFireTurtle(id, position, turtle2);
+			gameObject = new CFireTurtle(id, position, CMapManager::getInstance()->turtle2);
 			break;
 		}
 

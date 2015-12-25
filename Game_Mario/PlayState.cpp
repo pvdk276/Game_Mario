@@ -1,5 +1,6 @@
 ﻿#include "PlayState.h"
 #include "GameGraphic.h"
+#include "MapManager.h"
 
 CPlayState::CPlayState()
 {
@@ -20,6 +21,7 @@ void CPlayState::Init()
 	//sprMenu = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Other/Background.png", 800, 600, 1, 1, NULL);
 	this->LoadResource();
 	status = 0;
+	CMapManager::getInstance()->init();
 }
 
 void CPlayState::LoadResource()
