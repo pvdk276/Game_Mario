@@ -47,7 +47,7 @@ void CEnemy::Update(float delta_time)
 	if (!this->isDead)
 	{
 		//update animation
-		UpdateAnimation(delta_time, 0, 1, direction);
+		UpdateAnimation(delta_time, 0, 1, direction, 0.2f);
 		//update position
 		timer.x += delta_time;
 		this->position.x = flagPosition.x + this->velocity.x*timer.x;

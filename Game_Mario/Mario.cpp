@@ -5,66 +5,56 @@
 #include "GameGraphic.h"
 
 
-CMario::CMario() : CLivingObject(0, D3DXVECTOR2(75.0f, 600.0f), NULL)
+void CMario::droping()
 {
-	this->Init();
+	m_action = drop;
+	velocity.y = -(abs(velocity.y) + abs(accel.y) * timer.y);
+	timer.y = 0.0f;
+	accel.y = - flagAccel.y;
+	flagPosition.y = position.y;
 }
 
-CMario::~CMario()
+void CMario::Jumping()
 {
+	m_collisionY = false;
+	velocity.y = preVelocity.y;
+	accel.y = - flagAccel.y;
+	timer.y = 0.0f;
+	flagPosition.y = position.y;
+	m_action = jump;
 }
 
-void CMario::Init()
+void CMario::Standing()
 {
-	m_action = stand;
-	this->isDead = false;
-	magicCounter = 0;
-	doingChanging = false;
-
-	this->smallMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/SmallMario.png", 50, 50, 10, 5, NULL);
-	this->bigMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/BigMario.png", 50, 100, 10, 5, NULL);
-	changeMario(bigMario, 0);
-	velocity = D3DXVECTOR2(0.0f, - preVelocity.y);
-	accel = D3DXVECTOR2(0, - flagAccel.y);
-	prePosition = D3DXVECTOR2(0.0f, 0.0f);
-	posMasat = D3DXVECTOR2(5.0f, 0.0f);
-	deltaPosition = 0.0f;
-	masat = posMasat.x;
+	velocity.x = 0.0f;
+	preVelocity.x = velocity.x;
+	flagPosition.x = position.x;
+	accel.x = 0.0f;
+	timer.x = 0.0f;
+	deltaPosition = 0;
+	isSlowing = false;
 }
 
-void CMario::Render()
+void CMario::CheckCollision(CBox mario, float delta_time)
 {
-	sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, curIndex);
-}
-
-/// <summary>
-/// Updates the specified delta_time.
-/// </summary>
-/// <param name="delta_time">The delta_time.</param>
-void CMario::Update(float delta_time)
-{
-	//delta_time = 0.016667;
-
-#pragma region Xử lý va chạm của Mario
-
 	m_collisionX = false;
 	m_collisionY = false;
 
 	for (int i = 0; i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
 	{
-		mario = CMario::getInstance()->GetBox();
+		//mario = CMario::getInstance()->GetBox();
 		m_pObject = CBinaryTree::getInstance()->listCurrentObject->at(i);
 		float normalx = 0.0f, normaly = 0.0f;
 		value = 1;
 		value = CCollision::getInstance()->CheckCollision(
 			mario, m_pObject->GetBox(), normalx, normaly, timer, delta_time);
-		if(value < 1)
-			value = CCollision::getInstance()->CheckCollision(
-				mario, m_pObject->GetBox(), normalx, normaly, timer, delta_time);
+		//if (value < 1)
+		//	value = CCollision::getInstance()->CheckCollision(
+		//		mario, m_pObject->GetBox(), normalx, normaly, timer, delta_time);
 		/*if(m_pObject->type == CENTER_LAND && ((m_pObject->GetBox().x < mario.x + 50) && (m_pObject->GetBox().x > mario.x - 50)) && value >= 1)*/
-		if (m_pObject->type == CENTER_LAND && mario.y < 160)
+		/*if (m_pObject->type == PIPE && mario.x > 824.816 && value == 1)
 			CCollision::getInstance()->CheckCollision(
-				mario, m_pObject->GetBox(), normalx, normaly, timer, delta_time);
+				mario, m_pObject->GetBox(), normalx, normaly, timer, delta_time);*/
 		//float v = value; 
 		if (value < 1) //a collision occur
 		{
@@ -80,6 +70,9 @@ void CMario::Update(float delta_time)
 				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
 				{
 					m_collisionX = true;
+					if (!doingChanging)
+						currentSprite = this->sprite;
+					changeMario(smallMario, 2);
 					//position.x = position.x - 1;
 				}
 				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
@@ -140,16 +133,15 @@ void CMario::Update(float delta_time)
 			//Va chạm với gạch
 			case BRICK:
 			{
-				if ((normalx == 0.0f) && (normaly == -1.0f))
+				if (normalx == 0.0f && normaly == -1.0f)
 				{
 					if (this->sprite == bigMario)
 						m_pObject->isDead = true;
 					else if (this->sprite == smallMario) // Khi mario nho va cham
 					{
 						m_pObject->isCollision = true;
-						velocity.y = -velocity.y;
+						this->droping();
 					}
-					break;
 				}
 				if (normalx == 0.0f && normaly == 1.0f)
 				{
@@ -158,8 +150,6 @@ void CMario::Update(float delta_time)
 					{
 						if (velocity.x != 0) m_action = run;
 						else m_action = stand;
-						accel.y = -2;
-
 					}
 					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
 						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
@@ -172,7 +162,7 @@ void CMario::Update(float delta_time)
 				if (normalx == 0.0f && normaly == -1.0f)
 				{
 					m_pObject->isCollision = true;
-					velocity.y = -velocity.y;
+					this->droping();
 				}
 				if (normalx == 0.0f && normaly == 1.0f)
 				{
@@ -181,8 +171,6 @@ void CMario::Update(float delta_time)
 					{
 						if (velocity.x != 0) m_action = run;
 						else m_action = stand;
-						accel.y = -2;
-
 					}
 					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
 						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
@@ -205,7 +193,7 @@ void CMario::Update(float delta_time)
 						m_pObject->isCollision = true;
 						m_pObject->isDead = true;
 					}
-					velocity.y = -velocity.y;
+					this->droping();
 				}
 				if (normalx == 0.0f && normaly == 1.0f)
 				{
@@ -227,10 +215,6 @@ void CMario::Update(float delta_time)
 			case RIGHT_LAND:
 			case CENTER_LAND:
 			{
-				/*if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
-				{
-				m_collisionX = true;
-				}*/
 				if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
 				{
 					m_collisionY = true;
@@ -257,7 +241,52 @@ void CMario::Update(float delta_time)
 	{
 		m_collisionX = true;
 	}
-#pragma endregion
+}
+
+CMario::CMario() : CLivingObject(0, D3DXVECTOR2(75.0f, 600.0f), NULL)
+{
+	this->Init();
+}
+
+CMario::~CMario()
+{
+}
+
+void CMario::Init()
+{
+	m_action = drop;
+	this->isDead = false;
+	magicCounter = 0;
+	doingChanging = false;
+
+	this->m_pSprBullet = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Bullet/Bullet.png", 30, 30, 4, 4, NULL);
+	this->smallMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/SmallMario.png", 50, 50, 10, 5, NULL);
+	this->bigMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/BigMario.png", 50, 100, 10, 5, NULL);
+	changeMario(smallMario, 0);
+	velocity = D3DXVECTOR2(0.0f, - 200);
+	accel = D3DXVECTOR2(0, - 100);
+	prePosition = D3DXVECTOR2(0.0f, 0.0f);
+	posMasat = D3DXVECTOR2(5.0f, 0.0f);
+	deltaPosition = 0.0f;
+	masat = posMasat.x;
+	isShooting = false;
+	
+}
+
+void CMario::Render()
+{
+	sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, curIndex);
+	if(isShooting)
+		m_pBullet->Render();
+}
+
+/// <summary>
+/// Updates the specified delta_time.
+/// </summary>
+/// <param name="delta_time">The delta_time.</param>
+void CMario::Update(float delta_time)
+{
+	this->CheckCollision(this->GetBox(), delta_time);
 
 #pragma region Di chuyển của Mario
 
@@ -272,7 +301,7 @@ void CMario::Update(float delta_time)
 			timer = D3DXVECTOR2(0.0f,0.0f);
 		}
 	}
-	if (m_action != down && m_action != drop) //Đang di chuyển
+	if (m_action != down) //Đang di chuyển
 	{
 		if (CGameKeyboard::getInstance()->IsKeyDown(DIK_RIGHT))
 		{
@@ -323,7 +352,7 @@ void CMario::Update(float delta_time)
 				isSlowing = false;
 				timer.x = 0.0f;
 				accel.x = - flagAccel.x;
-				flagPosition.x = position.x;
+				flagPosition.x = position.x - 2;
 			}
 			else
 			{
@@ -331,6 +360,10 @@ void CMario::Update(float delta_time)
 
 				if (deltaPosition > 0)		//Nếu đang chuyển động sang phải
 				{
+					if (m_collisionX == true)
+					{
+						m_collisionX = false;
+					}
 					if (isSlowing == false)
 					{
 						velocity.x = accel.x*timer.x + preVelocity.x;
@@ -350,6 +383,11 @@ void CMario::Update(float delta_time)
 					isSlowing = false;
 					velocity.x = 0.0f;
 					accel.x = -flagAccel.x;
+				}
+				else if (deltaPosition < 0)
+				{
+					//if(m_collisionX == true)
+
 				}
 			}	
 			if (m_action != jump) m_action = run;
@@ -390,7 +428,9 @@ void CMario::Update(float delta_time)
 			m_action = stand;
 		}
 	}
+#pragma endregion
 
+#pragma region Mario Nhảy
 	//Sự kiện nhấn phím khi nhảy
 	if (CGameKeyboard::getInstance()->IsKeyDown(DIK_SPACE))
 	{
@@ -398,13 +438,8 @@ void CMario::Update(float delta_time)
 		{
 			if (m_collisionY)
 			{
-				m_collisionY = false;
-				velocity.y = preVelocity.y;
-				accel.y =   - flagAccel.y;
-				timer.y = 0.0f;
-				m_action = jump;
+				this->Jumping();
 			}
-
 		}
 	}
 	//Khi mario nhảy
@@ -412,22 +447,38 @@ void CMario::Update(float delta_time)
 	{
 		if ((velocity.y + accel.y * timer.y) < 400)
 		{
-			m_action = drop;
-			timer.y = 0.0f;
-			velocity.y = - (velocity.y + accel.y * timer.y);
-			accel.y = flagAccel.y;
-			flagPosition.y = position.y;
+			this->droping();
 		}
 			
 	}
+#pragma endregion
 
+#pragma region bắn
+	if (CGameKeyboard::getInstance()->IsKeyDown(DIK_A))
+	{
+		D3DXVECTOR2 bulletPosition;
+		if (direction == 1)
+			bulletPosition = D3DXVECTOR2(position.x + width / 2, position.y);
+		else
+			bulletPosition = D3DXVECTOR2(position.x - width / 2, position.y);
+		if (isShooting && m_pBullet->isDead == true)
+			m_pBullet = new CBullet(direction,bulletPosition,m_pSprBullet);
+		else if(isShooting == false)
+			m_pBullet = new CBullet(direction, bulletPosition, m_pSprBullet);
+		isShooting = true;
+	}
+	
+	if (isShooting)
+	{
+		m_pBullet->Update(delta_time);
+	}
+
+#pragma endregion 
 	//Mario dead
 	if (position.y <= 0.0f)
 	{
 		isDead = true;
 	}
-#pragma endregion
-
 	UpdatePosition(delta_time);
 	UpdateAnimation(delta_time);
 }
@@ -452,22 +503,16 @@ void CMario::UpdatePosition(float delta_time)
 			flagPosition.x = position.x;
 		}	
 
+		//mario đang dừng
 		if ((isSlowing == true && accel.x < 0 && deltaPosition < 0) ||
 			(isSlowing == true && accel.x > 0 && deltaPosition > 0) ||
-			deltaPosition == 0) //mario đang dừng
+			deltaPosition == 0) 
 		{
-			velocity.x = 0.0f;
-			preVelocity.x = velocity.x;
-			flagPosition.x = position.x;
-			accel.x = 0.0f;
-			timer.x = 0.0f;
-			deltaPosition = 0;
-			isSlowing = false;
+			this->Standing();
 		}		
 		else
 		{
 			position.x = flagPosition.x + velocity.x * timer.x + 1.0f / 2 * accel.x * timer.x * timer.x;
-			//prePosition.x = position.x;
 		}
 	}
 	else
@@ -485,6 +530,8 @@ void CMario::UpdatePosition(float delta_time)
 	}
 	else
 	{
+		//velocity.y = 0;
+		//accel.y = 0;
 		flagPosition.y = position.y;
 		timer.y = 0.0f;
 	}
@@ -562,22 +609,25 @@ void CMario::Reset()
 }
 void CMario::changeMario(CSprite* mario, float number)
 {
-	magicCounter += 0.5;
+	magicCounter += 1;
 	doingChanging = true;
-	if (magicCounter <= number)
+	if (magicCounter <= number*GAME_FPS)
 	{
-		if (this->sprite != this->currentSprite)
+		if (magicCounter % 30 == 0)
 		{
-			this->sprite = this->currentSprite;
-			width = currentSprite->width;
-			height = currentSprite->height;
-		}
-		else
-		{
-			this->sprite = mario;
-			width = mario->width;
-			height = mario->height;
-		}
+			if (this->sprite != this->currentSprite)
+			{
+				this->sprite = this->currentSprite;
+				width = currentSprite->width;
+				height = currentSprite->height;
+			}
+			else
+			{
+				this->sprite = mario;
+				width = mario->width;
+				height = mario->height;
+			}
+		}	
 	}
 	else //Thực hiện xong hiệu ứng
 	{
@@ -595,7 +645,7 @@ void CMario::changeMario(CSprite* mario, float number)
 	}
 	else
 	{
-		preVelocity = D3DXVECTOR2(0.0f, 600.0f);
+		preVelocity = D3DXVECTOR2(0.0f, 700.0f);
 		flagAccel = D3DXVECTOR2(400.0f, 550.0f);
 	}
 }

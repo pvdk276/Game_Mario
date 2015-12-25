@@ -4,9 +4,8 @@
 #include "Sprite.h"
 #include "Global.h"
 #include "Box.h"
+#include "Bullet.h"
 
-#define TIME_ANIMATION  1.6f
-#define MAXHEIGHT  450
 enum ActionMario
 {
 	stand,
@@ -26,11 +25,12 @@ class CMario : public CSingleton<CMario>, public CLivingObject
 private:
 	bool m_collisionX; // 1: va chạm bên phải, -1: va chạm bên trái
 	bool m_collisionY; // 1: va chạm phía dưới, -1: va chạm phía trên
+
 	CBox mario;
 	CBaseObject* m_pObject;
 	ObjectName objectName;
 
-	float magicCounter;	//biến đếm số lần thực hiện chuyển đổi
+	int magicCounter;	//biến đếm số lần thực hiện chuyển đổi
 	int posIndex;		//index của mario cũ
 	bool doingChanging;	//Mario đang thay đổi
 	CSprite* currentSprite;	//Sprite hiện tại
@@ -46,6 +46,16 @@ private:
 	D3DXVECTOR2 flagAccel;
 	D3DXVECTOR2 posMasat;
 	ActionMario m_action;
+
+	void droping();
+	void Jumping();
+	void Standing();
+
+	CSprite* m_pSprBullet;
+	CBullet* m_pBullet;
+	bool isShooting;
+
+	void CheckCollision(CBox mario, float delta_time);
 public:
 	
 	//D3DXVECTOR2 m_MaxVeloc;//luu tru maxveloc ban dau,khi va cham cho maxvecloc ve 0

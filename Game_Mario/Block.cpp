@@ -38,7 +38,7 @@ void CBlock::Update(float delta_time)
 	if (this->isDead)
 	{
 		bonus->Update(delta_time);
-		UpdateAnimation(delta_time, 2, 2, direction);
+		UpdateAnimation(delta_time, 2, 2, direction, 0.2f);
 	}
 	else
 	{

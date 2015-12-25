@@ -7,9 +7,8 @@ CBonus::CBonus(int id, ObjectName typeObj, D3DXVECTOR2 position, CSprite * sprit
 	width = 50;
 	height = 50;
 	posOfBlock = position;
-	velocity = D3DXVECTOR2(0.0f, 2.0f);
-	maxAccel = D3DXVECTOR2(10.0f, 10.0f);
-	MaxVelocity = D3DXVECTOR2(15.0f, 50.0f);
+	velocity = D3DXVECTOR2(200.0f, 600.0f);
+	accel = D3DXVECTOR2(0.0f, 550.0f);
 	this->isDead = false;
 	this->isCollision = false;
 }
@@ -35,7 +34,7 @@ void CBonus::Update(float delta_time)
 			float value = CCollision::getInstance()->CheckCollision(
 				this->GetBox(),
 				m_pObject->GetBox(),
-				normalx, normaly, D3DXVECTOR2(0.0f,0.0f), delta_time);
+				normalx, normaly, timer, delta_time);
 			if (value < 1) //a collision occur
 			{
 				switch (m_pObject->type)
@@ -62,7 +61,7 @@ void CBonus::Update(float delta_time)
 					{
 						m_collisionY = true;
 						if (velocity.x == 0.0f)
-							velocity.x = MaxVelocity.x;
+							velocity.x = -velocity.x;
 						if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
 							position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
 					}
@@ -84,7 +83,10 @@ void CBonus::Update(float delta_time)
 		case RED_MUSHROOM:
 		case GREEN_MUSHROOM:
 		{
-			if (velocity.y > 0) velocity.y *= -1;
+			timer.y = 0.0f;
+			velocity.y = -(abs(velocity.y) + abs(accel.y) * timer.y);
+			accel.y = -accel.y;
+			flagPosition.y = position.y;
 		}
 		break;
 		case COIN:
@@ -110,8 +112,13 @@ void CBonus::Update(float delta_time)
 
 	//Tính vận tốc cho bonus
 	if (m_collisionX)
-		velocity.x *= -1;
-	if (velocity.y < MaxVelocity.y && velocity.y > 0 || velocity.y > - MaxVelocity.y && velocity.y < 0)
+	{
+		flagPosition.x = position.x;
+		timer.x = 0.0f;
+		velocity.x = -velocity.x;
+	}
+
+	/*if (velocity.y < MaxVelocity.y && velocity.y > 0 || velocity.y > - MaxVelocity.y && velocity.y < 0)
 	{
 		if (velocity.y > 0)
 			accel.y = maxAccel.y;
@@ -125,7 +132,7 @@ void CBonus::Update(float delta_time)
 		else
 			velocity.y = - MaxVelocity.y;
 		accel.y = 0;
-	}
+	}*/
 	
 	//update Postion and Animation
 	updatePosAnima(delta_time);
@@ -139,12 +146,13 @@ void CBonus::updatePosAnima(float delta_time)
 	{
 		if (!m_collisionY)
 		{
-			position.y += velocity.y * delta_time + 1.0f / 2 * accel.y * delta_time * delta_time;
-			velocity.y += accel.y * delta_time;
+			timer.y += delta_time;
+			position.y = flagPosition.y + velocity.y * timer.y + 1.0f / 2 * accel.y * timer.y * timer.y;
 		}
 		else
 		{
-			position.x += velocity.x * delta_time;
+			timer.x += delta_time;
+			position.x = flagPosition.x + velocity.x * timer.x + 1.0f / 2 * accel.x * timer.x * timer.x;
 		}
 		UpdateAnimation(delta_time, 0, 0, direction);
 	}
@@ -153,20 +161,22 @@ void CBonus::updatePosAnima(float delta_time)
 	{
 		if (!m_collisionY)
 		{
-			position.y += velocity.y * delta_time + 1.0f / 2 * accel.y * delta_time * delta_time;
-			velocity.y += accel.y * delta_time;
+			timer.y += delta_time;
+			position.y = flagPosition.y + velocity.y * timer.y + 1.0f / 2 * accel.y * timer.y * timer.y;
 		}
 		else
 		{
-			position.x += velocity.x * delta_time;
+			timer.x += delta_time;
+			position.x = flagPosition.x + velocity.x * timer.x + 1.0f / 2 * accel.x * timer.x * timer.x;
 		}
+
 		UpdateAnimation(delta_time, 1, 1, direction);
 	}
 	break;
 	case COIN:
 	{
-		position.y += velocity.y * delta_time + 1.0f / 2 * accel.y * delta_time * delta_time;
-		velocity.y += accel.y * delta_time;
+		timer.y += delta_time;
+		position.y = flagPosition.y + velocity.y * timer.y + 1.0f / 2 * accel.y * timer.y * timer.y;
 
 		UpdateAnimation(delta_time, 0, 1, direction);
 	}

@@ -12,6 +12,8 @@ private:
 	int count; //đếm số lần va chạm
 	CBonus* bonus;
 	CSprite* sprite2;
+	bool isBonus;
+	bool isBrick;
 public:
 	CCoinBrick(int id, ObjectName type, D3DXVECTOR2 position, CSprite* sprite1, CSprite* sprite2);
 	~CCoinBrick();

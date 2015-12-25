@@ -13,6 +13,8 @@ CCoinBrick::CCoinBrick(int id, ObjectName type, D3DXVECTOR2 position, CSprite* s
 	this->numberCoin = rand() % 10 + 1;
 	this->sprite2 = sprite2;
 	bonus = new CBonus(id, COIN, position, sprite2);
+	isBonus = false;
+	isBrick = false;
 }
 
 CCoinBrick::~CCoinBrick()
@@ -21,16 +23,14 @@ CCoinBrick::~CCoinBrick()
 
 void CCoinBrick::Update(float delta_time)
  {
-	 if (this->isCollision)
+	 if (isCollision && !isBonus && !isBrick)
 	 {
-		 position.y += direct;
-		 if (position.y > pos + 5)
-			 direct = -1;
-		 if (position.y == pos)
-		 {
-			 direct = 0;
-		 }
-		 //coin	
+		 isBonus = true;
+		 isBrick = true;
+	 }
+	
+	 if (this->isCollision && isBonus == true)
+	 {
 		 if (count <= numberCoin)
 		 {
 			 bonus->Update(delta_time);
@@ -38,20 +38,34 @@ void CCoinBrick::Update(float delta_time)
 			 {
 				 bonus = new CBonus(id, COIN, position, sprite2);
 				 count++;
-				 direct = 1;
-				 this->isCollision = false;
+				 isBonus = false;
 			 }
 		 }
 		 else //Khi đủ số coin thì object chết
 		 {
 			 this->isDead = true;
+			 isBonus = false;
+		 }
+		 
+	 }
+	 
+	 if (this->isCollision && isBrick == true)
+	 {
+		 position.y += direct;
+		 if (position.y > pos + 5)
+			 direct = -1;
+		 if (position.y == pos)
+		 {
 			 direct = 1;
-			 this->isCollision = false;
-		 }		
-	}
+			 isBrick = false;
+		 }
+	 }
+
+	 if (!isBonus && !isBrick)
+		 isCollision = false;
 
 	if (this->isDead)
-		UpdateAnimation(delta_time, 1, 1, direction);
+		UpdateAnimation(delta_time, 1, 1, direction, 0.2f);
 	else
 		UpdateAnimation(delta_time, 0, 0, direction);
 }
