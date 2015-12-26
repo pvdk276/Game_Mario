@@ -135,9 +135,9 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 			{
 				if (normalx == 0.0f && normaly == -1.0f)
 				{
-					if (this->sprite == bigMario)
+					if (this->sprite != smallMario)
 						m_pObject->isDead = true;
-					else if (this->sprite == smallMario) // Khi mario nho va cham
+					else // Khi mario nho va cham
 					{
 						m_pObject->isCollision = true;
 						this->droping();
@@ -262,7 +262,8 @@ void CMario::Init()
 	this->m_pSprBullet = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Bullet/Bullet.png", 30, 30, 4, 4, NULL);
 	this->smallMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/SmallMario.png", 50, 50, 10, 5, NULL);
 	this->bigMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/BigMario.png", 50, 100, 10, 5, NULL);
-	changeMario(smallMario, 0);
+	this->superMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/SuperMario.png", 50, 100, 10, 5, NULL);
+	changeMario(superMario, 0);
 	velocity = D3DXVECTOR2(0.0f, - 200);
 	accel = D3DXVECTOR2(0, - 100);
 	prePosition = D3DXVECTOR2(0.0f, 0.0f);
@@ -270,7 +271,8 @@ void CMario::Init()
 	deltaPosition = 0.0f;
 	masat = posMasat.x;
 	isShooting = false;
-	
+	shoot = false;
+	timerShoot = 0.0f;
 }
 
 void CMario::Render()
@@ -456,20 +458,30 @@ void CMario::Update(float delta_time)
 #pragma region bắn
 	if (CGameKeyboard::getInstance()->IsKeyDown(DIK_A))
 	{
-		D3DXVECTOR2 bulletPosition;
-		if (direction == 1)
-			bulletPosition = D3DXVECTOR2(position.x + width / 2, position.y);
-		else
-			bulletPosition = D3DXVECTOR2(position.x - width / 2, position.y);
-		if (isShooting && m_pBullet->isDead == true)
-			m_pBullet = new CBullet(direction,bulletPosition,m_pSprBullet);
-		else if(isShooting == false)
-			m_pBullet = new CBullet(direction, bulletPosition, m_pSprBullet);
-		isShooting = true;
+		if (this->sprite == superMario)
+		{
+			D3DXVECTOR2 bulletPosition;
+			if (direction == 1)
+				bulletPosition = D3DXVECTOR2(position.x + width / 2, position.y);
+			else
+				bulletPosition = D3DXVECTOR2(position.x - width / 2, position.y);
+			if (isShooting && m_pBullet->isDead == true)
+				m_pBullet = new CBullet(direction, bulletPosition, m_pSprBullet);
+			else if (isShooting == false)
+				m_pBullet = new CBullet(direction, bulletPosition, m_pSprBullet);
+			isShooting = true;
+			shoot = true;
+		}
 	}
 	
 	if (isShooting)
 	{
+		timerShoot += delta_time;
+		if (timerShoot >= delta_time * 10)
+		{
+			shoot = false;
+			timerShoot = 0.0f;
+		}
 		m_pBullet->Update(delta_time);
 	}
 
@@ -540,65 +552,79 @@ void CMario::UpdatePosition(float delta_time)
 
 void CMario::UpdateAnimation(float delta_time)
 {
-	if (m_action == stand)
+	if (!shoot)
 	{
-		if (direction == 1)
+		if (m_action == stand)
 		{
-			CAnimation::UpdateAnimation(delta_time, 0, 0, direction, 0.2f);
-		}
-		else
-		{
-			CAnimation::UpdateAnimation(delta_time, 5, 5, direction, 0.2f);
-		}
-	}
-	else if (m_action == run)
-	{
-		if (direction == 1)
-		{
-			CAnimation::UpdateAnimation(delta_time, 0, 1, direction, 0.2f);
-		}
-		else
-		{
-			CAnimation::UpdateAnimation(delta_time, 5, 6, direction, 0.2f);
-		}
-	}
-	else if (m_action == jump)
-	{
-		if (direction == 1)
-		{
-			CAnimation::UpdateAnimation(delta_time, 2, 2, direction, 0.2f);
-		}
-		else
-		{
-			CAnimation::UpdateAnimation(delta_time, 7, 7, direction, 0.2f);
-		}
-	}
-	else if (m_action == drop)
-	{
-		if (direction == 1)
-		{
-			CAnimation::UpdateAnimation(delta_time, 2, 2, direction, 0.2f);
-		}
-		else
-		{
-			CAnimation::UpdateAnimation(delta_time, 7, 7, direction, 0.2f);
-		}
-	}
-	else //if(m_action == down)
-	{
-		if (direction == 1)
-		{
-			if (this->sprite == smallMario)
-				CAnimation::UpdateAnimation(delta_time, 3, 3, direction, 0.2f);
+			if (direction == 1)
+			{
+				CAnimation::UpdateAnimation(delta_time, 0, 0, direction, 0.2f);
+			}
 			else
-				CAnimation::UpdateAnimation(delta_time, 4, 4, direction, 0.2f);
+			{
+				CAnimation::UpdateAnimation(delta_time, 5, 5, direction, 0.2f);
+			}
+		}
+		else if (m_action == run)
+		{
+			if (direction == 1)
+			{
+				CAnimation::UpdateAnimation(delta_time, 0, 1, direction, 0.2f);
+			}
+			else
+			{
+				CAnimation::UpdateAnimation(delta_time, 5, 6, direction, 0.2f);
+			}
+		}
+		else if (m_action == jump)
+		{
+			if (direction == 1)
+			{
+				CAnimation::UpdateAnimation(delta_time, 2, 2, direction, 0.2f);
+			}
+			else
+			{
+				CAnimation::UpdateAnimation(delta_time, 7, 7, direction, 0.2f);
+			}
+		}
+		else if (m_action == drop)
+		{
+			if (direction == 1)
+			{
+				CAnimation::UpdateAnimation(delta_time, 2, 2, direction, 0.2f);
+			}
+			else
+			{
+				CAnimation::UpdateAnimation(delta_time, 7, 7, direction, 0.2f);
+			}
+		}
+		else //if(m_action == down)
+		{
+			if (direction == 1)
+			{
+				if (this->sprite == smallMario)
+					CAnimation::UpdateAnimation(delta_time, 3, 3, direction, 0.2f);
+				else
+					CAnimation::UpdateAnimation(delta_time, 4, 4, direction, 0.2f);
+			}
+			else
+			{
+				if (this->sprite == smallMario)
+					CAnimation::UpdateAnimation(delta_time, 8, 8, direction, 0.2f);
+				else
+					CAnimation::UpdateAnimation(delta_time, 9, 9, direction, 0.2f);
+			}
+		}
+	}
+	else
+	{
+		if (direction == 1)
+		{
+			CAnimation::UpdateAnimation(delta_time, 1, 1, direction, 0.05f);
 		}
 		else
 		{
-			if (this->sprite == smallMario)
-				CAnimation::UpdateAnimation(delta_time, 8, 8, direction, 0.2f);
-			else
-				CAnimation::UpdateAnimation(delta_time, 9, 9, direction, 0.2f);
+			CAnimation::UpdateAnimation(delta_time, 8, 8, direction, 0.05f);
 		}
 	}
 }

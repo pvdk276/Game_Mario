@@ -27,6 +27,9 @@ private:
 	bool m_collisionY; // 1: va chạm phía dưới, -1: va chạm phía trên
 
 	CBox mario;
+	CSprite* smallMario;
+	CSprite* bigMario;
+	CSprite* superMario;
 	CBaseObject* m_pObject;
 	ObjectName objectName;
 
@@ -54,19 +57,11 @@ private:
 	CSprite* m_pSprBullet;
 	CBullet* m_pBullet;
 	bool isShooting;
+	bool shoot;
+	float timerShoot;
 
 	void CheckCollision(CBox mario, float delta_time);
 public:
-	
-	//D3DXVECTOR2 m_MaxVeloc;//luu tru maxveloc ban dau,khi va cham cho maxvecloc ve 0
-
-	//D3DXVECTOR2 m_lastPos;
-	//float gravity;
-	//int state;
-
-	CSprite* smallMario;
-	CSprite* bigMario;
-	CSprite* superMario;
 
 	CMario();
 	~CMario();
