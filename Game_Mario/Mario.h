@@ -14,12 +14,7 @@ enum ActionMario
 	down,
 	drop
 };
-enum StatusMario
-{
-	SmallMario,
-	BigMario,
-	SuperMario
-};
+
 class CMario : public CSingleton<CMario>, public CLivingObject
 {
 private:

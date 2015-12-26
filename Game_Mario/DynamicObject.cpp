@@ -17,7 +17,16 @@ CDynamicObject::~CDynamicObject()
 
 CBox CDynamicObject::GetBox()
 {
-	CBox box(position.x, position.y, width, height, velocity.x, velocity.y, accel.x, accel.y);
+	CBox box(position.x, 
+		position.y, 
+		width, 
+		height, 
+		velocity.x, 
+		velocity.y, 
+		accel.x, 
+		accel.y, 
+		timer.x, 
+		timer.y);
 	return box;
 }
 

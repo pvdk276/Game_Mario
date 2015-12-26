@@ -31,7 +31,7 @@ void CBullet::Update(float delta_time)
 		CBaseObject* m_pObject = CBinaryTree::getInstance()->listCurrentObject->at(i);
 		float normalx = 0.0f, normaly = 0.0f;
 		float value = CCollision::getInstance()->CheckCollision(
-			this->GetBox(), m_pObject->GetBox(), normalx, normaly, timer, delta_time);
+			this->GetBox(), m_pObject->GetBox(), normalx, normaly, delta_time);
 		if (value < 1) //a collision occur
 		{
 			switch (m_pObject->type)

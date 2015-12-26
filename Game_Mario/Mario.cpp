@@ -35,19 +35,24 @@ void CMario::Standing()
 	isSlowing = false;
 }
 
+// TODO Mario va chạm với enemy.
+// TODO Sửa va chạm với pipe.
 void CMario::CheckCollision(CBox mario, float delta_time)
 {
 	m_collisionX = false;
 	m_collisionY = false;
 
+	
+
 	for (int i = 0; i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
 	{
-		//mario = CMario::getInstance()->GetBox();
 		m_pObject = CBinaryTree::getInstance()->listCurrentObject->at(i);
+		//Xử lý va chạm cho bonus
+
 		float normalx = 0.0f, normaly = 0.0f;
 		value = 1;
 		value = CCollision::getInstance()->CheckCollision(
-			mario, m_pObject->GetBox(), normalx, normaly, timer, delta_time);
+			mario, m_pObject->GetBox(), normalx, normaly, delta_time);
 		//if (value < 1)
 		//	value = CCollision::getInstance()->CheckCollision(
 		//		mario, m_pObject->GetBox(), normalx, normaly, timer, delta_time);
@@ -56,6 +61,11 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 			CCollision::getInstance()->CheckCollision(
 				mario, m_pObject->GetBox(), normalx, normaly, timer, delta_time);*/
 		//float v = value; 
+		if (m_pObject->type == RED_MUSHROOM)
+		{
+			CBox a = m_pObject->GetBox();
+		}
+
 		if (value < 1) //a collision occur
 		{
 			switch (m_pObject->type)
@@ -123,10 +133,10 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 			{
 				if (this->sprite == smallMario)
 				{
-					if (!doingChanging)
-						currentSprite = this->sprite;
-					changeMario(bigMario, 2);
-					m_pObject->isDead = true;
+					/*if (!doingChanging)
+					currentSprite = this->sprite;*/
+					changeMario(bigMario, 0);
+					//m_pObject->bonus->isDead = true;
 				}
 			}
 			break;
@@ -263,7 +273,7 @@ void CMario::Init()
 	this->smallMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/SmallMario.png", 50, 50, 10, 5, NULL);
 	this->bigMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/BigMario.png", 50, 100, 10, 5, NULL);
 	this->superMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/SuperMario.png", 50, 100, 10, 5, NULL);
-	changeMario(superMario, 0);
+	changeMario(smallMario, 0);
 	velocity = D3DXVECTOR2(0.0f, - 200);
 	accel = D3DXVECTOR2(0, - 100);
 	prePosition = D3DXVECTOR2(0.0f, 0.0f);

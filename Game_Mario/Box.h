@@ -6,6 +6,7 @@ struct CBox
 	float w, h;
 	float vx, vy;
 	float ax, ay;
+	float tx, ty;
 
 	CBox()
 	{
@@ -13,9 +14,19 @@ struct CBox
 		w = h = 0.0f;
 		vx = vy = 0.0f;
 		ax = ay = 0.0f;
+		tx = ty = 0.0f;
 	}
 
-	CBox(float posX, float posY, float Width, float Height, float vantocx, float vantocy, float giatocX, float giatocY)
+	CBox(float posX, 
+		float posY, 
+		float Width, 
+		float Height, 
+		float vantocx, 
+		float vantocy, 
+		float giatocX, 
+		float giatocY, 
+		float timerX, 
+		float timerY)
 	{
 		x = posX;
 		y = posY;
@@ -25,5 +36,7 @@ struct CBox
 		vy = vantocy;
 		ax = giatocX;
 		ay = giatocY;
+		tx = timerX;
+		ty = timerY;
 	}
 };

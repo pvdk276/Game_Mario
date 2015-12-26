@@ -27,7 +27,7 @@ void CTurtle::Update(float delta_time)
 			float value = CCollision::getInstance()->CheckCollision(
 				this->GetBox(),
 				CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(),
-				normalx, normaly, timer, delta_time);
+				normalx, normaly, delta_time);
 			if (value < 1) //a collision occur
 			{
 				timer.x = 0.0f;

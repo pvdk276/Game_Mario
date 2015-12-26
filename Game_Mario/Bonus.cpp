@@ -34,7 +34,7 @@ void CBonus::Update(float delta_time)
 			float value = CCollision::getInstance()->CheckCollision(
 				this->GetBox(),
 				m_pObject->GetBox(),
-				normalx, normaly, timer, delta_time);
+				normalx, normaly, delta_time);
 			if (value < 1) //a collision occur
 			{
 				switch (m_pObject->type)
@@ -117,22 +117,6 @@ void CBonus::Update(float delta_time)
 		timer.x = 0.0f;
 		velocity.x = -velocity.x;
 	}
-
-	/*if (velocity.y < MaxVelocity.y && velocity.y > 0 || velocity.y > - MaxVelocity.y && velocity.y < 0)
-	{
-		if (velocity.y > 0)
-			accel.y = maxAccel.y;
-		else
-			accel.y = - maxAccel.y;
-	}
-	else
-	{
-		if(velocity.y > 0)
-			velocity.y = MaxVelocity.y;
-		else
-			velocity.y = - MaxVelocity.y;
-		accel.y = 0;
-	}*/
 	
 	//update Postion and Animation
 	updatePosAnima(delta_time);
