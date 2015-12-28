@@ -1,7 +1,7 @@
 #include "Collision.h"
 
 //SweptAABB 
-float CCollision::SweptAABB(CBox first, CBox second)
+float CCollision::SweptAABB(CBox first, CBox second, float& distanceX, float& distanceY)
 {
 	float dxEntry, dyEntry;
 	float dxExit, dyExit;
@@ -14,28 +14,69 @@ float CCollision::SweptAABB(CBox first, CBox second)
 		//Khoảng cách xa nhất từ box1 đến box2
 		dxExit = (second.x + second.w / 2) - (first.x - first.w / 2);
 	}
-	else 
+	else if(m_deltaPosition.x < 0)
 	{
 		dxEntry = (second.x + second.w / 2) - (first.x - first.w / 2);
 		dxExit = (second.x - second.w / 2) - (first.x + first.w / 2);
 	}
+	else if (m_deltaPosition.x == 0)
+	{
+		float entry = (second.x - second.w / 2) - (first.x + first.w / 2);
+		float exit = (second.x + second.w / 2) - (first.x - first.w / 2);
+		if (abs(entry) == first.w + second.w && exit == 0)
+		{
+			dxEntry = exit;
+			dxExit = entry;
+		}
+		else if (abs(entry) == 0 && exit == first.w + second.w)
+		{
+			dxEntry = entry;
+			dxExit = exit;
+		}
+		else
+		{
+			dxEntry = (second.x + second.w / 2) - (first.x - first.w / 2);
+			dxExit = (second.x - second.w / 2) - (first.x + first.w / 2);
+		}
+	}
 
+	//chiều dọc
 	if (m_deltaPosition.y > 0)
 	{
 		dyEntry = (second.y - second.h / 2) - (first.y + first.h / 2);
 		dyExit = (second.y + second.h / 2) - (first.y - first.h / 2);
 	}
-	else
+	else if(m_deltaPosition.y < 0)
 	{
 		dyEntry = (second.y + second.h / 2) - (first.y - first.h / 2);
 		dyExit = (second.y - second.h / 2) - (first.y + first.h / 2);
+	}
+	else if (m_deltaPosition.y == 0)
+	{
+		float entry = (second.y - second.h / 2) - (first.y + first.h / 2);
+		float exit = (second.y + second.h / 2) - (first.y - first.h / 2);
+		if (abs(entry) == first.h + second.h && exit == 0)
+		{
+			dyEntry = exit;
+			dyExit = entry;
+		}
+		else if (abs(entry) == 0 && exit == first.h + second.h)
+		{
+			dyEntry = entry;
+			dyExit = exit;
+		}
+		else
+		{
+			dyEntry = (second.y + second.h / 2) - (first.y - first.h / 2);
+			dyExit = (second.y - second.h / 2) - (first.y + first.h / 2);
+		}
 	}
 
 	// find time of collision and time of leaving for each axis (if statement is to prevent divide by zero)
 	float txEntry, tyEntry;
 	float txExit, tyExit;
 
-	if (m_deltaPosition1.x == 0 && abs(dxEntry) != 0)
+	if (m_deltaPosition1.x == 0 && abs(dxEntry) != 0)	//Nếu đang ở xa và đang đứng yên
 	{
 		txEntry = -std::numeric_limits<float>::infinity();
 		txExit = std::numeric_limits<float>::infinity();
@@ -117,6 +158,8 @@ float CCollision::SweptAABB(CBox first, CBox second)
 		}
 
 		// return the time of collision
+		distanceX = dxEntry;
+		distanceY = dyEntry;
 		return entryTime;
 	}
 }
@@ -146,7 +189,7 @@ bool AABBCheck(CBox b1, CBox b2)
 		b1.y - b1.h / 2 > b2.y + b2.h / 2);
 }
 
-float CCollision::CheckCollision(CBox first, CBox second, float& normalx, float& normaly, float deltaTime)
+float CCollision::CheckCollision(CBox first, CBox second, float& normalx, float& normaly,float& distanceX, float& distanceY, float deltaTime)
 {
 	CBox box1 = first;
 	CBox box2 = second;
@@ -182,9 +225,12 @@ float CCollision::CheckCollision(CBox first, CBox second, float& normalx, float&
 
 	if (AABBCheck(broadphasebox, box2))
 	{
-		float value = SweptAABB(box1, box2);
+		float _distanceX, _distanceY;
+		float value = SweptAABB(box1, box2,_distanceX,_distanceY);
 		normalx = m_normalx;
 		normaly = m_normaly;
+		distanceX = _distanceX;
+		distanceY = _distanceY;
 		return value;
 	}
 

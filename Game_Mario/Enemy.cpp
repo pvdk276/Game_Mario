@@ -1,4 +1,4 @@
-#include "Enemy.h"
+﻿#include "Enemy.h"
 #include "BinaryTree.h"
 
 CEnemy::CEnemy(int id, D3DXVECTOR2 position, CSprite * sprite) : CLivingObject(id, position, sprite)
@@ -27,10 +27,11 @@ void CEnemy::Update(float delta_time)
 			CBinaryTree::getInstance()->listCurrentObject->at(i)->type == CARNIVOROUS_FLOWER_PIPE)
 		{
 			float normalx, normaly;
+			float distanceX, distanceY;
 			float value = CCollision::getInstance()->CheckCollision(
 				this->GetBox(),
 				CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(),
-				normalx, normaly, delta_time);
+				normalx, normaly, distanceX, distanceY, delta_time);
 			if (value < 1) //a collision occur
 			{
 				timer.x = 0.0f;
@@ -53,7 +54,7 @@ void CEnemy::Update(float delta_time)
 	{
 		UpdateAnimation(delta_time, 3, 3, direction);
 		deadTimer += delta_time;
-		if (deadTimer >= delta_time * 60)
+		if (deadTimer >= delta_time * 60)	//sau 1s thì chết
 		{
 			this->isDead = true;
 		}

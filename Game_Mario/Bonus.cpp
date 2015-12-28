@@ -26,10 +26,11 @@ void CBonus::Update(float delta_time)
 
 	//Va chạm với mario
 	float normalx, normaly;
+	float distanceX, distanceY;
 	if (CCollision::getInstance()->CheckCollision(
 		CMario::getInstance()->GetBox(),
 		this->GetBox(),
-		normalx, normaly, delta_time) < 1)
+		normalx, normaly, distanceX,distanceY, delta_time) < 1)
 	{
 		switch (type)
 		{
@@ -59,10 +60,11 @@ void CBonus::Update(float delta_time)
 		{
 			m_pObject = CBinaryTree::getInstance()->listCurrentObject->at(i);
 			float normalx, normaly;
+			float distanceX, distanceY;
 			float value = CCollision::getInstance()->CheckCollision(
 				this->GetBox(),
 				m_pObject->GetBox(),
-				normalx, normaly, delta_time);
+				normalx, normaly,distanceX,distanceY, delta_time);
 			if (value < 1) //a collision occur
 			{
 				switch (m_pObject->type)

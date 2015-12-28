@@ -51,7 +51,7 @@ private:
 	bool isShooting;
 	bool shoot;
 	float timerShoot;
-
+	int count;
 	void CheckCollision(CBox mario, float delta_time);
 public:
 	CSprite* smallMario;

@@ -4,250 +4,6 @@
 #include "BinaryTree.h"
 #include "GameGraphic.h"
 
-
-void CMario::droping()
-{
-	m_action = drop;
-	velocity.y = -(abs(velocity.y) + abs(accel.y) * timer.y);
-	timer.y = 0.0f;
-	accel.y = - flagAccel.y;
-	flagPosition.y = position.y;
-}
-
-void CMario::Jumping()
-{
-	m_collisionY = false;
-	velocity.y = preVelocity.y;
-	accel.y = - flagAccel.y;
-	timer.y = 0.0f;
-	flagPosition.y = position.y;
-	m_action = jump;
-}
-
-void CMario::Standing()
-{
-	velocity.x = 0.0f;
-	preVelocity.x = velocity.x;
-	flagPosition.x = position.x;
-	accel.x = 0.0f;
-	timer.x = 0.0f;
-	deltaPosition = 0;
-	isSlowing = false;
-}
-
-// TODO Mario va chạm với enemy.
-// TODO Sửa va chạm với pipe.
-void CMario::CheckCollision(CBox mario, float delta_time)
-{
-	//Va chạm trong current object
-	m_collisionX = false;
-	m_collisionY = false;
-	for (int i = 0; i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
-	{
-		m_pObject = CBinaryTree::getInstance()->listCurrentObject->at(i);
-		float normalx = 0.0f, normaly = 0.0f;
-		value = 1;
-		value = CCollision::getInstance()->CheckCollision(
-			mario, m_pObject->GetBox(), normalx, normaly, delta_time);
-		//if (value < 1)
-		//	value = CCollision::getInstance()->CheckCollision(
-		//		mario, m_pObject->GetBox(), normalx, normaly, timer, delta_time);
-		/*if(m_pObject->type == CENTER_LAND && ((m_pObject->GetBox().x < mario.x + 50) && (m_pObject->GetBox().x > mario.x - 50)) && value >= 1)*/
-		/*if (m_pObject->type == PIPE && mario.x > 824.816 && value == 1)
-			CCollision::getInstance()->CheckCollision(
-				mario, m_pObject->GetBox(), normalx, normaly, timer, delta_time);*/
-		//float v = value;
-
-		if (value < 1 && !m_pObject->isDead) //a collision occur
-		{
-			switch (m_pObject->type)
-			{
-				//Va chạm với ống
-			case PIPE:
-			case STONE:
-			case CARNIVOROUS_FLOWER_PIPE:
-			case PIPE_UP:
-			case PIPE_DOWN:
-			{
-				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
-				{
-					m_collisionX = true;
-					if (!doingChanging)
-						currentSprite = this->sprite;
-					changeMario(smallMario, 2);
-					//position.x = position.x - 1;
-				}
-				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
-				{
-					m_collisionY = true;
-					if (m_action == jump || m_action == drop)
-					{
-						if (velocity.x != 0) m_action = run;
-						else m_action = stand;
-					}
-					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
-						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
-				}
-			}
-			break;
-
-			//Va chạm với Enemy
-			case ENEMY:
-			{
-				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
-				{
-					//Mario chết
-					if (this->sprite == smallMario)
-					{
-						if (!doingChanging)
-							this->isDead = true;
-					}
-					else //Nếu là mario lớn
-					{
-						if (!doingChanging)
-							currentSprite = this->sprite;
-						changeMario(smallMario, 2);
-					}
-
-				}
-				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
-				{
-					m_pObject->isCollision = true;
-				}
-			}
-			break;
-			case RED_MUSHROOM:
-			{
-				if (this->sprite == smallMario)
-				{
-					/*if (!doingChanging)
-					currentSprite = this->sprite;*/
-					changeMario(bigMario, 0);
-					//m_pObject->bonus->isDead = true;
-				}
-			}
-			break;
-			//Va chạm với gạch
-			case BRICK:
-			{
-				if (normalx == 0.0f && normaly == -1.0f)
-				{
-					if (this->sprite != smallMario)
-					{
-						m_pObject->isDead = true;
-						CBinaryTree::getInstance()->listCurrentObject->erase(std::remove(
-							CBinaryTree::getInstance()->listCurrentObject->begin(),
-							CBinaryTree::getInstance()->listCurrentObject->end(),
-							m_pObject),
-							CBinaryTree::getInstance()->listCurrentObject->end());
-					}
-					else // Khi mario nho va cham
-					{
-						m_pObject->isCollision = true;
-						this->droping();
-					}
-				}
-				if (normalx == 0.0f && normaly == 1.0f)
-				{
-					m_collisionY = true;
-					if (m_action == jump || m_action == drop)
-					{
-						if (velocity.x != 0) m_action = run;
-						else m_action = stand;
-					}
-					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
-						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
-				}
-
-			}
-			break;
-			case COIN_BRICK:
-			{
-				if (normalx == 0.0f && normaly == -1.0f)
-				{
-					m_pObject->isCollision = true;
-					this->droping();
-				}
-				if (normalx == 0.0f && normaly == 1.0f)
-				{
-					m_collisionY = true;
-					if (m_action == jump || m_action == drop)
-					{
-						if (velocity.x != 0) m_action = run;
-						else m_action = stand;
-					}
-					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
-						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
-				}
-			}
-			break;
-			//Va chạm với block
-			case COIN_BLOCK:
-			case RED_MUSHROOM_BLOCK:
-			case FLOWER_BLOCK:
-			case GREEN_MUSHROOM_BLOCK:
-			case STAR_BLOCK:
-			{
-				if (normalx == 0.0f && normaly == -1.0f)
-				{
-					if (m_pObject->type == COIN_BLOCK)
-						m_pObject->isCollision = true;
-					else
-					{
-						m_pObject->isCollision = true;
-						m_pObject->unLocked = true;
-						
-					}
-					this->droping();
-				}
-				if (normalx == 0.0f && normaly == 1.0f)
-				{
-					m_collisionY = true;
-					if (m_action == jump || m_action == drop)
-					{
-						if (velocity.x != 0) m_action = run;
-						else m_action = stand;
-						accel.y = -2;
-
-					}
-					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
-						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
-				}
-			}
-			break;
-			//Va chạm với đất
-			case LEFT_LAND:
-			case RIGHT_LAND:
-			case CENTER_LAND:
-			{
-				if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
-				{
-					m_collisionY = true;
-					if (m_action == jump || m_action == drop)
-					{
-						if (velocity.x != 0) m_action = run;
-						else m_action = stand;
-
-					}
-					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
-						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
-				}
-			}
-			break;
-
-			default:
-				break;
-			}
-		}
-	}
-
-	//Va chạm với tường
-	if (position.x < 50.0f)
-	{
-		m_collisionX = true;
-	}
-}
-
 CMario::CMario() : CLivingObject(0, D3DXVECTOR2(75.0f, 600.0f), NULL)
 {
 	this->Init();
@@ -278,6 +34,7 @@ void CMario::Init()
 	isShooting = false;
 	shoot = false;
 	timerShoot = 0.0f;
+	count = 0.0f;
 }
 
 void CMario::Render()
@@ -344,6 +101,8 @@ void CMario::Update(float delta_time)
 				else if (deltaPosition == 0.0f)
 				{
 					isSlowing = false;
+					flagPosition.x = position.x;
+					timer.x = 0;
 					velocity.x = 0.0f;
 					accel.x = flagAccel.x;
 				}
@@ -510,7 +269,7 @@ void CMario::UpdatePosition(float delta_time)
 		deltaPosition = (flagPosition.x + velocity.x * timer.x + 1.0f / 2 * accel.x * timer.x * timer.x) - position.x;
 
 		//Giới hạn tốc độ cho Mario
-		if (abs(preVelocity.x + accel.x*timer.x) >= 300 && isSlowing == false)	//Giới hạn vận tốc nhỏ hơn 300
+		if (abs(preVelocity.x + accel.x*timer.x) >= 800 && isSlowing == false)	//Giới hạn vận tốc nhỏ hơn 300
 		{
 			//Chuyển thành chuyển động đều
 			velocity.x = preVelocity.x + accel.x*(timer.x - delta_time);
@@ -534,7 +293,7 @@ void CMario::UpdatePosition(float delta_time)
 	}
 	else
 	{
-		timer.x = delta_time;
+		timer.x = 0.0f;
 		flagPosition.x = position.x;
 		//deltaPosition = 0;
 	}
@@ -687,5 +446,283 @@ void CMario::changeMario(CSprite* mario, float number)
 
 		magicCounter = 0;
 		doingChanging = false;
+	}
+}
+
+void CMario::droping()
+{
+	m_action = drop;
+	velocity.y = -(abs(velocity.y) + abs(accel.y) * timer.y);
+	timer.y = 0.0f;
+	accel.y = -flagAccel.y;
+	flagPosition.y = position.y;
+}
+
+void CMario::Jumping()
+{
+	m_collisionY = false;
+	velocity.y = preVelocity.y;
+	accel.y = -flagAccel.y;
+	timer.y = 0.0f;
+	flagPosition.y = position.y;
+	m_action = jump;
+}
+
+void CMario::Standing()
+{
+	velocity.x = 0.0f;
+	preVelocity.x = velocity.x;
+	flagPosition.x = position.x;
+	accel.x = 0.0f;
+	timer.x = 0.0f;
+	deltaPosition = 0;
+	isSlowing = false;
+}
+
+// TODO Mario va chạm với enemy.
+// TODO Sửa va chạm với pipe.
+void CMario::CheckCollision(CBox mario, float delta_time)
+{
+	//Va chạm trong current object
+	m_collisionX = false;
+	m_collisionY = false;
+	count ++;
+	for (int i = 0; i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
+	{
+		m_pObject = CBinaryTree::getInstance()->listCurrentObject->at(i);
+		float normalx = 0.0f, normaly = 0.0f;
+		float distanceX, distanceY;
+		value = 1;
+		value = CCollision::getInstance()->CheckCollision(
+			mario, m_pObject->GetBox(), normalx, normaly, distanceX, distanceY, delta_time);
+		//if (value < 1)
+		//	value = CCollision::getInstance()->CheckCollision(
+		//		mario, m_pObject->GetBox(), normalx, normaly, timer, delta_time);
+		if (m_pObject->type == PIPE && mario.x > 824.816)
+		CCollision::getInstance()->CheckCollision(
+		mario, m_pObject->GetBox(), normalx, normaly, distanceX, distanceY, delta_time);
+		//float v = value;
+
+		if (value < 1 && !m_pObject->isDead) //a collision occur
+		{
+			switch (m_pObject->type)
+			{
+				//Va chạm với ống
+			case PIPE:
+			case STONE:
+			case CARNIVOROUS_FLOWER_PIPE:
+			case PIPE_UP:
+			case PIPE_DOWN:
+			{
+				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
+				{
+					position.x = position.x + distanceX;
+					flagPosition.x = position.x;
+					timer.x = 0;
+					m_collisionX = true;
+					if (!doingChanging)
+						currentSprite = this->sprite;
+					changeMario(smallMario, 2);
+					//position.x = position.x - 1;
+				}
+				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
+				{
+					m_collisionY = true;
+					if (m_action == jump || m_action == drop)
+					{
+						if (velocity.x != 0) m_action = run;
+						else m_action = stand;
+					}
+					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
+						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+				}
+			}
+			break;
+
+			//Va chạm với Enemy
+			case TURTLE:
+			{
+				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
+				{
+					//Mario chết
+					if (this->sprite == smallMario)
+					{
+						if (!doingChanging)
+							this->isDead = true;
+					}
+					else //Nếu là mario lớn
+					{
+						if (!doingChanging)
+							currentSprite = this->sprite;
+						changeMario(smallMario, 2);
+					}
+
+				}
+				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
+				{
+					m_pObject->isCollision = true;
+				}
+			}
+			break;
+			case CARNIVOROUS_FLOWER:
+			{
+				//Mario chết
+				if (this->sprite == smallMario)
+				{
+					if (!doingChanging)
+						this->isDead = true;
+				}
+				else //Nếu là mario lớn
+				{
+					if (!doingChanging)
+						currentSprite = this->sprite;
+					changeMario(smallMario, 2);
+				}
+			}
+			break;
+			case ENEMY:
+			{
+				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
+				{
+					position.x = position.x + distanceX;
+					//Mario chết
+					if (this->sprite == smallMario)
+					{
+						if (!doingChanging)
+							this->isDead = true;
+					}
+					else //Nếu là mario lớn
+					{
+						if (!doingChanging)
+							currentSprite = this->sprite;
+						changeMario(smallMario, 2);
+					}
+
+				}
+				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
+				{
+					m_pObject->isCollision = true;
+				}
+			}
+			break;
+			//Va chạm với gạch
+			case BRICK:
+			{
+				if (normalx == 0.0f && normaly == -1.0f)
+				{
+					if (this->sprite != smallMario)
+					{
+						m_pObject->isDead = true;
+						CBinaryTree::getInstance()->listCurrentObject->erase(std::remove(
+							CBinaryTree::getInstance()->listCurrentObject->begin(),
+							CBinaryTree::getInstance()->listCurrentObject->end(),
+							m_pObject),
+							CBinaryTree::getInstance()->listCurrentObject->end());
+					}
+					else // Khi mario nho va cham
+					{
+						m_pObject->isCollision = true;
+						this->droping();
+					}
+				}
+				if (normalx == 0.0f && normaly == 1.0f)
+				{
+					m_collisionY = true;
+					if (m_action == jump || m_action == drop)
+					{
+						if (velocity.x != 0) m_action = run;
+						else m_action = stand;
+					}
+					position.y = position.y + distanceY;
+					flagPosition.y = position.y;
+					timer.y = 0.0f;
+				}
+
+			}
+			break;
+			case COIN_BRICK:
+			{
+				if (normalx == 0.0f && normaly == -1.0f)
+				{
+					m_pObject->isCollision = true;
+					this->droping();
+				}
+				if (normalx == 0.0f && normaly == 1.0f)
+				{
+					m_collisionY = true;
+					if (m_action == jump || m_action == drop)
+					{
+						if (velocity.x != 0) m_action = run;
+						else m_action = stand;
+					}
+					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
+						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+				}
+			}
+			break;
+			//Va chạm với block
+			case COIN_BLOCK:
+			case RED_MUSHROOM_BLOCK:
+			case FLOWER_BLOCK:
+			case GREEN_MUSHROOM_BLOCK:
+			case STAR_BLOCK:
+			{
+				if (normalx == 0.0f && normaly == -1.0f)
+				{
+					position.x = position.x + distanceX;
+					if (m_pObject->type == COIN_BLOCK)
+						m_pObject->isCollision = true;
+					else
+					{
+						m_pObject->isCollision = true;
+						m_pObject->unLocked = true;
+
+					}
+					this->droping();
+				}
+				if (normalx == 0.0f && normaly == 1.0f)
+				{
+					m_collisionY = true;
+					if (m_action == jump || m_action == drop)
+					{
+						if (velocity.x != 0) m_action = run;
+						else m_action = stand;
+
+					}
+					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
+						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+				}
+			}
+			break;
+			//Va chạm với đất
+			case LEFT_LAND:
+			case RIGHT_LAND:
+			case CENTER_LAND:
+			{
+				if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
+				{
+					m_collisionY = true;
+					if (m_action == jump || m_action == drop)
+					{
+						if (velocity.x != 0) m_action = run;
+						else m_action = stand;
+
+					}
+					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
+						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+				}
+			}
+			break;
+
+			default:
+				break;
+			}
+		}
+	}
+
+	//Va chạm với tường
+	if (position.x < 50.0f)
+	{
+		m_collisionX = true;
 	}
 }

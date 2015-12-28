@@ -4,6 +4,9 @@
 
 class CTurtle : public CLivingObject
 {
+private:
+	int m_countCollision;
+	float m_counttimer;
 public: 
 	CTurtle(int id, ObjectName type, D3DXVECTOR2 position, CSprite* sprite);
 	~CTurtle();

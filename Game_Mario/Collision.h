@@ -21,11 +21,11 @@ private:
 	//Tạo vùng biên
 	CBox GetSweptBroadphaseBox(CBox b);
 	//Kiểm tra va chạm
-	float SweptAABB(CBox first, CBox second);
+	float SweptAABB(CBox first, CBox second, float& distanceX, float& distanceY);
 public:
 
 	//check collision between 2 CBox, normalx and normaly are directions of collision, deltaTime is duration of collision checking
-	float CheckCollision(CBox first, CBox second, float& normalx, float& normaly, float deltaTime);
+	float CheckCollision(CBox first, CBox second, float& normalx, float& normaly, float& distanceX,float& distanceY, float deltaTime);
 
 	//
 
