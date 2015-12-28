@@ -24,6 +24,34 @@ void CBonus::Update(float delta_time)
 	m_collisionX = false;
 	m_collisionY = false;
 
+	//Va chạm với mario
+	float normalx, normaly;
+	if (CCollision::getInstance()->CheckCollision(
+		CMario::getInstance()->GetBox(),
+		this->GetBox(),
+		normalx, normaly, delta_time) < 1)
+	{
+		switch (type)
+		{
+		case COIN:
+			break;
+		case FLOWER:
+			break;
+		case RED_MUSHROOM:
+		{
+			this->isDead = true;
+			if (CMario::getInstance()->sprite == CMario::getInstance()->smallMario)
+				CMario::getInstance()->changeMario(CMario::getInstance()->bigMario, 0);
+		}
+			break;
+		case GREEN_MUSHROOM:
+			break;
+		case STAR:
+			break;
+		default:
+			break;
+		}
+	}
 	//Nếu là RED_MUSHROOM hoặc GREEN_MUSHROOM thì xét va chạm
 	if (type == RED_MUSHROOM || type == GREEN_MUSHROOM)
 	{

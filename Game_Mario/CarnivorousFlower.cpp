@@ -5,11 +5,10 @@ CCarnivorousFlower::CCarnivorousFlower(int id, D3DXVECTOR2 position, CSprite * s
 	this->type = CARNIVOROUS_FLOWER;
 	this->width = 50;
 	this->height = 50;
-	this->_isDelayMove = false;
-	velocity = D3DXVECTOR2(0.0f, 10.0f);
+	velocity = D3DXVECTOR2(0.0f, 50.0f);
 	accel = D3DXVECTOR2(0.0f, 0.0f);
-	maxVelocity = D3DXVECTOR2(40.0f, 80.0f);
-	maxAccel = D3DXVECTOR2(5.0f, 30.0f);
+	m_posPosition = flagPosition.y;
+	m_counter = 0.0f;
 }
 
 CCarnivorousFlower::~CCarnivorousFlower()
@@ -18,13 +17,36 @@ CCarnivorousFlower::~CCarnivorousFlower()
 
 void CCarnivorousFlower::Update(float delta_time)
 {
-	
-	position.y += velocity.y * delta_time;
-	if (position.y >= 275) velocity.y = -5.0f;
-	else if (position.y <= 175) velocity.y = 5.0f;
+	if (this->position.y >= 275)
+	{
+		velocity.y = - abs(velocity.y);
+		timer.y = 0.0f;
+		flagPosition.y = position.y;
+		m_counter += delta_time;
+	}
+	else
+		m_counter = 0.0f;
 
+	if (this->position.y <= m_posPosition)
+	{
+		velocity.y = abs(velocity.y);
+		timer.y = 0.0f;
+		flagPosition.y = position.y;
+	}
+
+	if (m_counter >= delta_time*GAME_FPS )
+	{
+		timer.y += delta_time;
+		this->position.y = flagPosition.y + this->velocity.y*timer.y;
+	}
+	if (m_counter == 0.0f)
+	{
+		timer.y += delta_time;
+		this->position.y = flagPosition.y + this->velocity.y*timer.y;
+	}
 	//update animation
-	UpdateAnimation(delta_time, 0, 2, direction);
+
+	UpdateAnimation(delta_time, 0, 2, direction, 0.2f);
 }
 
  

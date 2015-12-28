@@ -2,6 +2,8 @@
 
 #include "LivingObject.h"
 #include "Global.h"
+#include "Singleton.h"
+#include "Mario.h"
 
 class CBonus : public CLivingObject
 {

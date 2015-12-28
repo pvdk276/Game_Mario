@@ -4,6 +4,8 @@
 
 class CEnemy : public CLivingObject
 {
+private:
+	float deadTimer;
 public:
 	CEnemy(int id, D3DXVECTOR2 position, CSprite* sprite);
 	~CEnemy();

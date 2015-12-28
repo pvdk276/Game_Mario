@@ -27,7 +27,6 @@ void CBullet::Update(float delta_time)
 
 	for (int i = 0; i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
 	{
-		//mario = CMario::getInstance()->GetBox();
 		CBaseObject* m_pObject = CBinaryTree::getInstance()->listCurrentObject->at(i);
 		float normalx = 0.0f, normaly = 0.0f;
 		float value = CCollision::getInstance()->CheckCollision(

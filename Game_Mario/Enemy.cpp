@@ -7,7 +7,9 @@ CEnemy::CEnemy(int id, D3DXVECTOR2 position, CSprite * sprite) : CLivingObject(i
 	this->width = 50;
 	this->height = 50;
 	this->isDead = false;
+	this->isCollision = false;
 	this->velocity = D3DXVECTOR2(-100.0f, 0.0f);
+	deadTimer = 0.0f;
 }
 
 CEnemy::~CEnemy()
@@ -39,12 +41,7 @@ void CEnemy::Update(float delta_time)
 		}
 	}
 	
-	if (this->isDead)
-	{
-		position.y += 0;
-	}
-	
-	if (!this->isDead)
+	if (!this->isCollision)
 	{
 		//update animation
 		UpdateAnimation(delta_time, 0, 1, direction, 0.2f);
@@ -53,10 +50,20 @@ void CEnemy::Update(float delta_time)
 		this->position.x = flagPosition.x + this->velocity.x*timer.x;
 	}
 	else
+	{
 		UpdateAnimation(delta_time, 3, 3, direction);
+		deadTimer += delta_time;
+		if (deadTimer >= delta_time * 60)
+		{
+			this->isDead = true;
+		}
+		
+	}
+		
 }
 
 void CEnemy::Render()
 {
-	sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, curIndex);
+	if(!isDead)
+		sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, curIndex);
 }

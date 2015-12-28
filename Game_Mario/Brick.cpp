@@ -1,5 +1,6 @@
 #include "Brick.h"
 #include "GameGraphic.h"
+#include "BinaryTree.h"
 
 CBrick::CBrick(int id, D3DXVECTOR2 position, CSprite* sprite) : CStaticObject(id, position, sprite)
 {
@@ -66,8 +67,7 @@ void CBrick::Update(float delta_time)
 		{
 			this->isCollision = false;
 			direct = 1;
-		}
-			
+		}	
 	}
 
 }

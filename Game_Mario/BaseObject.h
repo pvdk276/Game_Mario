@@ -19,6 +19,7 @@ public:
 	CSprite* sprite;
 	bool isCollision;
 	bool isDead;
+	bool unLocked;
 	CBaseObject(int id, D3DXVECTOR2 position, CSprite* sprite);
 	~CBaseObject();
 	

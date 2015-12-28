@@ -41,9 +41,9 @@ void CCoinBrick::Update(float delta_time)
 				 isBonus = false;
 			 }
 		 }
-		 else //Khi đủ số coin thì object chết
+		 else //Khi đủ số coin thì object unlock
 		 {
-			 this->isDead = true;
+			 this->unLocked = true;
 			 isBonus = false;
 		 }
 		 
@@ -64,7 +64,7 @@ void CCoinBrick::Update(float delta_time)
 	 if (!isBonus && !isBrick)
 		 isCollision = false;
 
-	if (this->isDead)
+	if (this->unLocked)
 		UpdateAnimation(delta_time, 1, 1, direction, 0.2f);
 	else
 		UpdateAnimation(delta_time, 0, 0, direction);

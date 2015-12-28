@@ -39,16 +39,12 @@ void CMario::Standing()
 // TODO Sửa va chạm với pipe.
 void CMario::CheckCollision(CBox mario, float delta_time)
 {
+	//Va chạm trong current object
 	m_collisionX = false;
 	m_collisionY = false;
-
-	
-
 	for (int i = 0; i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
 	{
 		m_pObject = CBinaryTree::getInstance()->listCurrentObject->at(i);
-		//Xử lý va chạm cho bonus
-
 		float normalx = 0.0f, normaly = 0.0f;
 		value = 1;
 		value = CCollision::getInstance()->CheckCollision(
@@ -60,13 +56,9 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 		/*if (m_pObject->type == PIPE && mario.x > 824.816 && value == 1)
 			CCollision::getInstance()->CheckCollision(
 				mario, m_pObject->GetBox(), normalx, normaly, timer, delta_time);*/
-		//float v = value; 
-		if (m_pObject->type == RED_MUSHROOM)
-		{
-			CBox a = m_pObject->GetBox();
-		}
+		//float v = value;
 
-		if (value < 1) //a collision occur
+		if (value < 1 && !m_pObject->isDead) //a collision occur
 		{
 			switch (m_pObject->type)
 			{
@@ -120,12 +112,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 				}
 				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
 				{
-					//if (this->sprite == bigMario)
-					//	this->sprite = smallMario;
-					//else
-					//	this->sprite = bigMario;
-					//Enemy chết
-					CBinaryTree::getInstance()->listCurrentObject->at(i)->isDead = true;
+					m_pObject->isCollision = true;
 				}
 			}
 			break;
@@ -146,7 +133,14 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 				if (normalx == 0.0f && normaly == -1.0f)
 				{
 					if (this->sprite != smallMario)
+					{
 						m_pObject->isDead = true;
+						CBinaryTree::getInstance()->listCurrentObject->erase(std::remove(
+							CBinaryTree::getInstance()->listCurrentObject->begin(),
+							CBinaryTree::getInstance()->listCurrentObject->end(),
+							m_pObject),
+							CBinaryTree::getInstance()->listCurrentObject->end());
+					}
 					else // Khi mario nho va cham
 					{
 						m_pObject->isCollision = true;
@@ -201,7 +195,8 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 					else
 					{
 						m_pObject->isCollision = true;
-						m_pObject->isDead = true;
+						m_pObject->unLocked = true;
+						
 					}
 					this->droping();
 				}
@@ -663,25 +658,34 @@ void CMario::changeMario(CSprite* mario, float number)
 				width = mario->width;
 				height = mario->height;
 			}
-		}	
+		}
 	}
 	else //Thực hiện xong hiệu ứng
 	{
+		if (mario == smallMario)
+		{
+			preVelocity = D3DXVECTOR2(0.0f, 600.0f);
+			flagAccel = D3DXVECTOR2(400.0f, 550.0f);
+			if (this->sprite == bigMario || this->sprite == superMario)
+			{
+				position.y = position.y - 25;
+			}
+		}
+		else
+		{
+			preVelocity = D3DXVECTOR2(0.0f, 700.0f);
+			flagAccel = D3DXVECTOR2(400.0f, 550.0f);
+			if (this->sprite == smallMario)
+			{
+				position.y = position.y + 25;
+			}
+		}
+
 		this->sprite = mario;
 		width = mario->width;
 		height = mario->height;
 
 		magicCounter = 0;
 		doingChanging = false;
-	}
-	if (mario == smallMario)
-	{
-		preVelocity = D3DXVECTOR2(0.0f, 600.0f);
-		flagAccel = D3DXVECTOR2(400.0f, 550.0f);
-	}
-	else
-	{
-		preVelocity = D3DXVECTOR2(0.0f, 700.0f);
-		flagAccel = D3DXVECTOR2(400.0f, 550.0f);
 	}
 }

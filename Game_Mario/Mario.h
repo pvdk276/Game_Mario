@@ -22,9 +22,6 @@ private:
 	bool m_collisionY; // 1: va chạm phía dưới, -1: va chạm phía trên
 
 	CBox mario;
-	CSprite* smallMario;
-	CSprite* bigMario;
-	CSprite* superMario;
 	CBaseObject* m_pObject;
 	ObjectName objectName;
 
@@ -57,6 +54,9 @@ private:
 
 	void CheckCollision(CBox mario, float delta_time);
 public:
+	CSprite* smallMario;
+	CSprite* bigMario;
+	CSprite* superMario;
 
 	CMario();
 	~CMario();
