@@ -71,12 +71,7 @@ void CMario::Update(float delta_time)
 		{
 			if (m_collisionX == true && direction == - 1)
 			{
-				velocity.x = 0.0f;
-				m_collisionX = false;
-				isSlowing = false;
-				timer.x = 0.0f;
-				accel.x = flagAccel.x;
-				flagPosition.x = position.x;
+				this->BeginMoving(position.x, 0.0f, flagAccel.x);
 			}
 			else
 			{
@@ -100,11 +95,7 @@ void CMario::Update(float delta_time)
 				}
 				else if (deltaPosition == 0.0f)
 				{
-					isSlowing = false;
-					flagPosition.x = position.x;
-					timer.x = 0;
-					velocity.x = 0.0f;
-					accel.x = flagAccel.x;
+					this->BeginMoving(position.x, 0.0f, flagAccel.x);
 				}
 			}		
 			if (m_action != jump) m_action = run;
@@ -113,12 +104,7 @@ void CMario::Update(float delta_time)
 		{
 			if (m_collisionX == true && direction == 1)
 			{
-				velocity.x = 0.0f;
-				m_collisionX = false;
-				isSlowing = false;
-				timer.x = 0.0f;
-				accel.x = - flagAccel.x;
-				flagPosition.x = position.x - 2;
+				this->BeginMoving(position.x, 0.0f, -flagAccel.x);
 			}
 			else
 			{
@@ -126,9 +112,9 @@ void CMario::Update(float delta_time)
 
 				if (deltaPosition > 0)		//Nếu đang chuyển động sang phải
 				{
-					if (m_collisionX == true)
+					if (m_collisionX)
 					{
-						m_collisionX = false;
+						this->BeginMoving(position.x, 0.0f, -flagAccel.x);
 					}
 					if (isSlowing == false)
 					{
@@ -146,13 +132,11 @@ void CMario::Update(float delta_time)
 				}
 				else if (deltaPosition == 0.0f)
 				{
-					isSlowing = false;
-					velocity.x = 0.0f;
-					accel.x = -flagAccel.x;
+					this->BeginMoving(position.x,0.0f,-flagAccel.x);
 				}
 				else if (deltaPosition < 0)
 				{
-					//if(m_collisionX == true)
+					
 
 				}
 			}	
@@ -447,6 +431,15 @@ void CMario::changeMario(CSprite* mario, float number)
 		magicCounter = 0;
 		doingChanging = false;
 	}
+}
+
+void CMario::BeginMoving(float positionx, float velocityx, float accelx)
+{
+	isSlowing = false;
+	flagPosition.x = positionx;
+	velocity.x = velocityx;
+	accel.x = accelx;
+	timer.x = 0.0f;
 }
 
 void CMario::droping()

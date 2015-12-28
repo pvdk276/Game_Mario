@@ -42,16 +42,17 @@ private:
 	D3DXVECTOR2 posMasat;
 	ActionMario m_action;
 
-	void droping();
-	void Jumping();
-	void Standing();
-
 	CSprite* m_pSprBullet;
 	CBullet* m_pBullet;
 	bool isShooting;
 	bool shoot;
 	float timerShoot;
 	int count;
+
+	void BeginMoving(float positionx, float velocityx, float accelx);
+	void droping();
+	void Jumping();
+	void Standing();
 	void CheckCollision(CBox mario, float delta_time);
 public:
 	CSprite* smallMario;
