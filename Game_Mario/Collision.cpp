@@ -76,7 +76,7 @@ float CCollision::SweptAABB(CBox first, CBox second, float& distanceX, float& di
 	float txEntry, tyEntry;
 	float txExit, tyExit;
 
-	if (m_deltaPosition1.x == 0 && abs(dxEntry) != 0)	//Nếu đang ở xa và đang đứng yên
+	if (m_deltaPosition.x == 0 && abs(dxEntry) != 0)	//Nếu đang ở xa và đang đứng yên
 	{
 		txEntry = -std::numeric_limits<float>::infinity();
 		txExit = std::numeric_limits<float>::infinity();
@@ -97,7 +97,7 @@ float CCollision::SweptAABB(CBox first, CBox second, float& distanceX, float& di
 		}
 	}
 
-	if (m_deltaPosition1.y == 0 && abs(dyEntry) != 0)
+	if (m_deltaPosition.y == 0 && abs(dyEntry) != 0)
 	{
 		tyEntry = -std::numeric_limits<float>::infinity();
 		tyExit = std::numeric_limits<float>::infinity();
@@ -197,11 +197,11 @@ float CCollision::CheckCollision(CBox first, CBox second, float& normalx, float&
 	DeltaPosition(first, second, deltaTime);
 
 	//Nếu 2 box cùng chuyển động
-	if (m_deltaPosition2.x != 0.0f)
+	if (m_deltaPosition1.x != 0.0f && m_deltaPosition2.x != 0)
 	{
 		second.x += m_deltaPosition2.x;
 	}
-	if (m_deltaPosition2.y != 0.0f)
+	if (m_deltaPosition1.y != 0.0f && m_deltaPosition2.y != 0.0f)
 	{
 		second.y += m_deltaPosition2.y;
 	}

@@ -18,7 +18,6 @@ CEnemy::~CEnemy()
 
 void CEnemy::Update(float delta_time)
 {
-
 	//Check collision
 	for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
 	{
@@ -54,11 +53,10 @@ void CEnemy::Update(float delta_time)
 	{
 		UpdateAnimation(delta_time, 3, 3, direction);
 		deadTimer += delta_time;
-		if (deadTimer >= delta_time * 60)	//sau 1s thì chết
+		if (deadTimer >= delta_time * GAME_FPS)	//sau 1s thì chết
 		{
 			this->isDead = true;
-		}
-		
+		}	
 	}
 		
 }

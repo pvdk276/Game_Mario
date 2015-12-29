@@ -299,7 +299,7 @@
       <Filter>Source Files\Game Mario</Filter>
     </ClInclude>
     <ClInclude Include="LivingObject.h">
-      <Filter>Source Files\Game Mario</Filter>
+      <Filter>Source Files\Game Mario\Game Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

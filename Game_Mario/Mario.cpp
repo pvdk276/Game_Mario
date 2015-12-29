@@ -515,9 +515,11 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 		//if (value < 1)
 		//	value = CCollision::getInstance()->CheckCollision(
 		//		mario, m_pObject->GetBox(), normalx, normaly, timer, delta_time);
-		if (m_pObject->type == PIPE && mario.x > 824.816)
-		CCollision::getInstance()->CheckCollision(
-		mario, m_pObject->GetBox(), normalx, normaly, distanceX, distanceY, delta_time);
+		if (m_pObject->GetBox().x - 25 <= CMario::getInstance()->GetBox().x + 25 + 1 && m_pObject->type == ENEMY)
+		{
+			value = CCollision::getInstance()->CheckCollision(
+				mario, m_pObject->GetBox(), normalx, normaly, distanceX, distanceY, delta_time);
+		}
 		//float v = value;
 
 		if (value < 1 && !m_pObject->isDead) //a collision occur
@@ -577,6 +579,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 				}
 				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
 				{
+					this->Jumping();
 					m_pObject->isCollision = true;
 				}
 			}
@@ -586,7 +589,6 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 				//Mario chết
 				if (this->sprite == smallMario)
 				{
-					if (!doingChanging)
 						this->Deading();
 				}
 				else //Nếu là mario lớn
@@ -617,6 +619,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 				}
 				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
 				{
+					this->Jumping();
 					m_pObject->isCollision = true;
 				}
 			}
