@@ -7,7 +7,13 @@ CBonus::CBonus(int id, ObjectName typeObj, D3DXVECTOR2 position, CSprite * sprit
 	width = 50;
 	height = 50;
 	posOfBlock = position;
-	velocity = D3DXVECTOR2(200.0f, 600.0f);
+
+	//Random direction
+	srand((int)time(0));
+	float vx = (rand() % 2) + 1;
+	if (vx != 1)
+		vx = -1;
+	velocity = D3DXVECTOR2(vx*200.0f, 600.0f);
 	accel = D3DXVECTOR2(0.0f, 550.0f);
 	this->isDead = false;
 	this->isCollision = false;
@@ -30,7 +36,7 @@ void CBonus::Update(float delta_time)
 	if (CCollision::getInstance()->CheckCollision(
 		CMario::getInstance()->GetBox(),
 		this->GetBox(),
-		normalx, normaly, distanceX,distanceY, delta_time) < 1)
+		normalx, normaly, distanceX,distanceY, delta_time) < 1 && !this->isDead)
 	{
 		switch (type)
 		{
@@ -65,7 +71,7 @@ void CBonus::Update(float delta_time)
 				this->GetBox(),
 				m_pObject->GetBox(),
 				normalx, normaly,distanceX,distanceY, delta_time);
-			if (value < 1) //a collision occur
+			if (value < 1  && !m_pObject->isDead) //a collision occur
 			{
 				switch (m_pObject->type)
 				{

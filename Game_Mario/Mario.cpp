@@ -509,19 +509,8 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 		m_pObject = CBinaryTree::getInstance()->listCurrentObject->at(i);
 		float normalx = 0.0f, normaly = 0.0f;
 		float distanceX, distanceY;
-		value = 1;
-		value = CCollision::getInstance()->CheckCollision(
+		float value = CCollision::getInstance()->CheckCollision(
 			mario, m_pObject->GetBox(), normalx, normaly, distanceX, distanceY, delta_time);
-		//if (value < 1)
-		//	value = CCollision::getInstance()->CheckCollision(
-		//		mario, m_pObject->GetBox(), normalx, normaly, timer, delta_time);
-		if (m_pObject->GetBox().x - 25 <= CMario::getInstance()->GetBox().x + 25 + 1 && m_pObject->type == ENEMY)
-		{
-			value = CCollision::getInstance()->CheckCollision(
-				mario, m_pObject->GetBox(), normalx, normaly, distanceX, distanceY, delta_time);
-		}
-		//float v = value;
-
 		if (value < 1 && !m_pObject->isDead) //a collision occur
 		{
 			switch (m_pObject->type)
@@ -535,13 +524,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 			{
 				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
 				{
-					position.x = position.x + distanceX;
-					flagPosition.x = position.x;
-					timer.x = 0;
 					m_collisionX = true;
-					if (!doingChanging)
-						currentSprite = this->sprite;
-					changeMario(smallMario, 2);
 					//position.x = position.x - 1;
 				}
 				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)

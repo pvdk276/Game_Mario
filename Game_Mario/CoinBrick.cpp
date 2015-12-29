@@ -9,8 +9,10 @@ CCoinBrick::CCoinBrick(int id, ObjectName type, D3DXVECTOR2 position, CSprite* s
 	this->isCollision = false;
 	this->direct = 1;
 	this->pos = position.y;
-	this->count = 0;
+	//Random coin number
+	srand((int)time(0));
 	this->numberCoin = rand() % 10 + 1;
+	this->count = 0;
 	this->sprite2 = sprite2;
 	bonus = new CBonus(id, COIN, position, sprite2);
 	isBonus = false;

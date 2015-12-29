@@ -3,6 +3,8 @@
 #include <stdarg.h>
 #include <windows.h>
 #include <cmath>
+#include <cstdlib>
+#include <ctime>
 
 enum ObjectName
 {
