@@ -9,7 +9,7 @@ CPipe::CPipe(int id, ObjectName type, D3DXVECTOR2 position, CSprite* sprite1, CS
 	if (type == CARNIVOROUS_FLOWER_PIPE)
 	{
 		D3DXVECTOR2 pos(position.x, 125);
-		flower = new CCarnivorousFlower(-1, pos, sprite2);
+		flower = new CCarnivorousFlower(id, pos, sprite2);
 	}
 }
 

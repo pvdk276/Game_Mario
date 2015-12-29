@@ -104,7 +104,7 @@ float CCollision::SweptAABB(CBox first, CBox second, float& distanceX, float& di
 	}
 	else
 	{
-		if (dyEntry == 0 && m_deltaPosition1.y == 0)
+		if (dyEntry == 0 && m_deltaPosition.y == 0)
 		{
 			tyEntry = 0;
 			tyExit = 0;

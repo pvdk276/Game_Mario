@@ -52,8 +52,9 @@ private:
 	void droping();
 	void Jumping();
 	void Standing();
-	void Deading();
 	void CheckCollision(CBox mario, float delta_time);
+	void UpdatePosition(float delta_time);
+	void UpdateAnimation(float delta_time);
 public:
 	CSprite* smallMario;
 	CSprite* bigMario;
@@ -65,8 +66,7 @@ public:
 	void Init();
 	void Render();
 	void Update(float delta_time);
-	void UpdatePosition(float delta_time);
-	void UpdateAnimation(float delta_time);
 	void Reset();
 	void changeMario(CSprite* mario, float number);
+	void Deading();
 };

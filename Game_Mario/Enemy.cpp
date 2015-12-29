@@ -8,6 +8,7 @@ CEnemy::CEnemy(int id, D3DXVECTOR2 position, CSprite * sprite) : CLivingObject(i
 	this->height = 50;
 	this->isDead = false;
 	this->isCollision = false;
+	this->beingShoot = false;
 	this->velocity = D3DXVECTOR2(-100.0f, 0.0f);
 	deadTimer = 0.0f;
 }
@@ -41,6 +42,44 @@ void CEnemy::Update(float delta_time)
 		}
 	}
 	
+	//Bị bắn
+	if (isShoot && !beingShoot)
+	{
+		//Chiều ngang
+		if ( this->position.x > CMario::getInstance()->position.x)
+		{
+			timer.x = 0.0f;
+			flagPosition.x = position.x;
+			velocity.x = abs(velocity.x)/1.5;
+		}
+		else
+		{
+			timer.x = 0.0f;
+			flagPosition.x = position.x;
+			velocity.x = - abs(velocity.x)/1.5;
+		}
+
+		//Chiều dọc
+		timer.y = 0.0f;
+		flagPosition.y = position.y;
+		velocity.y = 500;
+		accel.y = -1500;
+
+		this->beingShoot = true;
+	}
+
+	if(isShoot)
+	{
+		if (position.y < 125)
+		{
+			this->isDead = true;
+		}
+		timer.y += delta_time;
+		this->position.y = flagPosition.y + this->velocity.y*timer.y + 0.5f*this->accel.y * timer.y * timer.y;
+	}
+	
+
+	//Nếu có va chạm với mario
 	if (!this->isCollision)
 	{
 		//update animation
@@ -56,9 +95,9 @@ void CEnemy::Update(float delta_time)
 		if (deadTimer >= delta_time * GAME_FPS)	//sau 1s thì chết
 		{
 			this->isDead = true;
-		}	
+		}
 	}
-		
+
 }
 
 void CEnemy::Render()

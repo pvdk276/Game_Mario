@@ -8,6 +8,7 @@ CTurtle::CTurtle(int id, ObjectName type, D3DXVECTOR2 position, CSprite * sprite
 	this->height = 50;
 	this->velocity = D3DXVECTOR2(-100.0f, 0.0f);
 	m_countCollision = 0;
+	beingShoot = false;
 }
 
 CTurtle::~CTurtle()
@@ -21,7 +22,6 @@ void CTurtle::Update(float delta_time)
 		m_countCollision += 1;
 		m_counttimer = 0;
 	}
-		
 
 	//Check collision
 	for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
@@ -70,6 +70,43 @@ void CTurtle::Update(float delta_time)
 		flagPosition.x = position.x;
 	}
 
+	//Bị bắn
+	if (isShoot && !beingShoot)
+	{
+		//Chiều ngang
+		if (this->position.x > CMario::getInstance()->position.x)
+		{
+			timer.x = 0.0f;
+			flagPosition.x = position.x;
+			velocity.x = abs(velocity.x) / 1.5;
+		}
+		else
+		{
+			timer.x = 0.0f;
+			flagPosition.x = position.x;
+			velocity.x = -abs(velocity.x) / 1.5;
+		}
+
+		//Chiều dọc
+		timer.y = 0.0f;
+		flagPosition.y = position.y;
+		velocity.y = 500;
+		accel.y = -1500;
+
+		this->beingShoot = true;
+	}
+
+	if (isShoot)
+	{
+		if (position.y < 125)
+		{
+			this->isDead = true;
+		}
+		timer.y += delta_time;
+		this->position.y = flagPosition.y + this->velocity.y*timer.y + 0.5f*this->accel.y * timer.y * timer.y;
+	}
+
+	//Animation
 	if (type == WING_TURTLE)
 	{
 		if (direction == 1)

@@ -53,8 +53,8 @@ void CBrick::Update(float delta_time)
 			{
 				_smallBrickPos[i].x += 2.5f;	
 			}
-			maxVelocity.y += maxAccel.y * delta_time;
-			_smallBrickPos[i].y += maxVelocity.y * delta_time;
+			maxVelocity.y += maxAccel.y * delta_time* 10;
+			_smallBrickPos[i].y += maxVelocity.y * delta_time* 10;
 		}
 	}
 	//Khi va chạm của mario nhỏ

@@ -1,6 +1,7 @@
 #pragma once
-
 #include "LivingObject.h"
+#include "Mario.h"
+
 enum Direction
 {
 	NONE = 0,

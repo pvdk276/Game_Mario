@@ -1,4 +1,4 @@
-#include "CarnivorousFlower.h"
+﻿#include "CarnivorousFlower.h"
 
 CCarnivorousFlower::CCarnivorousFlower(int id, D3DXVECTOR2 position, CSprite * sprite) : CLivingObject(id, position, sprite)
 {
@@ -17,6 +17,22 @@ CCarnivorousFlower::~CCarnivorousFlower()
 
 void CCarnivorousFlower::Update(float delta_time)
 {
+
+	//Va chạm với mario
+	float normalx, normaly;
+	float distanceX, distanceY;
+	if (CCollision::getInstance()->CheckCollision(
+		CMario::getInstance()->GetBox(),
+		this->GetBox(),
+		normalx, normaly, distanceX, distanceY, delta_time) < 1 && !this->isDead)
+	{
+		if (CMario::getInstance()->sprite == CMario::getInstance()->smallMario)
+			CMario::getInstance()->Deading();
+		else
+			CMario::getInstance()->changeMario(CMario::getInstance()->smallMario,0);
+	}
+
+	//Di chuyển
 	if (this->position.y >= 275)
 	{
 		velocity.y = - abs(velocity.y);

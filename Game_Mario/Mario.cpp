@@ -24,7 +24,7 @@ void CMario::Init()
 	this->smallMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/SmallMario.png", 50, 50, 10, 5, NULL);
 	this->bigMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/BigMario.png", 50, 100, 10, 5, NULL);
 	this->superMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/SuperMario.png", 50, 100, 10, 5, NULL);
-	changeMario(smallMario, 0);
+	changeMario(superMario, 0);
 	velocity = D3DXVECTOR2(0.0f, - 200);
 	accel = D3DXVECTOR2(0, - 100);
 	prePosition = D3DXVECTOR2(0.0f, 0.0f);
@@ -133,11 +133,6 @@ void CMario::Update(float delta_time)
 				else if (deltaPosition == 0.0f)
 				{
 					this->BeginMoving(position.x,0.0f,-flagAccel.x);
-				}
-				else if (deltaPosition < 0)
-				{
-					
-
 				}
 			}	
 			if (m_action != jump) m_action = run;
@@ -511,7 +506,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 		float distanceX, distanceY;
 		float value = CCollision::getInstance()->CheckCollision(
 			mario, m_pObject->GetBox(), normalx, normaly, distanceX, distanceY, delta_time);
-		if (value < 1 && !m_pObject->isDead) //a collision occur
+		if (value < 1 && !m_pObject->isDead && m_action != dead) //a collision occur
 		{
 			switch (m_pObject->type)
 			{
@@ -567,21 +562,6 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 				}
 			}
 			break;
-			case CARNIVOROUS_FLOWER:	//ko có
-			{
-				//Mario chết
-				if (this->sprite == smallMario)
-				{
-						this->Deading();
-				}
-				else //Nếu là mario lớn
-				{
-					if (!doingChanging)
-						currentSprite = this->sprite;
-					changeMario(smallMario, 2);
-				}
-			}
-			break;
 			case ENEMY:
 			{
 				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
@@ -594,9 +574,8 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 					}
 					else //Nếu là mario lớn
 					{
-						if (!doingChanging)
-							currentSprite = this->sprite;
-						changeMario(smallMario, 2);
+						//currentSprite = this->sprite;
+						changeMario(smallMario, 0);
 					}
 
 				}
@@ -698,17 +677,14 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 			{
 				if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
 				{
-					if (m_action != dead)
+					m_collisionY = true;
+					if (m_action == jump || m_action == drop)
 					{
-						m_collisionY = true;
-						if (m_action == jump || m_action == drop)
-						{
-							if (velocity.x != 0) m_action = run;
-							else m_action = stand;
-						}
-						if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
-							position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
-					}	
+						if (velocity.x != 0) m_action = run;
+						else m_action = stand;
+					}
+					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
+						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
 				}
 			}
 			break;

@@ -47,21 +47,27 @@ void CBullet::Update(float delta_time)
 				{
 					this->isDead = true;
 				}
+				if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
+				{
+					m_collisionY = true;
+					positionObject = m_pObject->GetBox().y;
+					heighObject = m_pObject->GetBox().h;
+					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
+						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+				}
 			}
 			break;
 
 			//Va chạm với Enemy
 			case ENEMY:
 			{
-				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
-				{
-
-				}
-				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
-				{
-				}
+				m_pObject->isShoot = true;
 			}
 			break;
+			case TURTLE:
+			{
+				m_pObject->isShoot = true;
+			}
 			//va chạm với brick
 			case COIN_BRICK:
 			case BRICK:
@@ -78,6 +84,11 @@ void CBullet::Update(float delta_time)
 				}
 				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
 				{
+					m_collisionY = true;
+					positionObject = m_pObject->GetBox().y;
+					heighObject = m_pObject->GetBox().h;
+					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
+						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
 				}
 			}
 			break;

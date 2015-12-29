@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "Box.h"
 #include "Sprite.h"
@@ -20,6 +20,7 @@ public:
 	bool isCollision;
 	bool isDead;
 	bool unLocked;
+	bool isShoot;		//bị bắn
 	CBaseObject(int id, D3DXVECTOR2 position, CSprite* sprite);
 	~CBaseObject();
 	
