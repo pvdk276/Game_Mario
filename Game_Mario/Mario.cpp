@@ -43,10 +43,6 @@ void CMario::Render()
 		m_pBullet->Render();
 }
 
-/// <summary>
-/// Updates the specified delta_time.
-/// </summary>
-/// <param name="delta_time">The delta_time.</param>
 void CMario::Update(float delta_time)
 {
 	this->CheckCollision(this->GetBox(), delta_time);
@@ -71,7 +67,7 @@ void CMario::Update(float delta_time)
 		{
 			if (m_collisionX == true && direction == - 1)
 			{
-				this->BeginMoving(position.x, 0.0f, flagAccel.x);
+				this->BeginMoving(position.x + 2, 0.0f, flagAccel.x);
 			}
 			else
 			{
@@ -104,7 +100,7 @@ void CMario::Update(float delta_time)
 		{
 			if (m_collisionX == true && direction == 1)
 			{
-				this->BeginMoving(position.x, 0.0f, -flagAccel.x);
+				this->BeginMoving(position.x - 2, 0.0f,- flagAccel.x);
 			}
 			else
 			{
@@ -141,7 +137,7 @@ void CMario::Update(float delta_time)
 		{
 			if (m_action == run)
 			{
-				if (isSlowing == false)
+				if (isSlowing == false && timer.x != 0)
 				{
 					velocity.x = accel.x*timer.x + preVelocity.x;
 					preVelocity.x = velocity.x;
@@ -237,6 +233,7 @@ void CMario::Update(float delta_time)
 	UpdatePosition(delta_time);
 	UpdateAnimation(delta_time);
 }
+
 void CMario::UpdatePosition(float delta_time)
 {
 	//Di chuyển ngang
@@ -375,11 +372,13 @@ void CMario::UpdateAnimation(float delta_time)
 		}
 	}
 }
+
 void CMario::Reset()
 {
 	position = D3DXVECTOR2(120.0f, 600.0f);
 	this->Init();
 }
+
 void CMario::changeMario(CSprite* mario, float number)
 {
 	magicCounter += 1;
@@ -424,7 +423,7 @@ void CMario::changeMario(CSprite* mario, float number)
 		}
 
 		this->sprite = mario;
-		width = mario->width;
+		width = mario->width - 10;
 		height = mario->height;
 
 		magicCounter = 0;
@@ -435,8 +434,10 @@ void CMario::changeMario(CSprite* mario, float number)
 void CMario::BeginMoving(float positionx, float velocityx, float accelx)
 {
 	isSlowing = false;
+	position.x = positionx;
 	flagPosition.x = positionx;
 	velocity.x = velocityx;
+	preVelocity.x = 0.0f;
 	accel.x = accelx;
 	timer.x = 0.0f;
 }
@@ -492,8 +493,6 @@ void CMario::Deading()
 	}
 }
 
-// TODO Mario va chạm với enemy.
-// TODO Sửa va chạm với pipe.
 void CMario::CheckCollision(CBox mario, float delta_time)
 {
 	//Va chạm trong current object
@@ -520,7 +519,6 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
 				{
 					m_collisionX = true;
-					//position.x = position.x - 1;
 				}
 				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
 				{
@@ -589,6 +587,10 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 			//Va chạm với gạch
 			case BRICK:
 			{
+				/*if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
+				{
+					m_collisionX = true;
+				}*/
 				if (normalx == 0.0f && normaly == -1.0f)
 				{
 					if (this->sprite != smallMario)
@@ -613,7 +615,6 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 					flagPosition.y = position.y;
 					timer.y = 0.0f;
 				}
-
 			}
 			break;
 			case COIN_BRICK:
