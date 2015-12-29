@@ -12,7 +12,8 @@ enum ActionMario
 	jump,
 	run,
 	down,
-	drop
+	drop,
+	dead
 };
 
 class CMario : public CSingleton<CMario>, public CLivingObject
@@ -47,12 +48,12 @@ private:
 	bool isShooting;
 	bool shoot;
 	float timerShoot;
-	int count;
 
 	void BeginMoving(float positionx, float velocityx, float accelx);
 	void droping();
 	void Jumping();
 	void Standing();
+	void Deading();
 	void CheckCollision(CBox mario, float delta_time);
 public:
 	CSprite* smallMario;

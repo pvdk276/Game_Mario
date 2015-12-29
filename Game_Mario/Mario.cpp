@@ -34,7 +34,6 @@ void CMario::Init()
 	isShooting = false;
 	shoot = false;
 	timerShoot = 0.0f;
-	count = 0.0f;
 }
 
 void CMario::Render()
@@ -62,10 +61,11 @@ void CMario::Update(float delta_time)
 			m_action = down;
 			velocity.x = 0;
 			accel.x = 0;
-			timer = D3DXVECTOR2(0.0f,0.0f);
+			flagPosition.x = position.x;
+			timer.x = 0.0f;
 		}
 	}
-	if (m_action != down) //Đang di chuyển
+	if (m_action != down && m_action != dead) //Đang di chuyển
 	{
 		if (CGameKeyboard::getInstance()->IsKeyDown(DIK_RIGHT))
 		{
@@ -157,12 +157,12 @@ void CMario::Update(float delta_time)
 				}	
 			}
 
-			if (m_action != jump && m_action != drop) m_action = stand;
+			if (m_action != jump && m_action != drop && m_action != dead) m_action = stand;
 			
 			
 		}
 	}
-	else //m_action = down
+	else if(m_action == down)
 	{
 		if (CGameKeyboard::getInstance()->IsKeyDown(DIK_RIGHT))
 		{
@@ -237,7 +237,7 @@ void CMario::Update(float delta_time)
 	//Mario dead
 	if (position.y <= 0.0f)
 	{
-		isDead = true;
+		this->Deading();
 	}
 	UpdatePosition(delta_time);
 	UpdateAnimation(delta_time);
@@ -253,7 +253,7 @@ void CMario::UpdatePosition(float delta_time)
 		deltaPosition = (flagPosition.x + velocity.x * timer.x + 1.0f / 2 * accel.x * timer.x * timer.x) - position.x;
 
 		//Giới hạn tốc độ cho Mario
-		if (abs(preVelocity.x + accel.x*timer.x) >= 800 && isSlowing == false)	//Giới hạn vận tốc nhỏ hơn 300
+		if (abs(preVelocity.x + accel.x*timer.x) >= 300 && isSlowing == false)	//Giới hạn vận tốc nhỏ hơn 300
 		{
 			//Chuyển thành chuyển động đều
 			velocity.x = preVelocity.x + accel.x*(timer.x - delta_time);
@@ -345,6 +345,10 @@ void CMario::UpdateAnimation(float delta_time)
 			{
 				CAnimation::UpdateAnimation(delta_time, 7, 7, direction, 0.2f);
 			}
+		}
+		else if (m_action == dead)
+		{
+			CAnimation::UpdateAnimation(delta_time, 4, 4, direction, 0.2f);
 		}
 		else //if(m_action == down)
 		{
@@ -472,6 +476,27 @@ void CMario::Standing()
 	isSlowing = false;
 }
 
+void CMario::Deading()
+{
+	if (m_action != dead)
+	{
+		velocity.y = preVelocity.y;
+		accel.y = - flagAccel.y;
+		timer.y = 0.0f;
+		flagPosition.y = position.y;
+
+		timer.x = 0.0f;
+		velocity.x = 0.0f;
+		accel.x = 0.0f;
+		flagPosition.x = position.x;
+	}
+	m_action = dead;
+	if (position.y <= 0.0f && (velocity.y + accel.y*timer.y) < 0)
+	{
+		this->isDead = true;
+	}
+}
+
 // TODO Mario va chạm với enemy.
 // TODO Sửa va chạm với pipe.
 void CMario::CheckCollision(CBox mario, float delta_time)
@@ -479,7 +504,6 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 	//Va chạm trong current object
 	m_collisionX = false;
 	m_collisionY = false;
-	count ++;
 	for (int i = 0; i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
 	{
 		m_pObject = CBinaryTree::getInstance()->listCurrentObject->at(i);
@@ -557,13 +581,13 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 				}
 			}
 			break;
-			case CARNIVOROUS_FLOWER:
+			case CARNIVOROUS_FLOWER:	//ko có
 			{
 				//Mario chết
 				if (this->sprite == smallMario)
 				{
 					if (!doingChanging)
-						this->isDead = true;
+						this->Deading();
 				}
 				else //Nếu là mario lớn
 				{
@@ -581,8 +605,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 					//Mario chết
 					if (this->sprite == smallMario)
 					{
-						if (!doingChanging)
-							this->isDead = true;
+						this->Deading();
 					}
 					else //Nếu là mario lớn
 					{
@@ -605,12 +628,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 				{
 					if (this->sprite != smallMario)
 					{
-						m_pObject->isDead = true;
-						CBinaryTree::getInstance()->listCurrentObject->erase(std::remove(
-							CBinaryTree::getInstance()->listCurrentObject->begin(),
-							CBinaryTree::getInstance()->listCurrentObject->end(),
-							m_pObject),
-							CBinaryTree::getInstance()->listCurrentObject->end());
+						m_pObject->isDead = true;				
 					}
 					else // Khi mario nho va cham
 					{
@@ -694,15 +712,17 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 			{
 				if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
 				{
-					m_collisionY = true;
-					if (m_action == jump || m_action == drop)
+					if (m_action != dead)
 					{
-						if (velocity.x != 0) m_action = run;
-						else m_action = stand;
-
-					}
-					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
-						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+						m_collisionY = true;
+						if (m_action == jump || m_action == drop)
+						{
+							if (velocity.x != 0) m_action = run;
+							else m_action = stand;
+						}
+						if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
+							position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+					}	
 				}
 			}
 			break;
