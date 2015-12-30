@@ -49,7 +49,7 @@ namespace Mario_BinaryTree
                 {
                     switch (mt[i, j])
                     {
-                        case 3: //left-land
+                        case 3:
                             id++;
                             int typeId = 1;
                             float width = 50;
@@ -61,7 +61,7 @@ namespace Mario_BinaryTree
 
                             break;
 
-                        case 4: //center-land
+                        case 4:
                             id++;
                             typeId = 2;
                             width = 50;
@@ -73,7 +73,7 @@ namespace Mario_BinaryTree
 
                             break;
 
-                        case 5: //right-land
+                        case 5:
                             id++;
                             typeId = 3;
                             width = 50;
@@ -85,10 +85,10 @@ namespace Mario_BinaryTree
 
                             break;
 
-                        case 6: //jump
+                        case 112:
                             id++;
                             typeId = 4;
-                            width = 50;
+                            width = 150;
                             height = 100;
                             x = (j * tileWidth) + (width / 2);
                             y = (m - i) * tileHeight - (height / 2);
@@ -96,8 +96,7 @@ namespace Mario_BinaryTree
                             list.Add(new GameObject(id, typeId, x, y, width, height));
 
                             break;
-
-                        case 7: //pipe
+                        case 7:
                             id++;
                             typeId = 5;
                             width = 100;
@@ -108,21 +107,18 @@ namespace Mario_BinaryTree
                             list.Add(new GameObject(id, typeId, x, y, width, height));
 
                             break;
-
-                        case 39: //tank
+                        case 59:
                             id++;
                             typeId = 6;
                             width = 100;
-                            height = 100;
+                            height = 50;
                             x = (j * tileWidth) + (width / 2);
-                            //y = (m - i) * tileHeight - (height / 2);
-                            y = (m - i) * tileHeight;
+                            y = (m - i) * tileHeight - (height / 2);
 
                             list.Add(new GameObject(id, typeId, x, y, width, height));
 
                             break;
-
-                        case 42: //stone
+                        case 62:
                             id++;
                             typeId = 7;
                             width = 50;
@@ -133,11 +129,10 @@ namespace Mario_BinaryTree
                             list.Add(new GameObject(id, typeId, x, y, width, height));
 
                             break;
-
-                        case 59: //grass
+                        case 218:
                             id++;
                             typeId = 8;
-                            width = 100;
+                            width = 50;
                             height = 50;
                             x = (j * tileWidth) + (width / 2);
                             y = (m - i) * tileHeight - (height / 2);
@@ -145,8 +140,7 @@ namespace Mario_BinaryTree
                             list.Add(new GameObject(id, typeId, x, y, width, height));
 
                             break;
-
-                        case 61: //carnivorous
+                        case 221:
                             id++;
                             typeId = 9;
                             width = 50;
@@ -157,8 +151,7 @@ namespace Mario_BinaryTree
                             list.Add(new GameObject(id, typeId, x, y, width, height));
 
                             break;
-
-                        case 62: //brick
+                        case 222:
                             id++;
                             typeId = 10;
                             width = 50;
@@ -169,58 +162,20 @@ namespace Mario_BinaryTree
                             list.Add(new GameObject(id, typeId, x, y, width, height));
 
                             break;
-
-                        case 109: //left-pipe
+                        case 223:
                             id++;
                             typeId = 11;
-                            width = 150;
-                            height = 100;
+                            width = 50;
+                            height = 50;
                             x = (j * tileWidth) + (width / 2);
                             y = (m - i) * tileHeight - (height / 2);
 
                             list.Add(new GameObject(id, typeId, x, y, width, height));
 
                             break;
-
-                        case 75: //left-pipe-1
+                        case 115:
                             id++;
                             typeId = 12;
-                            width = 150;
-                            height = 100;
-                            x = (j * tileWidth) + (width / 2);
-                            y = (m - i) * tileHeight - (height / 2);
-
-                            list.Add(new GameObject(id, typeId, x, y, width, height));
-
-                            break;
-
-                        case 78: //left-pipe-2
-                            id++;
-                            typeId = 13;
-                            width = 150;
-                            height = 100;
-                            x = (j * tileWidth) + (width / 2);
-                            y = (m - i) * tileHeight - (height / 2);
-
-                            list.Add(new GameObject(id, typeId, x, y, width, height));
-
-                            break;
-
-                        case 112: //cloud
-                            id++;
-                            typeId = 14;
-                            width = 150;
-                            height = 100;
-                            x = (j * tileWidth) + (width / 2);
-                            y = (m - i) * tileHeight - (height / 2);
-
-                            list.Add(new GameObject(id, typeId, x, y, width, height));
-
-                            break;
-
-                        case 115: //carnivorous-pipe
-                            id++;
-                            typeId = 15;
                             width = 100;
                             height = 150;
                             x = (j * tileWidth) + (width / 2);
@@ -229,8 +184,40 @@ namespace Mario_BinaryTree
                             list.Add(new GameObject(id, typeId, x, y, width, height));
 
                             break;
+                        case 147:
+                            id++;
+                            typeId = 13;
+                            width = 100;
+                            height = 150;
+                            x = (j * tileWidth) + (width / 2);
+                            y = (m - i) * tileHeight - (height / 2);
 
-                        case 145: //down-pipe
+                            list.Add(new GameObject(id, typeId, x, y, width, height));
+
+                            break;
+                        case 42:
+                            id++;
+                            typeId = 14;
+                            width = 50;
+                            height = 50;
+                            x = (j * tileWidth) + (width / 2);
+                            y = (m - i) * tileHeight - (height / 2);
+
+                            list.Add(new GameObject(id, typeId, x, y, width, height));
+
+                            break;
+                        case 61:
+                            id++;
+                            typeId = 15;
+                            width = 50;
+                            height = 50;
+                            x = (j * tileWidth) + (width / 2);
+                            y = (m - i) * tileHeight - (height / 2);
+
+                            list.Add(new GameObject(id, typeId, x, y, width, height));
+
+                            break;
+                        case 169:
                             id++;
                             typeId = 16;
                             width = 100;
@@ -241,238 +228,64 @@ namespace Mario_BinaryTree
                             list.Add(new GameObject(id, typeId, x, y, width, height));
 
                             break;
-
-                        case 147: //down-pipe-1
+                        case 6:
                             id++;
                             typeId = 17;
-                            width = 100;
-                            height = 150;
+                            width = 50;
+                            height = 100;
                             x = (j * tileWidth) + (width / 2);
                             y = (m - i) * tileHeight - (height / 2);
 
                             list.Add(new GameObject(id, typeId, x, y, width, height));
 
                             break;
-
-                        case 149: //down-pipe-2
+                        case 69:
                             id++;
                             typeId = 18;
-                            width = 100;
-                            height = 150;
+                            width = 200;
+                            height = 32;
                             x = (j * tileWidth) + (width / 2);
                             y = (m - i) * tileHeight - (height / 2);
 
                             list.Add(new GameObject(id, typeId, x, y, width, height));
 
                             break;
-
-                        case 169: //up-pipe-1
+                        case 224:
                             id++;
                             typeId = 19;
-                            width = 100;
-                            height = 150;
+                            width = 50;
+                            height = 50;
                             x = (j * tileWidth) + (width / 2);
                             y = (m - i) * tileHeight - (height / 2);
 
                             list.Add(new GameObject(id, typeId, x, y, width, height));
 
                             break;
-
-                        case 55: //up-pipe-2
+                        case 225:
                             id++;
                             typeId = 20;
-                            width = 100;
-                            height = 150;
+                            width = 50;
+                            height = 50;
                             x = (j * tileWidth) + (width / 2);
                             y = (m - i) * tileHeight - (height / 2);
 
                             list.Add(new GameObject(id, typeId, x, y, width, height));
 
                             break;
-
-                        case 63: //tower
+                        case 226:
                             id++;
                             typeId = 21;
-                            width = 300;
-                            height = 400;
+                            width = 50;
+                            height = 50;
                             x = (j * tileWidth) + (width / 2);
                             y = (m - i) * tileHeight - (height / 2);
 
                             list.Add(new GameObject(id, typeId, x, y, width, height));
 
                             break;
-
-                        case 15: //down-bar
+                        case 227:
                             id++;
                             typeId = 22;
-                            width = 200;
-                            height = 32;
-                            x = (j * tileWidth) + (width / 2);
-                            y = (m - i) * tileHeight - (height / 2);
-
-                            list.Add(new GameObject(id, typeId, x, y, width, height));
-
-                            break;
-
-                        case 33: //up-bar
-                            id++;
-                            typeId = 23;
-                            width = 200;
-                            height = 32;
-                            x = (j * tileWidth) + (width / 2);
-                            y = (m - i) * tileHeight - (height / 2);
-
-                            list.Add(new GameObject(id, typeId, x, y, width, height));
-
-                            break;
-
-                        case 51: //right-bar
-                            id++;
-                            typeId = 24;
-                            width = 200;
-                            height = 32;
-                            x = (j * tileWidth) + (width / 2);
-                            y = (m - i) * tileHeight - (height / 2);
-
-                            list.Add(new GameObject(id, typeId, x, y, width, height));
-
-                            break;
-
-                        case 69: //bar
-                            id++;
-                            typeId = 25;
-                            width = 200;
-                            height = 32;
-                            x = (j * tileWidth) + (width / 2);
-                            y = (m - i) * tileHeight - (height / 2);
-
-                            list.Add(new GameObject(id, typeId, x, y, width, height));
-
-                            break;
-
-                        case 87: //coin
-                            id++;
-                            typeId = 26;
-                            width = 50;
-                            height = 50;
-                            x = (j * tileWidth) + (width / 2);
-                            y = (m - i) * tileHeight - (height / 2);
-
-                            list.Add(new GameObject(id, typeId, x, y, width, height));
-
-                            break;
-
-                        case 88: //coin-block
-                            id++;
-                            typeId = 27;
-                            width = 50;
-                            height = 50;
-                            x = (j * tileWidth) + (width / 2);
-                            y = (m - i) * tileHeight - (height / 2);
-
-                            list.Add(new GameObject(id, typeId, x, y, width, height));
-
-                            break;
-
-                        case 89: //coin-brick
-                            id++;
-                            typeId = 28;
-                            width = 50;
-                            height = 50;
-                            x = (j * tileWidth) + (width / 2);
-                            y = (m - i) * tileHeight - (height / 2);
-
-                            list.Add(new GameObject(id, typeId, x, y, width, height));
-
-                            break;
-
-                        case 105: //flower-block
-                            id++;
-                            typeId = 29;
-                            width = 50;
-                            height = 50;
-                            x = (j * tileWidth) + (width / 2);
-                            y = (m - i) * tileHeight - (height / 2);
-
-                            list.Add(new GameObject(id, typeId, x, y, width, height));
-
-                            break;
-
-                        case 106: //green-mushroom-block
-                            id++;
-                            typeId = 30;
-                            width = 50;
-                            height = 50;
-                            x = (j * tileWidth) + (width / 2);
-                            y = (m - i) * tileHeight - (height / 2);
-
-                            list.Add(new GameObject(id, typeId, x, y, width, height));
-
-                            break;
-
-                        case 107: //red-mushroom-block
-                            id++;
-                            typeId = 31;
-                            width = 50;
-                            height = 50;
-                            x = (j * tileWidth) + (width / 2);
-                            y = (m - i) * tileHeight - (height / 2);
-
-                            list.Add(new GameObject(id, typeId, x, y, width, height));
-
-                            break;
-
-                        case 123: //star-block
-                            id++;
-                            typeId = 32;
-                            width = 50;
-                            height = 50;
-                            x = (j * tileWidth) + (width / 2);
-                            y = (m - i) * tileHeight - (height / 2);
-
-                            list.Add(new GameObject(id, typeId, x, y, width, height));
-
-                            break;
-
-                        case 124: //enemy
-                            id++;
-                            typeId = 33;
-                            width = 50;
-                            height = 50;
-                            x = (j * tileWidth) + (width / 2);
-                            y = (m - i) * tileHeight - (height / 2);
-
-                            list.Add(new GameObject(id, typeId, x, y, width, height));
-
-                            break;
-
-                        case 125: //wing-turtle
-                            id++;
-                            typeId = 34;
-                            width = 50;
-                            height = 50;
-                            x = (j * tileWidth) + (width / 2);
-                            y = (m - i) * tileHeight - (height / 2);
-
-                            list.Add(new GameObject(id, typeId, x, y, width, height));
-
-                            break;
-
-                        case 142: //turtle
-                            id++;
-                            typeId = 35;
-                            width = 50;
-                            height = 50;
-                            x = (j * tileWidth) + (width / 2);
-                            y = (m - i) * tileHeight - (height / 2);
-
-                            list.Add(new GameObject(id, typeId, x, y, width, height));
-
-                            break;
-
-                        case 143: //fire-turtle
-                            id++;
-                            typeId = 36;
                             width = 50;
                             height = 50;
                             x = (j * tileWidth) + (width / 2);

@@ -28,6 +28,4 @@ public:
 
 	//kiem tra node co chua diem nay khong?
 	bool IsContain(float positionX, float positionY);
-
-	
 };

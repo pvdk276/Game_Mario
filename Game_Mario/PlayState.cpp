@@ -2,9 +2,8 @@
 #include "GameGraphic.h"
 #include "SoundManagement.h"
 
-CPlayState::CPlayState(int idmap)
+CPlayState::CPlayState()
 {
-	id_map = idmap;
 	this->Init();
 }
 
@@ -29,38 +28,12 @@ void CPlayState::Init()
 void CPlayState::LoadResource()
 {
 	//Khởi tạo Binary tree
-	switch (id_map)
-	{
-	case 1: 
-		CBinaryTree::getInstance()->Init("Resources/Maps/map1_ListObject.txt", "Resources/Maps/map1_BinaryTree.txt");
-
-		CCamera::getInstance()->matrix = CFileUtils::getInstance()->LoadMatrix(15, 173, "Resources/Maps/map1.txt");
-		CCamera::getInstance()->m = 15;
-		CCamera::getInstance()->n = 173;
-		break;
-	case 2:
-		CBinaryTree::getInstance()->Init("Resources/Maps/map2_ListObject.txt", "Resources/Maps/map2_BinaryTree.txt");
-
-		CCamera::getInstance()->matrix = CFileUtils::getInstance()->LoadMatrix(15, 207, "Resources/Maps/map2.txt");
-		CCamera::getInstance()->m = 15;
-		CCamera::getInstance()->n = 207;
-		break;
-	case 3:
-		CBinaryTree::getInstance()->Init("Resources/Maps/map3_ListObject.txt", "Resources/Maps/map3_BinaryTree.txt");
-
-		CCamera::getInstance()->matrix = CFileUtils::getInstance()->LoadMatrix(15, 166, "Resources/Maps/map3.txt");
-		CCamera::getInstance()->m = 15;
-		CCamera::getInstance()->n = 166;
-		break;
-	default: 
-		break;
-	}
-	//CBinaryTree::getInstance()->Init("Resources/Maps/map1_ListObject.txt", "Resources/Maps/map1_BinaryTree.txt");
+	CBinaryTree::getInstance()->Init("Resources/Maps/map1_ListObject.txt", "Resources/Maps/map1_BinaryTree.txt");
 
 	//Khởi tạo camera
-	/*CCamera::getInstance()->matrix = CFileUtils::getInstance()->LoadMatrix(15, 166, "Resources/Maps/map1.txt");
+	CCamera::getInstance()->matrix = CFileUtils::getInstance()->LoadMatrix(15, 166, "Resources/Maps/map1.txt");
 	CCamera::getInstance()->m = 15;
-	CCamera::getInstance()->n = 166;*/
+	CCamera::getInstance()->n = 166;
 	CCamera::getInstance()->sprite = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Maps/tiles.png", 50, 50, 216, 18, NULL);
 	
 	//Khởi tạo mario

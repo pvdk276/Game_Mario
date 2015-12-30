@@ -15,15 +15,12 @@ class CPlayState : public CBaseGameState
 private:
 	CSprite* sprMenu;
 	int status;
-
 public:
-	CPlayState(int idmap);
+	CPlayState();
 	~CPlayState();
 	void Init();
 	void LoadResource();
 	void Update(float deltaTime);
 	void Render();
 	void End();
-
-	int id_map;
 };
