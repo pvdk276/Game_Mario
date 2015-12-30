@@ -1,5 +1,6 @@
 ﻿#include "PlayState.h"
 #include "GameGraphic.h"
+#include "SoundManagement.h"
 
 CPlayState::CPlayState()
 {
@@ -38,6 +39,8 @@ void CPlayState::LoadResource()
 
 	//Phông nền
 	CGameGraphic::getInstance()->InitSurface("Resources/Images/Other/Background.png");
+
+	SoundManagement::GetInstance()->Get(BACKMUSIC_SOUND)->PlayLoop();
 }
 
 void CPlayState::Update(float deltaTime)
