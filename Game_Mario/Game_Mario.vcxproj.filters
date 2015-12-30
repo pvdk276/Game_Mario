@@ -158,6 +158,15 @@
     <ClCompile Include="SoundManagement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BonusManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AboutState.cpp">
+      <Filter>Source Files\Game Mario\StateManagement</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameWindow.h">
@@ -295,10 +304,18 @@
     <ClInclude Include="SoundManagement.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="BonusManager.h" />
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="AboutState.h">
+      <Filter>Source Files\Game Mario\StateManagement</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="DirectX.txt">
       <Filter>Source Files\DirectX</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
