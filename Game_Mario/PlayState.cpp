@@ -46,7 +46,7 @@ void CPlayState::LoadResource()
 void CPlayState::Update(float deltaTime)
 {
 	CBinaryTree::getInstance()->listCurrentObject->clear();
-	CBinaryTree::getInstance()->loadListCurrentObject(CBinaryTree::getInstance()->rootNode, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, CCamera::getInstance()->width, CCamera::getInstance()->height);
+	CBinaryTree::getInstance()->loadListCurrentObject(CBinaryTree::getInstance()->rootNode, CMario::getInstance()->position.x, CMario::getInstance()->position.y, 2000, CCamera::getInstance()->height);
 	
 	//Update các đối tượng trong binary tree
 	for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
