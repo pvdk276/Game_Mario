@@ -164,6 +164,15 @@
     <ClCompile Include="SoundManagement.cpp">
       <Filter>Source Files\Game Mario</Filter>
     </ClCompile>
+    <ClCompile Include="BonusManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tower.cpp">
+      <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameWindow.h">
@@ -306,6 +315,11 @@
     </ClInclude>
     <ClInclude Include="SoundManagement.h">
       <Filter>Source Files\Game Mario</Filter>
+    </ClInclude>
+    <ClInclude Include="BonusManager.h" />
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Tower.h">
+      <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

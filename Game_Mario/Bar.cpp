@@ -1,8 +1,8 @@
 #include "Bar.h"
 
-CBar::CBar(int id, D3DXVECTOR2 position, CSprite* sprite) : CDynamicObject(id, position, sprite)
+CBar::CBar(int id, ObjectName type, D3DXVECTOR2 position, CSprite* sprite) : CDynamicObject(id, position, sprite)
 {
-	this->type = BAR;
+	this->type = type;
 	this->width = 200;
 	this->height = 32;
 }
