@@ -2,6 +2,7 @@
 #include "Camera.h"
 #include "GameKeyboard.h"
 #include "BinaryTree.h"
+#include "SoundManagement.h"
 #include "GameGraphic.h"
 #include <sstream>
 
@@ -65,6 +66,7 @@ void CMario::Update(float delta_time)
 				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
 				{
 					m_collisionX = true;
+					SoundManagement::GetInstance()->Get(ENEMYDIE_SOUND)->Play();
 				}
 				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
 				{
@@ -113,6 +115,7 @@ void CMario::Update(float delta_time)
 				/*if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)*/
 				if(normalx == 0.0f && normaly == -1.0f)
 				{
+					SoundManagement::GetInstance()->Get(EXTRALIFE_SOUND)->Play();
 					if (this->sprite == bigMario)
 						CBinaryTree::getInstance()->listCurrentObject->at(i)->isDead = true;
 					else if (this->sprite == smallMario) // Khi mario nho va cham

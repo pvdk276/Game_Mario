@@ -5,6 +5,7 @@
 #include "GameGraphic.h"
 #include "GameKeyboard.h"
 #include "GameStateManager.h"
+#include "SoundManagement.h"
 
 class CGame
 {
