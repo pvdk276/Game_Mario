@@ -1,13 +1,12 @@
 #pragma once
-
+#include "Global.h"
 class CAnimation
 {
 public:
 	int curIndex;
 	int beginIndex;
 	int endIndex;
-	float animationTime;
 	float curTime;
 
-	void UpdateAnimation(float delta_time, int beginIndex, int endIndex, int flag);
+	void UpdateAnimation(float delta_time, int beginIndex, int endIndex, int flag, float timeAnimation = TIME_ANIMATION);
 };

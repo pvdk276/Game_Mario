@@ -1,8 +1,10 @@
-#pragma once
+Ôªø#pragma once
 #include <stdio.h>
 #include <stdarg.h>
 #include <windows.h>
 #include <cmath>
+#include <cstdlib>
+#include <ctime>
 
 enum ObjectName
 {
@@ -45,7 +47,7 @@ enum ObjectName
 	CARNIVOROUS_FLOWER	
 };
 
-#define TIME_ANIMATION  1.6f
+#define TIME_ANIMATION  0.5f	//T√≠nh b·∫±ng gi√¢y
 #define STANDING 1
 #define RUNNING 2
 #define MARIO_GRAVITY = 0.5f
@@ -58,7 +60,7 @@ enum ObjectName
 
 #define PI 3.14159265f
 
-#pragma region C·c h?ng s? ID ki?u ??i t??ng game
+#pragma region C√°c h?ng s? ID ki?u ??i t??ng game
 
 #define ID_GRASS_CAN_FALL           0
 #define ID_GRASS					2
@@ -128,7 +130,7 @@ enum ObjectName
 
 #pragma endregion
 
-#pragma region C·c h?ng s? ID c?a sprite
+#pragma region C√°c h?ng s? ID c?a sprite
 
 #define	ID_SPRITE_ROCKMAN_STAND				0
 #define	ID_SPRITE_ROCKMAN_STAND_FIRE		1
@@ -296,12 +298,12 @@ enum ObjectName
 
 #pragma endregion
 
-#pragma region C·c h?ng s? ID c?a texture
+#pragma region C√°c h?ng s? ID c?a texture
 
 #define ID_TEXTURE_BILL						0
 
 
-////??nh ngh?a ID c?a hÏnh ch?a tile c·c map
+////??nh ngh?a ID c?a h√¨nh ch?a tile c√°c map
 #define ID_TEXTURE_MAP1_TILES				101
 #define ID_TEXTURE_MAP2_TILES				102
 #define ID_TEXTURE_MAP3_TILES				103
@@ -315,7 +317,7 @@ enum ObjectName
 
 #pragma endregion
 
-#pragma region C·c h?ng s? ID c?a sound
+#pragma region C√°c h?ng s? ID c?a sound
 
 #define ID_SOUND_OP_THEME					0
 #define ID_SOUND_LEVEL1_THEME				1
@@ -331,7 +333,7 @@ enum ObjectName
 
 #pragma endregion
 
-#pragma region C·c h?ng s? ID c?a Level
+#pragma region C√°c h?ng s? ID c?a Level
 
 #define ID_LEVEL1							1
 #define ID_LEVEL2							2
@@ -340,7 +342,7 @@ enum ObjectName
 
 #pragma endregion
 
-#pragma region C·c h?ng chu?i ???ng d?n c?a file map
+#pragma region C√°c h?ng chu?i ???ng d?n c?a file map
 
 #define MAP1_PATH							"Resources\\Data\\Map1.txt"
 #define MAP2_PATH							"Resources\\Data\\Map2.txt"
@@ -348,7 +350,7 @@ enum ObjectName
 
 #pragma endregion
 
-#pragma region C·c h?ng chu?i ???ng d?n c?a file resource
+#pragma region C√°c h?ng chu?i ???ng d?n c?a file resource
 
 #define TEXTURE_PATH						"Resources\\Data\\PlayTextureData.txt"
 #define SPRITE_PATH							"Resources\\Data\\PlaySpriteData.txt"
@@ -356,7 +358,7 @@ enum ObjectName
 
 #pragma endregion
 
-#pragma region C·c h?ng chu?i ???ng d?n c?a file HLSL
+#pragma region C√°c h?ng chu?i ???ng d?n c?a file HLSL
 
 #define HLSL1_PATH							"Resources\\Data\\Map1HLSL.fx"
 #define HLSL2_PATH							"Resources\\Data\\Map2HLSL.fx"

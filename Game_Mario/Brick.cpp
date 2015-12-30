@@ -1,5 +1,6 @@
 #include "Brick.h"
 #include "GameGraphic.h"
+#include "BinaryTree.h"
 
 CBrick::CBrick(int id, D3DXVECTOR2 position, CSprite* sprite) : CStaticObject(id, position, sprite)
 {
@@ -52,8 +53,8 @@ void CBrick::Update(float delta_time)
 			{
 				_smallBrickPos[i].x += 2.5f;	
 			}
-			maxVelocity.y += maxAccel.y * delta_time;
-			_smallBrickPos[i].y += maxVelocity.y * delta_time;
+			maxVelocity.y += maxAccel.y * delta_time* 10;
+			_smallBrickPos[i].y += maxVelocity.y * delta_time* 10;
 		}
 	}
 	//Khi va chạm của mario nhỏ
@@ -66,8 +67,7 @@ void CBrick::Update(float delta_time)
 		{
 			this->isCollision = false;
 			direct = 1;
-		}
-			
+		}	
 	}
 
 }

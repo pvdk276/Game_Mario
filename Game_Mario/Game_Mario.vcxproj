@@ -157,7 +157,9 @@
     <ClCompile Include="BinaryNode.cpp" />
     <ClCompile Include="BinaryTree.cpp" />
     <ClCompile Include="Bonus.cpp" />
+    <ClCompile Include="BonusManager.cpp" />
     <ClCompile Include="Brick.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cloud.cpp" />
     <ClCompile Include="Block.cpp" />
@@ -200,8 +202,10 @@
     <ClInclude Include="BinaryNode.h" />
     <ClInclude Include="BinaryTree.h" />
     <ClInclude Include="Bonus.h" />
+    <ClInclude Include="BonusManager.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="Brick.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Cloud.h" />
     <ClInclude Include="Block.h" />
