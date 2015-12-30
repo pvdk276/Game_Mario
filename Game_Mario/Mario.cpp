@@ -75,6 +75,10 @@ void CMario::Update(float delta_time)
 
 				if (deltaPosition < 0)		//Nếu đang chuyển động sang trái
 				{
+					if (m_collisionX)
+					{
+						this->BeginMoving(position.x, 0.0f, flagAccel.x);
+					}
 					if (isSlowing == false)
 					{
 						velocity.x = accel.x*timer.x + preVelocity.x;
@@ -128,7 +132,7 @@ void CMario::Update(float delta_time)
 				}
 				else if (deltaPosition == 0.0f)
 				{
-					this->BeginMoving(position.x,0.0f,-flagAccel.x);
+					this->BeginMoving(position.x, 0.0f,- flagAccel.x);
 				}
 			}	
 			if (m_action != jump) m_action = run;
@@ -340,6 +344,8 @@ void CMario::UpdateAnimation(float delta_time)
 		}
 		else if (m_action == dead)
 		{
+			if(this->sprite != smallMario)
+				this->sprite = smallMario;
 			CAnimation::UpdateAnimation(delta_time, 4, 4, direction, 0.2f);
 		}
 		else //if(m_action == down)
@@ -503,8 +509,15 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 		m_pObject = CBinaryTree::getInstance()->listCurrentObject->at(i);
 		float normalx = 0.0f, normaly = 0.0f;
 		float distanceX, distanceY;
-		float value = CCollision::getInstance()->CheckCollision(
+		float value;
+		value = CCollision::getInstance()->CheckCollision(
 			mario, m_pObject->GetBox(), normalx, normaly, distanceX, distanceY, delta_time);
+		/*if (m_pObject->type == ENEMY && mario.y <= 203 && mario.y >= 150 && m_action == drop && value == 1)
+		{
+ 			CBox bmario = mario;
+			value = CCollision::getInstance()->CheckCollision(
+				mario, m_pObject->GetBox(), normalx, normaly, distanceX, distanceY, delta_time);
+		}*/
 		if (value < 1 && !m_pObject->isDead && m_action != dead) //a collision occur
 		{
 			switch (m_pObject->type)
@@ -566,21 +579,26 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 				{
 					position.x = position.x + distanceX;
 					//Mario chết
-					if (this->sprite == smallMario)
+					if (!m_pObject->isCollision)
 					{
-						this->Deading();
-					}
-					else //Nếu là mario lớn
-					{
-						//currentSprite = this->sprite;
-						changeMario(smallMario, 0);
-					}
-
+						if (this->sprite == smallMario)
+						{
+							this->Deading();
+						}
+						else //Nếu là mario lớn
+						{
+							//currentSprite = this->sprite;
+							changeMario(smallMario, 0);
+						}
+					}	
 				}
 				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
 				{
-					this->Jumping();
-					m_pObject->isCollision = true;
+					if(!m_pObject->isCollision)
+					{
+						this->Jumping();
+						m_pObject->isCollision = true;
+					}
 				}
 			}
 			break;

@@ -206,9 +206,18 @@ float CCollision::CheckCollision(CBox first, CBox second, float& normalx, float&
 		second.y += m_deltaPosition2.y;
 	}
 
+	//nếu chuyển động vuông góc
+	if (m_deltaPosition1.y != 0.0f && m_deltaPosition1.x == 0.0f && m_deltaPosition2.x != 0.0f && m_deltaPosition2.y == 0.0f)
+	{
+		second.x += m_deltaPosition2.x;
+	}
+	else if (m_deltaPosition1.y == 0.0f && m_deltaPosition1.x != 0.0f && m_deltaPosition2.x == 0.0f && m_deltaPosition2.y != 0.0f)
+	{
+		second.y += m_deltaPosition2.y;
+	}
+		
 	//Nếu 2 chuyển động, 1 đứng yên
-	if (m_deltaPosition1.x == 0.0f && m_deltaPosition2.x != 0.0f ||
-		m_deltaPosition1.y == 0.0f && m_deltaPosition2.y != 0.0f)
+	if (m_deltaPosition1.x == 0.0f && m_deltaPosition1.y == 0.0f)
 	{
 		box1 = second;
 		box2 = first;

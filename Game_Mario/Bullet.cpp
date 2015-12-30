@@ -32,7 +32,7 @@ void CBullet::Update(float delta_time)
 		float distanceX, distanceY;
 		float value = CCollision::getInstance()->CheckCollision(
 			this->GetBox(), m_pObject->GetBox(), normalx, normaly,distanceX,distanceY, delta_time);
-		if (value < 1) //a collision occur
+		if (value < 1 && !this->isDead) //a collision occur
 		{
 			switch (m_pObject->type)
 			{
