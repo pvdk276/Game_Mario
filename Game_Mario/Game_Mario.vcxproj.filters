@@ -164,8 +164,13 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
+    <ClCompile Include="AboutState.cpp">
+      <Filter>Source Files\Game Mario\StateManagement</Filter>
+=======
     <ClCompile Include="ScoreManagement.cpp">
       <Filter>Source Files</Filter>
+>>>>>>> origin/master
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -304,6 +309,12 @@
     <ClInclude Include="SoundManagement.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="BonusManager.h" />
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="AboutState.h">
+      <Filter>Source Files\Game Mario\StateManagement</Filter>
+=======
     <ClInclude Include="BonusManager.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -312,11 +323,15 @@
     </ClInclude>
     <ClInclude Include="ScoreManagement.h">
       <Filter>Source Files</Filter>
+>>>>>>> origin/master
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="DirectX.txt">
       <Filter>Source Files\DirectX</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
