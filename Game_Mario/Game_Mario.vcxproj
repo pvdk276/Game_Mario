@@ -176,7 +176,7 @@
     <ClCompile Include="GameKeyboard.cpp" />
     <ClCompile Include="BaseObject.cpp" />
     <ClCompile Include="GameOverState.cpp" />
-    <ClCompile Include="GameSound.cpp" />
+    <ClCompile Include="SoundBuffer.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="Grass.cpp" />
@@ -187,6 +187,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="PlayState.cpp" />
+    <ClCompile Include="SoundManagement.cpp" />
     <ClCompile Include="Spring.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="StaticObject.cpp" />
@@ -222,7 +223,7 @@
     <ClInclude Include="GameKeyboard.h" />
     <ClInclude Include="BaseObject.h" />
     <ClInclude Include="GameOverState.h" />
-    <ClInclude Include="GameSound.h" />
+    <ClInclude Include="SoundBuffer.h" />
     <ClInclude Include="GameStateManager.h" />
     <ClInclude Include="GameWindow.h" />
     <ClInclude Include="Global.h" />
@@ -235,6 +236,7 @@
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="PlayState.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="SoundManagement.h" />
     <ClInclude Include="Spring.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="StaticObject.h" />

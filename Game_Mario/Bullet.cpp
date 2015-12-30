@@ -1,5 +1,6 @@
 ﻿#include "Bullet.h"
 #include "BinaryTree.h"
+#include "SoundManagement.h"
 
 CBullet::CBullet(int direction, D3DXVECTOR2 position, CSprite * sprite): CLivingObject(id, position, sprite)
 {
@@ -61,11 +62,13 @@ void CBullet::Update(float delta_time)
 			//Va chạm với Enemy
 			case ENEMY:
 			{
+				SoundManagement::GetInstance()->Get(BULLETBREAK_SOUND)->Play();
 				m_pObject->isShoot = true;
 			}
 			break;
 			case TURTLE:
 			{
+				SoundManagement::GetInstance()->Get(BULLETBREAK_SOUND)->Play();
 				m_pObject->isShoot = true;
 			}
 			//va chạm với brick

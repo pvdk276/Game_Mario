@@ -24,11 +24,11 @@
     <Filter Include="Source Files\Game Mario\Game Object\Living Object">
       <UniqueIdentifier>{73e2ea90-8ac8-4eae-aee0-4d9745f6da4b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Game Mario\StateManagement">
-      <UniqueIdentifier>{33fba84a-be6e-4378-82e1-7deb5d9cdd81}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Game Mario\Game Object\Static Object">
       <UniqueIdentifier>{9cfc65d4-8f16-4e7f-89d0-c92b909650f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game Mario\StateManagement">
+      <UniqueIdentifier>{33fba84a-be6e-4378-82e1-7deb5d9cdd81}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -36,6 +36,9 @@
       <Filter>Source Files\DirectX</Filter>
     </ClCompile>
     <ClCompile Include="GameKeyboard.cpp">
+      <Filter>Source Files\DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="GameGraphic.cpp">
       <Filter>Source Files\DirectX</Filter>
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
@@ -48,9 +51,6 @@
       <Filter>Source Files\Game Mario</Filter>
     </ClCompile>
     <ClCompile Include="dsutil.cpp">
-      <Filter>Source Files\DirectX</Filter>
-    </ClCompile>
-    <ClCompile Include="GameSound.cpp">
       <Filter>Source Files\DirectX</Filter>
     </ClCompile>
     <ClCompile Include="dxutil.cpp">
@@ -152,14 +152,11 @@
     <ClCompile Include="CoinBrick.cpp">
       <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>Source Files\Game Mario\Game Object\Living Object</Filter>
+    <ClCompile Include="SoundBuffer.cpp">
+      <Filter>Source Files\DirectX</Filter>
     </ClCompile>
-    <ClCompile Include="GameGraphic.cpp">
-      <Filter>Source Files\Game Mario</Filter>
-    </ClCompile>
-    <ClCompile Include="BonusManager.cpp">
-      <Filter>Source Files\Game Mario</Filter>
+    <ClCompile Include="SoundManagement.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -190,13 +187,13 @@
     <ClInclude Include="dsutil.h">
       <Filter>Source Files\DirectX</Filter>
     </ClInclude>
-    <ClInclude Include="GameSound.h">
-      <Filter>Source Files\DirectX</Filter>
-    </ClInclude>
     <ClInclude Include="dxutil.h">
       <Filter>Source Files\DirectX</Filter>
     </ClInclude>
     <ClInclude Include="Collision.h">
+      <Filter>Source Files\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="Box.h">
       <Filter>Source Files\DirectX</Filter>
     </ClInclude>
     <ClInclude Include="StaticObject.h">
@@ -224,6 +221,9 @@
       <Filter>Source Files\Game Mario</Filter>
     </ClInclude>
     <ClInclude Include="BaseObject.h">
+      <Filter>Source Files\Game Mario\Game Object</Filter>
+    </ClInclude>
+    <ClInclude Include="LivingObject.h">
       <Filter>Source Files\Game Mario\Game Object</Filter>
     </ClInclude>
     <ClInclude Include="FireTurtle.h">
@@ -280,26 +280,20 @@
     <ClInclude Include="Block.h">
       <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
     </ClInclude>
+    <ClInclude Include="Bonus.h">
+      <Filter>Source Files\Game Mario\Game Object\Living Object</Filter>
+    </ClInclude>
     <ClInclude Include="GameOverState.h">
       <Filter>Source Files\Game Mario\StateManagement</Filter>
     </ClInclude>
     <ClInclude Include="CoinBrick.h">
       <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
     </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>Source Files\Game Mario\Game Object\Living Object</Filter>
+    <ClInclude Include="SoundBuffer.h">
+      <Filter>Source Files\DirectX</Filter>
     </ClInclude>
-    <ClInclude Include="Box.h">
-      <Filter>Source Files\Game Mario</Filter>
-    </ClInclude>
-    <ClInclude Include="Bonus.h">
-      <Filter>Source Files\Game Mario\Game Object\Living Object</Filter>
-    </ClInclude>
-    <ClInclude Include="BonusManager.h">
-      <Filter>Source Files\Game Mario</Filter>
-    </ClInclude>
-    <ClInclude Include="LivingObject.h">
-      <Filter>Source Files\Game Mario\Game Object</Filter>
+    <ClInclude Include="SoundManagement.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

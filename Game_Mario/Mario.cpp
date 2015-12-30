@@ -2,6 +2,7 @@
 #include "Camera.h"
 #include "GameKeyboard.h"
 #include "BinaryTree.h"
+#include "SoundManagement.h"
 #include "GameGraphic.h"
 
 CMario::CMario() : CLivingObject(0, D3DXVECTOR2(75.0f, 600.0f), NULL)
@@ -214,6 +215,8 @@ void CMario::Update(float delta_time)
 				m_pBullet = new CBullet(direction, bulletPosition, m_pSprBullet);
 			isShooting = true;
 			shoot = true;
+
+			SoundManagement::GetInstance()->Get(HEADSHOOT_SOUND)->Play();
 		}
 	}
 	
@@ -465,6 +468,7 @@ void CMario::Jumping()
 	timer.y = 0.0f;
 	flagPosition.y = position.y;
 	m_action = jump;
+	SoundManagement::GetInstance()->Get(JUMP_SOUND)->Play();
 }
 
 void CMario::Standing()
@@ -493,6 +497,7 @@ void CMario::Deading()
 		flagPosition.x = position.x;
 	}
 	m_action = dead;
+	SoundManagement::GetInstance()->Get(DYING_SOUND)->Play();
 	if (position.y <= 0.0f && (velocity.y + accel.y*timer.y) < 0)
 	{
 		this->isDead = true;
@@ -594,10 +599,11 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 				}
 				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
 				{
-					if(!m_pObject->isCollision)
+					if (!m_pObject->isCollision)
 					{
 						this->Jumping();
 						m_pObject->isCollision = true;
+						SoundManagement::GetInstance()->Get(ENEMYDIE_SOUND)->Play();
 					}
 				}
 			}
@@ -613,7 +619,8 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 				{
 					if (this->sprite != smallMario)
 					{
-						m_pObject->isDead = true;				
+						m_pObject->isDead = true;
+						SoundManagement::GetInstance()->Get(BRICKBROKEN_SOUND)->Play();
 					}
 					else // Khi mario nho va cham
 					{
@@ -641,6 +648,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 				{
 					m_pObject->isCollision = true;
 					this->droping();
+					
 				}
 				if (normalx == 0.0f && normaly == 1.0f)
 				{
