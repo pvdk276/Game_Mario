@@ -8,6 +8,7 @@
 #include "Camera.h"
 #include "Mario.h"
 #include "GameOverState.h"
+#include "ScoreManagement.h"
 
 class CPlayState : public CBaseGameState
 {

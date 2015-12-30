@@ -181,6 +181,7 @@
     <ClCompile Include="GameKeyboard.cpp" />
     <ClCompile Include="BaseObject.cpp" />
     <ClCompile Include="GameOverState.cpp" />
+    <ClCompile Include="ScoreManagement.cpp" />
     <ClCompile Include="SoundBuffer.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="GameWindow.cpp" />
@@ -229,6 +230,7 @@
     <ClInclude Include="GameKeyboard.h" />
     <ClInclude Include="BaseObject.h" />
     <ClInclude Include="GameOverState.h" />
+    <ClInclude Include="ScoreManagement.h" />
     <ClInclude Include="SoundBuffer.h" />
     <ClInclude Include="GameStateManager.h" />
     <ClInclude Include="GameWindow.h" />

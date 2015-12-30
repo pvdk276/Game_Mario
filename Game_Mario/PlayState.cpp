@@ -21,6 +21,8 @@ void CPlayState::Init()
 	//sprMenu = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Other/Background.png", 800, 600, 1, 1, NULL);
 	this->LoadResource();
 	status = 0;
+	CScoreManagement::getInstance()->Init();
+
 }
 
 void CPlayState::LoadResource()
@@ -66,10 +68,14 @@ void CPlayState::Update(float deltaTime)
 		status = 2;
 		this->End();	//GameOver State
 	}
+
+	//score
+	CScoreManagement::getInstance()->Update();
 }
 
 void CPlayState::Render()
 {
+	
 	CCamera::getInstance()->Render();
 	for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
 	{
@@ -77,6 +83,9 @@ void CPlayState::Render()
 	}
 
 	CMario::getInstance()->Render();
+
+	//score
+	CScoreManagement::getInstance()->Render();
 	
 }
 
