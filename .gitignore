@@ -212,3 +212,5 @@ _Pvt_Extensions/
 ModelManifest.xml
 *.opendb
 *.filters
+Game_Mario/Game_Mario.vcxproj.filters
+Game_Mario/Game_Mario.vcxproj.filters
