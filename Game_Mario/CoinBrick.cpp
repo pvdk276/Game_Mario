@@ -46,6 +46,7 @@ void CCoinBrick::Update(float delta_time)
 				 bonus = new CBonus(id, COIN, position, sprite2);
 				 count++;
 				 isBonus = false;
+				 //
 			 }
 		 }
 		 else //Khi đủ số coin thì object unlock
