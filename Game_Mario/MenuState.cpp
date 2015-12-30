@@ -83,6 +83,9 @@ void CMenuState::End()
 	case 0:
 		m_pNextState = new CPlayState();
 		break;
+	case 3:
+		m_pNextState = new CAboutState();
+		break;
 	case 4:
 		exit(0);
 		break;
