@@ -81,7 +81,7 @@ void CMenuState::End()
 	switch (m_indexMenu)
 	{
 	case 0:
-		m_pNextState = new CPlayState();
+		m_pNextState = new CPlayState(1);
 		break;
 	case 4:
 		exit(0);

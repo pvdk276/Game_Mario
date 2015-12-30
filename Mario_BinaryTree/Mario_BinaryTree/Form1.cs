@@ -28,10 +28,10 @@ namespace Mario_BinaryTree
                 int[,] mt = FileUtils.GetInstance().LoadMatrix(filePath, numberOfRows, numberOfColumns);
 
                 BinaryTree tree = new BinaryTree(0, numberOfRows * 50, numberOfColumns * 50, numberOfRows * 50, 750);
-                String binaryTreeTextPath = @"C:\Users\ntthi\Downloads\Map_Mario\map1_BinaryTree.txt";
+                String binaryTreeTextPath = @"C:\Users\ntthi\Downloads\Map_Mario\map2_BinaryTree.txt";
                 tree.rootNode.listObject = FileUtils.GetInstance().CreateObjectListFile(mt, numberOfRows, numberOfColumns);
 
-                using (System.IO.StreamWriter sw = System.IO.File.AppendText(@"C:\Users\ntthi\Downloads\Map_Mario\map1_ListObject.txt"))
+                using (System.IO.StreamWriter sw = System.IO.File.AppendText(@"C:\Users\ntthi\Downloads\Map_Mario\map2_ListObject.txt"))
                 {
                     foreach (GameObject gameObject in tree.rootNode.listObject)
                     {
