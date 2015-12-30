@@ -1,4 +1,5 @@
 ﻿#include "CoinBrick.h"
+#include "SoundManagement.h"
 
 CCoinBrick::CCoinBrick(int id, ObjectName type, D3DXVECTOR2 position, CSprite* sprite1, CSprite* sprite2) : CDynamicObject(id, position, sprite1)
 {
@@ -35,6 +36,7 @@ void CCoinBrick::Update(float delta_time)
 	 {
 		 if (count <= numberCoin)
 		 {
+			 SoundManagement::GetInstance()->Get(GETCOIN_SOUND)->Play();
 			 bonus->Update(delta_time);
 			 if (bonus->isDead)
 			 {

@@ -38,6 +38,16 @@ int CGame::Init(HINSTANCE hInstance)
 		OutputDebugString("[Game.cpp] Cannot init CGameStateManager.");
 		return 0;
 	}
+	//Khởi tạo âm thanh
+	if (!SoundManagement::GetInstance()->Init(CGameWindow::getInstance()->m_hWnd))
+	{
+		OutputDebugString("[Game.cpp] Cannot init SoundManagement.");
+		return 0;
+	}
+	else 
+	{
+		SoundManagement::GetInstance()->AddAll();
+	}
 
 	////Khởi tạo đối tượng quản lý thời gian
 	CTimer::getInstance()->Init();
