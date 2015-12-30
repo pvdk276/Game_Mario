@@ -155,17 +155,14 @@
     <ClCompile Include="SoundBuffer.cpp">
       <Filter>Source Files\DirectX</Filter>
     </ClCompile>
-    <ClCompile Include="SoundManagement.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BonusManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Bullet.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
     </ClCompile>
-    <ClCompile Include="Castle.cpp">
-      <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
+    <ClCompile Include="ScoreManagement.cpp">
+      <Filter>Source Files\Game Mario</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManagement.cpp">
+      <Filter>Source Files\Game Mario</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -301,13 +298,14 @@
     <ClInclude Include="SoundBuffer.h">
       <Filter>Source Files\DirectX</Filter>
     </ClInclude>
-    <ClInclude Include="SoundManagement.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="Bullet.h">
+      <Filter>Source Files\Game Mario\Game Object\Dynamic Object</Filter>
     </ClInclude>
-    <ClInclude Include="BonusManager.h" />
-    <ClInclude Include="Bullet.h" />
-    <ClInclude Include="Castle.h">
-      <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
+    <ClInclude Include="ScoreManagement.h">
+      <Filter>Source Files\Game Mario</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManagement.h">
+      <Filter>Source Files\Game Mario</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
