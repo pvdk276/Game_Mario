@@ -3,8 +3,10 @@
 
 CMenuState::CMenuState()
 {
-	
-	this->Init();
+	this->m_indexMenu = 0;
+	this->m_bFinished = false;
+	this->LoadResource();
+	//this->Init();
 }
 
 CMenuState::~CMenuState()
@@ -15,9 +17,7 @@ CMenuState::~CMenuState()
 
 void CMenuState::Init()
 {
-	this->m_indexMenu = 0;
-	this->m_bFinished = false;
-	this->LoadResource();
+	
 }
 
 void CMenuState::LoadResource()

@@ -38,7 +38,6 @@ int CGame::Init(HINSTANCE hInstance)
 		OutputDebugString("[Game.cpp] Cannot init CGameStateManager.");
 		return 0;
 	}
-
 	//Khởi tạo âm thanh
 	if (!SoundManagement::GetInstance()->Init(CGameWindow::getInstance()->m_hWnd))
 	{
@@ -50,6 +49,9 @@ int CGame::Init(HINSTANCE hInstance)
 		SoundManagement::GetInstance()->AddAll();
 	}
 
+	////Khởi tạo đối tượng quản lý thời gian
+	CTimer::getInstance()->Init();
+
 	return 1;
 }
 
@@ -57,10 +59,8 @@ void CGame::Run()
 {
 	MSG msg;
 	int done = 0;
-	float frame_start = GetTickCount();;
 
-	float tick_per_frame = 1000 / GAME_FPS;
-
+	CTimer::getInstance()->StartCount();
 	while (!done)
 	{
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
@@ -70,14 +70,18 @@ void CGame::Run()
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-
-		float now = GetTickCount();
-		float _DeltaTime = now - frame_start;
-		if (_DeltaTime >= tick_per_frame)
+		else
 		{
-			frame_start = now;
-			CGameStateManager::getInstance()->GetCurrentState()->Run(_DeltaTime);
+			if (CTimer::getInstance()->m_deltaTime >= 1.0f / GAME_FPS)
+			{
+				char    buf[4096], *p = buf;
+				sprintf(p, "Update at detatime is:  %f\n", CTimer::getInstance()->m_deltaTime);
+				OutputDebugString(p);
+				CGameStateManager::getInstance()->GetCurrentState()->Run(CTimer::getInstance()->m_deltaTime);
+				CTimer::getInstance()->EndCount();
+			}
 		}
 		CGameKeyboard::getInstance()->PollKeyboard();
 	}
+
 }

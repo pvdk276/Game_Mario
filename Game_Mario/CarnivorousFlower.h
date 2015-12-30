@@ -1,6 +1,7 @@
 #pragma once
-
 #include "LivingObject.h"
+#include "Mario.h"
+
 enum Direction
 {
 	NONE = 0,
@@ -11,19 +12,13 @@ enum Direction
 };
 class CCarnivorousFlower : public CLivingObject
 {
+private:
+	float m_posPosition;
+	float m_counter;
 public:
-	bool _isDelayMove;
-	D3DXVECTOR2 maxVelocity;
-	D3DXVECTOR2 maxAccel;
-	bool _isDead;
-	Direction _direction;
-	D3DXVECTOR2 accel;
-	D3DXVECTOR2 _velocity;
-	float _deltaTime;
 	CCarnivorousFlower(int id, D3DXVECTOR2 position, CSprite* sprite);
 	~CCarnivorousFlower();
 	
 	void Update(float delta_time);
-	void UpdatePosition(float delta_time);
 	void Render();
 };
