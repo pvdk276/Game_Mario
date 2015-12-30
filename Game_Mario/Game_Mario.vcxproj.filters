@@ -158,6 +158,15 @@
     <ClCompile Include="SoundManagement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BonusManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreManagement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameWindow.h">
@@ -293,6 +302,15 @@
       <Filter>Source Files\DirectX</Filter>
     </ClInclude>
     <ClInclude Include="SoundManagement.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BonusManager.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreManagement.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
