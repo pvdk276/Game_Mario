@@ -85,6 +85,7 @@ enum ObjectName
 };
 
 #define SCORE 1
+#define LIFE 3
 #define TIME_ANIMATION  0.5f	//Tính bằng giây
 #define STANDING 1
 #define RUNNING 2

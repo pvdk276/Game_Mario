@@ -81,6 +81,7 @@ void CMenuState::End()
 	switch (m_indexMenu)
 	{
 	case 0:
+		CMario::getInstance()->Reset();
 		m_pNextState = new CPlayState(1);
 		break;
 	case 4:

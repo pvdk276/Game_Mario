@@ -393,7 +393,10 @@ void CMario::UpdateAnimation(float delta_time)
 
 void CMario::Reset()
 {
-	position = D3DXVECTOR2(120.0f, 600.0f);
+	direction = 1;
+	timer = D3DXVECTOR2(0.0f, 0.0f);
+	position = D3DXVECTOR2(75.0f, 600.0f);
+	flagPosition = position;
 	this->Init();
 }
 

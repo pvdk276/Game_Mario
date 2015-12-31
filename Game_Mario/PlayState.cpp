@@ -126,7 +126,7 @@ void CPlayState::End()
 	delete m_pNextState;
 	switch (status)
 	{
-	case 1:		
+	case 1:	
 		m_pNextState = new CMenuState();
 	break;
 	case 2:
