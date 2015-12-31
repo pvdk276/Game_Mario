@@ -6,7 +6,6 @@ class CBaseGameState
 {
 private:
 	CBaseGameState* m_nextState;
-protected:
 	virtual void Update(float deltaTime) = 0;
 
 	virtual void Render() = 0;
@@ -14,7 +13,10 @@ protected:
 public:
 	CBaseGameState();
 	~CBaseGameState();
-
+	void Dispose()
+	{
+		delete this;
+	}
 	virtual void Init() = 0;
 	virtual void LoadResource() = 0;
 	void Run(float deltaTime);
@@ -24,4 +26,3 @@ public:
 	//Bi?n ch?a con tr? c?a state ti?p theo
 	CBaseGameState* m_pNextState;
 };
-

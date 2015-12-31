@@ -14,6 +14,8 @@ CPlayState::~CPlayState()
 	if (CMario::getInstance()) delete CMario::getInstance();
 	if (CBinaryTree::getInstance()) delete CBinaryTree::getInstance();
 	if (CGameGraphic::getInstance()) delete CGameGraphic::getInstance();
+	if (sprMenu)
+		delete sprMenu;
 }
 
 void CPlayState::Init()
@@ -130,7 +132,6 @@ void CPlayState::End()
 	case 2:
 	{
 		//delete CMario::getInstance();
-		CMario::getInstance()->Reset();
 		m_pNextState = new CGameOverState();
 	}	
 		break;

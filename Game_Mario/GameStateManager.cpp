@@ -30,6 +30,8 @@ CBaseGameState* CGameStateManager::GetCurrentState()
 
 void CGameStateManager::ChangeState(CBaseGameState* state)
 {
+	/*if (m_currentState)
+		m_currentState->Dispose();*/
 	this->m_currentState = state;
 	/*if (!m_aGameState.empty())
 	{

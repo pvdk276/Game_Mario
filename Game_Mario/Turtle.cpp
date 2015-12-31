@@ -26,24 +26,36 @@ void CTurtle::Update(float delta_time)
 	//Check collision
 	for (int i = 0;i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
 	{
-		if (CBinaryTree::getInstance()->listCurrentObject->at(i)->type == PIPE ||
-			CBinaryTree::getInstance()->listCurrentObject->at(i)->type == STONE ||
-			CBinaryTree::getInstance()->listCurrentObject->at(i)->type == CARNIVOROUS_FLOWER_PIPE ||
-			CBinaryTree::getInstance()->listCurrentObject->at(i)->type == PIPE_UP ||
-			CBinaryTree::getInstance()->listCurrentObject->at(i)->type == PIPE_DOWN)
+		float normalx, normaly;
+		float distanceX, distanceY;
+		float value = CCollision::getInstance()->CheckCollision(
+			this->GetBox(),
+			CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(),
+			normalx, normaly, distanceX, distanceY, delta_time);
+		if (value < 1) //a collision occur
 		{
-			float normalx, normaly;
-			float distanceX, distanceY;
-			float value = CCollision::getInstance()->CheckCollision(
-				this->GetBox(),
-				CBinaryTree::getInstance()->listCurrentObject->at(i)->GetBox(),
-				normalx, normaly, distanceX, distanceY, delta_time);
-			if (value < 1) //a collision occur
+			switch (CBinaryTree::getInstance()->listCurrentObject->at(i)->type)
+			{
+			case PIPE:
+			case CARNIVOROUS_FLOWER_PIPE:
+			case PIPE_UP:
+			case PIPE_DOWN:
+			case PIPE_DOWN_1:
+			case PIPE_DOWN_2:
+			case PIPE_UP_1:
+			case PIPE_UP_2:
+			case PIPE_LEFT:
+			case PIPE_LEFT_1:
+			case PIPE_LEFT_2:
+			case STONE:
 			{
 				timer.x = 0.0f;
 				this->velocity.x *= -1;
 				direction *= -1;
 				flagPosition.x = this->position.x;
+			}
+			break;
+			default:
 				break;
 			}
 		}

@@ -12,6 +12,15 @@ CMario::CMario() : CLivingObject(0, D3DXVECTOR2(75.0f, 600.0f), NULL)
 
 CMario::~CMario()
 {
+	delete smallMario;
+	delete bigMario;
+	delete superMario;
+	delete m_pSprBullet;
+	if (m_pBullet)
+		delete m_pBullet;
+	if (m_pObject)
+		delete m_pObject;
+
 }
 
 void CMario::Init()
@@ -529,10 +538,16 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 			{
 				//Va chạm với ống
 			case PIPE:
-			case STONE:
 			case CARNIVOROUS_FLOWER_PIPE:
 			case PIPE_UP:
 			case PIPE_DOWN:
+			case PIPE_DOWN_1:
+			case PIPE_DOWN_2:
+			case PIPE_UP_1:
+			case PIPE_UP_2:
+			case PIPE_LEFT:
+			case PIPE_LEFT_1:
+			case PIPE_LEFT_2:
 			{
 				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
 				{
@@ -551,7 +566,33 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 				}
 			}
 			break;
-
+			case STONE:
+			{
+				if (normalx == 0.0f && normaly == -1.0f)
+				{
+					this->droping();
+				}
+				if (normalx == 0.0f && normaly == 1.0f)
+				{
+					m_collisionY = true;
+					if (m_action == jump || m_action == drop)
+					{
+						if (velocity.x != 0) m_action = run;
+						else m_action = stand;
+					}
+					position.y = position.y + distanceY;
+					flagPosition.y = position.y;
+					timer.y = 0.0f;
+				}
+				if (position.y != (position.y + distanceY))
+				{
+					if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
+					{
+						m_collisionX = true;
+					}
+				}
+			}
+			break;
 			//Va chạm với Enemy
 			case TURTLE:
 			{
@@ -611,10 +652,6 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 			//Va chạm với gạch
 			case BRICK:
 			{
-				/*if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
-				{
-					m_collisionX = true;
-				}*/
 				if (normalx == 0.0f && normaly == -1.0f)
 				{
 					if (this->sprite != smallMario)
@@ -640,6 +677,13 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 					flagPosition.y = position.y;
 					timer.y = 0.0f;
 				}
+				if (position.y != (position.y + distanceY))
+				{
+					if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
+					{
+						m_collisionX = true;
+					}
+				}	
 			}
 			break;
 			case COIN_BRICK:
@@ -660,6 +704,13 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 					}
 					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
 						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+				}
+				if (position.y != (position.y + distanceY))
+				{
+					if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
+					{
+						m_collisionX = true;
+					}
 				}
 			}
 			break;
@@ -694,6 +745,13 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 					}
 					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
 						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+				}
+				if (position.y != (position.y + distanceY))
+				{
+					if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
+					{
+						m_collisionX = true;
+					}
 				}
 			}
 			break;
