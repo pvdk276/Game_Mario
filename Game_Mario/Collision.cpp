@@ -164,6 +164,13 @@ float CCollision::SweptAABB(CBox first, CBox second, float& distanceX, float& di
 	}
 }
 
+bool CCollision::isStandOn(CBox box1, CBox box2)
+{
+	if ((box1.y - box1.h / 2) == (box2.y - box2.h / 2))
+		return true;
+	return false;
+}
+
 //Broadphase box : if block is not within broadphase box, there is not a collision.
 //If block is within broadphase box , there is maybe a collision
 CBox CCollision::GetSweptBroadphaseBox(CBox b)
@@ -195,7 +202,7 @@ float CCollision::CheckCollision(CBox first, CBox second, float& normalx, float&
 	CBox box2 = second;
 	//Tính quãng đường đi được của 2 box
 	DeltaPosition(first, second, deltaTime);
-
+	m_isStandOn = isStandOn(first, second);
 	//Nếu 2 box cùng chuyển động
 	if (m_deltaPosition1.x != 0.0f && m_deltaPosition2.x != 0)
 	{
@@ -217,7 +224,8 @@ float CCollision::CheckCollision(CBox first, CBox second, float& normalx, float&
 	}
 		
 	//Nếu 2 chuyển động, 1 đứng yên
-	if (m_deltaPosition1.x == 0.0f && m_deltaPosition1.y == 0.0f)
+	if (m_deltaPosition1.x == 0.0f && m_isStandOn || 
+		m_deltaPosition1.y != 0.0f && m_deltaPosition1.x == 0.0f && m_deltaPosition2.x == 0.0f && m_deltaPosition2.y != 0.0f)
 	{
 		box1 = second;
 		box2 = first;

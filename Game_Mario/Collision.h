@@ -15,6 +15,7 @@ private:
 	
 	float m_normalx;
 	float m_normaly;
+	bool m_isStandOn;
 
 	//Tính quãng đường di chuyển
 	void DeltaPosition(CBox first, CBox second, float deltaTime);
@@ -22,6 +23,8 @@ private:
 	CBox GetSweptBroadphaseBox(CBox b);
 	//Kiểm tra va chạm
 	float SweptAABB(CBox first, CBox second, float& distanceX, float& distanceY);
+	//Kiểm tra đang đứng hay không
+	bool isStandOn(CBox box1, CBox box2);
 public:
 
 	//check collision between 2 CBox, normalx and normaly are directions of collision, deltaTime is duration of collision checking

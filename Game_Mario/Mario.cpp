@@ -206,9 +206,9 @@ void CMario::Update(float delta_time)
 		{
 			D3DXVECTOR2 bulletPosition;
 			if (direction == 1)
-				bulletPosition = D3DXVECTOR2(position.x + width / 2, position.y);
+				bulletPosition = D3DXVECTOR2(position.x + width / 2 - 15, position.y);
 			else
-				bulletPosition = D3DXVECTOR2(position.x - width / 2, position.y);
+				bulletPosition = D3DXVECTOR2(position.x - width / 2 + 15, position.y);
 			if (isShooting && m_pBullet->isDead == true)
 				m_pBullet = new CBullet(direction, bulletPosition, m_pSprBullet);
 			else if (isShooting == false)
@@ -252,7 +252,7 @@ void CMario::UpdatePosition(float delta_time)
 		deltaPosition = (flagPosition.x + velocity.x * timer.x + 1.0f / 2 * accel.x * timer.x * timer.x) - position.x;
 
 		//Giới hạn tốc độ cho Mario
-		if (abs(preVelocity.x + accel.x*timer.x) >= 300 && isSlowing == false)	//Giới hạn vận tốc nhỏ hơn 300
+		if (abs(preVelocity.x + accel.x*timer.x) >= 350 && isSlowing == false)	//Giới hạn vận tốc nhỏ hơn 300
 		{
 			//Chuyển thành chuyển động đều
 			velocity.x = preVelocity.x + accel.x*(timer.x - delta_time);

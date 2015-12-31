@@ -9,8 +9,9 @@ CBullet::CBullet(int direction, D3DXVECTOR2 position, CSprite * sprite): CLiving
 	height = 30.0f;
 	this->sprite = sprite;
 	flagPosition = this->position;
-	velocity = D3DXVECTOR2(600,-600);
 	this->direction = direction;
+	velocity = D3DXVECTOR2(direction*600,-600);
+	
 
 	positionObject = position.y * 2;
 	heighObject = height;
@@ -33,6 +34,11 @@ void CBullet::Update(float delta_time)
 		float distanceX, distanceY;
 		float value = CCollision::getInstance()->CheckCollision(
 			this->GetBox(), m_pObject->GetBox(), normalx, normaly,distanceX,distanceY, delta_time);
+		if (m_pObject->type == PIPE && value == 1)
+		{
+			value = CCollision::getInstance()->CheckCollision(
+				this->GetBox(), m_pObject->GetBox(), normalx, normaly, distanceX, distanceY, delta_time);
+		}
 		if (value < 1 && !this->isDead) //a collision occur
 		{
 			switch (m_pObject->type)
@@ -119,9 +125,12 @@ void CBullet::Update(float delta_time)
 	//Chiều ngang
 	if (abs(position.x - flagPosition.x) > 500)
 		this->isDead = true;
-
+	if (direction == 1)
+		velocity.x = 600;
+	else
+		velocity.x = -600;
 	timer.x += delta_time;
-	position.x = flagPosition.x + direction * velocity.x * timer.x + 1.0f / 2 * direction * accel.x * timer.x * timer.x;
+	position.x = flagPosition.x + velocity.x * timer.x + 1.0f / 2 * direction * accel.x * timer.x * timer.x;
 
 	//Chiều dọc
 	if (m_collisionY == true || position.y >= (positionObject + heighObject/2 + 100))

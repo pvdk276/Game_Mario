@@ -33,6 +33,18 @@ void CBonus::Update(float delta_time)
 	//Va chạm với mario
 	float normalx, normaly;
 	float distanceX, distanceY;
+	float value = CCollision::getInstance()->CheckCollision(
+		CMario::getInstance()->GetBox(),
+		this->GetBox(),
+		normalx, normaly, distanceX, distanceY, delta_time);
+	if (value == 1 && ((CMario::getInstance()->position.x - this->position.x) <= 46 && (CMario::getInstance()->position.x - this->position.x) > 0))
+	{
+		value = CCollision::getInstance()->CheckCollision(
+			CMario::getInstance()->GetBox(),
+			this->GetBox(),
+			normalx, normaly, distanceX, distanceY, delta_time);
+	}
+
 	if (CCollision::getInstance()->CheckCollision(
 		CMario::getInstance()->GetBox(),
 		this->GetBox(),
