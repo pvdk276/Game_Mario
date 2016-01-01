@@ -15,7 +15,6 @@
 class CPlayState : public CBaseGameState, public CSingleton<CPlayState>
 {
 private:
-	CSprite* sprMenu;
 	int m_status;
 	int m_id_map;
 public:

@@ -13,8 +13,6 @@ CPlayState::~CPlayState()
 	if (CMario::getInstance()) delete CMario::getInstance();
 	if (CBinaryTree::getInstance()) delete CBinaryTree::getInstance();
 	if (CGameGraphic::getInstance()) delete CGameGraphic::getInstance();
-	if (sprMenu)
-		delete sprMenu;
 }
 
 void CPlayState::Init()
@@ -123,7 +121,7 @@ void CPlayState::Render()
 void CPlayState::End()
 {
 	//Khi state kết thúc m_bFinished = true
-	this->m_bFinished = true;
+	
 	//Xóa con trỏ m_pNextState
 	delete m_pNextState;
 	switch (m_status)

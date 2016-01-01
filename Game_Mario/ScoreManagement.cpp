@@ -18,16 +18,9 @@ void CScoreManagement::AddScore()
 	m_currentScore += SCORE;
 }
 
-int CScoreManagement::SubtractLife()
+void CScoreManagement::SetLife(int life)
 {
-	m_currentLife -= 1;
-	return m_currentLife;
-}
-
-int CScoreManagement::AddLife()
-{
-	m_currentLife += 1;
-	return m_currentLife;
+	m_currentLife = life;
 }
 
 int CScoreManagement::GetLife()

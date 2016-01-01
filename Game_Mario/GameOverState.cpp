@@ -9,6 +9,8 @@ CGameOverState::CGameOverState()
 
 CGameOverState::~CGameOverState()
 {
+	if (m_pNumbers)
+		delete m_pNumbers;
 }
 
 void CGameOverState::Init()
@@ -17,8 +19,11 @@ void CGameOverState::Init()
 	this->m_isGameOver = false;
 	this->m_timer = 0.0f;
 	this->LoadResource();
-	if(CScoreManagement::getInstance()->GetLife() >= 1)
-		m_Life = CScoreManagement::getInstance()->SubtractLife();
+	if (CScoreManagement::getInstance()->GetLife() >= 0)
+	{
+		CScoreManagement::getInstance()->SetLife(CScoreManagement::getInstance()->GetLife() - 1);
+		m_Life = CScoreManagement::getInstance()->GetLife();
+	}
 }
 
 void CGameOverState::LoadResource()
@@ -29,7 +34,7 @@ void CGameOverState::LoadResource()
 
 void CGameOverState::Update(float deltaTime)
 {
-	if (m_Life != 0)
+	if (m_Life > 0)
 	{
 		if (CGameKeyboard::getInstance()->IsKeyDown(DIK_SPACE))
 		{
@@ -57,13 +62,19 @@ void CGameOverState::Render()
 void CGameOverState::End()
 {
 	this->m_bFinished = true;
-	delete m_pNextState;
+	
 	if (m_Life == 0)
+	{
+		delete m_pNextState;
 		m_pNextState = new CMenuState();
+	}
+		
 	else
 	{
+
 		CMario::getInstance()->Resume();
-		m_pNextState = CPlayState::getInstance();
+		delete m_pNextState;
+		m_pNextState = new CPlayState();
 	}
 	CGameStateManager::getInstance()->ChangeState(m_pNextState);
 }

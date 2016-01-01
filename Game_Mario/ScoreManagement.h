@@ -17,8 +17,7 @@ public:
 	void Update();
 	void Render();
 	void AddScore();
-	int SubtractLife();
-	int AddLife();
+	void SetLife(int life);
 	int GetLife();
 	void SetLevel(int level);
 	int GetLevel();

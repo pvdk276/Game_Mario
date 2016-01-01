@@ -38,7 +38,7 @@ void CMario::Init()
 	velocity = D3DXVECTOR2(0.0f, - 200);
 	accel = D3DXVECTOR2(0, - 100);
 	prePosition = D3DXVECTOR2(0.0f, 0.0f);
-	backupPosition = position;
+	
 	posMasat = D3DXVECTOR2(5.0f, 0.0f);
 	deltaPosition = 0.0f;
 	masat = posMasat.x;
@@ -46,6 +46,8 @@ void CMario::Init()
 	shoot = false;
 	timerShoot = 0.0f;
 	this->isWin = false;
+
+	this->Backup();
 }
 
 void CMario::Render()
@@ -393,6 +395,12 @@ void CMario::UpdateAnimation(float delta_time)
 	}
 }
 
+void CMario::Backup()
+{
+	this->backupPosition = position;
+	this->backupSprite = this->sprite;
+}
+
 void CMario::Reset()
 {
 	direction = 1;
@@ -405,6 +413,11 @@ void CMario::Reset()
 void CMario::Resume()
 {
 	position = backupPosition;
+	flagPosition = position;
+	this->sprite = backupSprite;
+	timer.x = 0;
+	timer.y = 0;
+	isDead = false;
 }
 
 void CMario::changeMario(CSprite* mario, float number)
@@ -559,7 +572,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 			case PIPE_LEFT_1:
 			case PIPE_LEFT_2:
 			{
-				backupPosition = position;
+				this->Backup();
 				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
 				{
 					m_collisionX = true;
@@ -579,13 +592,13 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 			break;
 			case STONE:
 			{
-				backupPosition = position;
 				if (normalx == 0.0f && normaly == -1.0f)
 				{
 					this->droping();
 				}
 				if (normalx == 0.0f && normaly == 1.0f)
 				{
+					//this->Backup();
 					m_collisionY = true;
 					if (m_action == jump || m_action == drop)
 					{
@@ -679,7 +692,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 				}
 				if (normalx == 0.0f && normaly == 1.0f)
 				{
-					backupPosition = position;
+					this->Backup();
 					m_collisionY = true;
 					if (m_action == jump || m_action == drop)
 					{
@@ -709,7 +722,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 				}
 				if (normalx == 0.0f && normaly == 1.0f)
 				{
-					backupPosition = position;
+					this->Backup();
 					m_collisionY = true;
 					if (m_action == jump || m_action == drop)
 					{
@@ -750,7 +763,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 				}
 				if (normalx == 0.0f && normaly == 1.0f)
 				{
-					backupPosition = position;
+					this->Backup();
 					m_collisionY = true;
 					if (m_action == jump || m_action == drop)
 					{

@@ -3,6 +3,7 @@
 #include "Sprite.h"
 #include "GameWindow.h"
 #include "PlayState.h"
+#include "AboutState.h"
 
 class CMenuState : public CBaseGameState
 {

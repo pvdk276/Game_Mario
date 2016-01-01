@@ -173,6 +173,9 @@
     <ClCompile Include="WinnerState.cpp">
       <Filter>Source Files\Game Mario\StateManagement</Filter>
     </ClCompile>
+    <ClCompile Include="AboutState.cpp">
+      <Filter>Source Files\Game Mario\StateManagement</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameWindow.h">
@@ -321,6 +324,9 @@
       <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
     </ClInclude>
     <ClInclude Include="WinnerState.h">
+      <Filter>Source Files\Game Mario\StateManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="AboutState.h">
       <Filter>Source Files\Game Mario\StateManagement</Filter>
     </ClInclude>
   </ItemGroup>

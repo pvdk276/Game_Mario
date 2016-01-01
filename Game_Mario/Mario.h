@@ -41,7 +41,9 @@ private:
 	D3DXVECTOR2 flagAccel;
 	D3DXVECTOR2 posMasat;
 	ActionMario m_action;
+
 	D3DXVECTOR2 backupPosition;
+	CSprite* backupSprite;
 
 	CSprite* m_pSprBullet;
 	CBullet* m_pBullet;
@@ -56,6 +58,7 @@ private:
 	void CheckCollision(CBox mario, float delta_time);
 	void UpdatePosition(float delta_time);
 	void UpdateAnimation(float delta_time);
+	void Backup();
 public:
 	CSprite* smallMario;
 	CSprite* bigMario;

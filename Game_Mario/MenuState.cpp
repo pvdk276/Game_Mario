@@ -81,9 +81,17 @@ void CMenuState::End()
 	switch (m_indexMenu)
 	{
 	case 0:
+	{
 		CMario::getInstance()->Reset();
+		CScoreManagement::getInstance()->SetLife(LIFE);
 		m_pNextState = new CPlayState();
-		break;
+	}
+	break;
+	case 3:
+	{
+		m_pNextState = new CAboutState();
+	}
+	break;
 	case 4:
 		exit(0);
 		break;

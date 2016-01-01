@@ -8,10 +8,6 @@ CGameStateManager::~CGameStateManager()
 {
 	if (m_currentState)
 		delete m_currentState;
-	if (m_pNextState)
-		delete m_pNextState;
-	/*if (m_pResourceManager)
-		delete m_pResourceManager;*/
 }
 
 int CGameStateManager::Init(CBaseGameState* state)
@@ -23,8 +19,8 @@ int CGameStateManager::Init(CBaseGameState* state)
 
 CBaseGameState* CGameStateManager::GetCurrentState()
 {
-	if (m_currentState->m_bFinished)
-		m_currentState = new CMenuState;
+	/*if (m_currentState->m_bFinished)
+		m_currentState = new CMenuState;*/
 	return m_currentState;
 }
 
