@@ -24,7 +24,7 @@ CBar::~CBar()
 void CBar::Update(float delta_time)
 {
 	//check collision
-	if (type == BAR_RIGHT)
+	/*if (type == BAR_RIGHT)
 	{
 		for (int i = 0; i < CBinaryTree::getInstance()->listCurrentObject->size(); i++)
 		{
@@ -44,7 +44,7 @@ void CBar::Update(float delta_time)
 				if(value < 1) direction = -1 * direction;
 			}
 		}
-	}	
+	}	*/
 
 	//update position
 	/*if (type == BAR_DOWN) velocity.y = -100.0f;

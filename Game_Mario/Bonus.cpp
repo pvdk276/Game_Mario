@@ -52,7 +52,18 @@ void CBonus::Update(float delta_time)
 		}
 		break;
 		case FLOWER:
-			break;
+		{
+			if (CMario::getInstance()->sprite == CMario::getInstance()->smallMario)
+			{
+				CMario::getInstance()->changeMario(CMario::getInstance()->bigMario, 0);
+			}
+			else
+			{
+				CMario::getInstance()->changeMario(CMario::getInstance()->superMario, 0);
+			}
+			this->isDead = true;
+		}
+		break;
 		case RED_MUSHROOM:
 		{
 			this->isDead = true;
@@ -140,11 +151,6 @@ void CBonus::Update(float delta_time)
 				this->isDead = true;
 		}
 		break;
-		case FLOWER:
-		{
-			
-		}
-		break;
 		case STAR:
 		{
 			
@@ -154,6 +160,14 @@ void CBonus::Update(float delta_time)
 			break;
 		}
 		
+	}
+	if (type == FLOWER && position.y > posOfBlock.y + width)
+	{
+		m_collisionY = true;
+		timer.y = 0.0f;
+		velocity.y = 0.0f;
+		accel.y = 0.0f;
+		flagPosition.y = position.y;
 	}
 
 	//Tính vận tốc cho bonus
@@ -230,6 +244,11 @@ void CBonus::updatePosAnima(float delta_time)
 	break;
 	case FLOWER:
 	{
+		if (!m_collisionY)
+		{
+			timer.y += delta_time;
+			position.y = flagPosition.y + velocity.y * timer.y + 1.0f / 2 * accel.y * timer.y * timer.y;
+		}
 		UpdateAnimation(delta_time, 0, 3, direction);
 	}
 	break;

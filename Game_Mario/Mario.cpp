@@ -153,7 +153,7 @@ void CMario::Update(float delta_time)
 		}
 		else // KHông nhấn nút (trượt)
 		{
-			if (m_action == run)
+			if (m_action == run || m_action == jump || m_action == drop)
 			{
 				if (isSlowing == false && timer.x != 0)
 				{
@@ -166,7 +166,9 @@ void CMario::Update(float delta_time)
 				}
 				if (m_collisionX)
 				{
-					//accel.x = 0;
+					flagPosition.x = position.x;
+					accel.x = 0;
+					timer.x = 0;
 				}
 			}
 
@@ -555,6 +557,11 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 		float value;
 		value = CCollision::getInstance()->CheckCollision(
 			mario, m_pObject->GetBox(), normalx, normaly, distanceX, distanceY, delta_time);
+		if (value == 1 && m_pObject->type == PIPE)
+		{
+			value = CCollision::getInstance()->CheckCollision(
+				mario, m_pObject->GetBox(), normalx, normaly, distanceX, distanceY, delta_time);
+		}
 		if (value < 1 && !m_pObject->isDead && m_action != dead) //a collision occur
 		{
 			switch (m_pObject->type)
@@ -576,6 +583,10 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
 				{
 	 				m_collisionX = true;
+					position.x += distanceX;
+					flagPosition.x = position.x;
+					timer.x = 0.0f;
+					accel.x = 0.0f;
 				}
 				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
 				{
@@ -613,6 +624,10 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 					if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
 					{
 						m_collisionX = true;
+						position.x += distanceX;
+						flagPosition.x = position.x;
+						timer.x = 0.0f;
+						accel.x = 0.0f;
 					}
 				}
 			}
