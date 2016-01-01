@@ -46,6 +46,7 @@ void CGameOverState::Update(float deltaTime)
 		m_timer += deltaTime;
 		if (m_timer >= deltaTime * GAME_FPS)
 		{
+			CScoreManagement::getInstance()->SetLevel(1);
 			m_isGameOver = true;
 			CGameGraphic::getInstance()->InitSurface("Resources/Images/Other/GameOverScreen.png");
 			if(m_timer >= deltaTime * GAME_FPS * 4) this->End();
