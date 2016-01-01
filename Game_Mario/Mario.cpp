@@ -166,6 +166,7 @@ void CMario::Update(float delta_time)
 				}
 				if (m_collisionX)
 				{
+					//accel.x = 0;
 				}
 			}
 
