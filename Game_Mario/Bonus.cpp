@@ -136,7 +136,8 @@ void CBonus::Update(float delta_time)
 		break;
 		case COIN:
 		{
-			this->isDead = true;
+			if(!isStaticCoin)
+				this->isDead = true;
 		}
 		break;
 		case FLOWER:
@@ -156,11 +157,26 @@ void CBonus::Update(float delta_time)
 	}
 
 	//Tính vận tốc cho bonus
-	if (m_collisionX)
+	switch (type)
 	{
-		flagPosition.x = position.x;
-		timer.x = 0.0f;
-		velocity.x = -velocity.x;
+	case COIN:
+		break;
+	case FLOWER:
+		break;
+	case RED_MUSHROOM:
+	case GREEN_MUSHROOM:
+	case STAR:
+	{
+		if (m_collisionX)
+		{
+			flagPosition.x = position.x;
+			timer.x = 0.0f;
+			velocity.x = -velocity.x;
+		}
+	}
+		break;
+	default:
+		break;
 	}
 	
 	//update Postion and Animation
@@ -204,9 +220,11 @@ void CBonus::updatePosAnima(float delta_time)
 	break;
 	case COIN:
 	{
-		timer.y += delta_time;
-		position.y = flagPosition.y + velocity.y * timer.y + 1.0f / 2 * accel.y * timer.y * timer.y;
-
+		if (!isStaticCoin)
+		{
+			timer.y += delta_time;
+			position.y = flagPosition.y + velocity.y * timer.y + 1.0f / 2 * accel.y * timer.y * timer.y;
+		}
 		UpdateAnimation(delta_time, 0, 1, direction);
 	}
 	break;

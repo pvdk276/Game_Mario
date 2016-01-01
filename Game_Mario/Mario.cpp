@@ -163,7 +163,10 @@ void CMario::Update(float delta_time)
 					accel.x = -1.0f * direction * (flagAccel.x);
 					timer.x = 0.0f;
 					isSlowing = true;
-				}	
+				}
+				if (m_collisionX)
+				{
+				}
 			}
 
 			if (m_action != jump && m_action != drop && m_action != dead) m_action = stand;

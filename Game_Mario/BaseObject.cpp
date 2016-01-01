@@ -11,6 +11,7 @@ CBaseObject::CBaseObject(int id, D3DXVECTOR2 flagPosition, CSprite* sprite)
 	this->isDead = false;
 	this->unLocked = false;
 	this->isShoot = false;
+	this->isStaticCoin = true;
 } 
 
 CBaseObject::~CBaseObject()

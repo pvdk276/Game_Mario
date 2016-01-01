@@ -22,6 +22,7 @@ public:
 	bool isDead;
 	bool unLocked;
 	bool isShoot;		//bị bắn
+	bool isStaticCoin;
 	CBaseObject(int id, D3DXVECTOR2 position, CSprite* sprite);
 	~CBaseObject();
 	

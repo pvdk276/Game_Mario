@@ -17,6 +17,7 @@ CCoinBrick::CCoinBrick(int id, ObjectName type, D3DXVECTOR2 position, CSprite* s
 	this->count = 0;
 	this->sprite2 = sprite2;
 	bonus = new CBonus(id, COIN, position, sprite2);
+	bonus->isStaticCoin = false;
 	isBonus = false;
 	isBrick = false;
 }
@@ -44,6 +45,7 @@ void CCoinBrick::Update(float delta_time)
 			 {
 				 CScoreManagement::getInstance()->AddScore();
 				 bonus = new CBonus(id, COIN, position, sprite2);
+				 bonus->isStaticCoin = false;
 				 count++;
 				 isBonus = false;
 			 }
