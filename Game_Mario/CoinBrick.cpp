@@ -50,6 +50,7 @@ void CCoinBrick::Update(float delta_time)
 		 }
 		 else //Khi đủ số coin thì object unlock
 		 {
+			 bonus->isDead = true;
 			 this->unLocked = true;
 			 isBonus = false;
 		 }
@@ -79,6 +80,6 @@ void CCoinBrick::Update(float delta_time)
 
 void CCoinBrick::Render()
 {
-	if (!bonus->isDead) bonus->Render();
+	if (isBonus) bonus->Render();
 	sprite->Render(position.x, position.y, CCamera::getInstance()->position.x, CCamera::getInstance()->position.y, curIndex);
 }
