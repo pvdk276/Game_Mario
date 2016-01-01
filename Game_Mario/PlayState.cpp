@@ -78,6 +78,7 @@ void CPlayState::Update(float deltaTime)
 
 	CMario::getInstance()->Update(deltaTime);
 	CCamera::getInstance()->Update(CMario::getInstance()->position.x, CMario::getInstance()->position.y);
+
 	if (CGameKeyboard::getInstance()->IsKeyDown(DIK_ESCAPE))
 	{
 		m_status = 1;
@@ -137,6 +138,7 @@ void CPlayState::End()
 	case 3:
 	{
 		int idmap = m_id_map + 1;
+		CMario::getInstance()->Reset();
 		CScoreManagement::getInstance()->SetLevel(idmap);
 		m_pNextState = new CPlayState();
 	}

@@ -12,6 +12,7 @@ class CBaseObject
 public:
 	int id;
 	ObjectName type;
+	D3DXVECTOR2 rootPosition;
 	D3DXVECTOR2 flagPosition;
 	D3DXVECTOR2 position;
 	float width;

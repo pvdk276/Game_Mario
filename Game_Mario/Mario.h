@@ -5,6 +5,7 @@
 #include "Global.h"
 #include "Box.h"
 #include "Bullet.h"
+#include "ScoreManagement.h"
 
 enum ActionMario
 {
