@@ -91,6 +91,14 @@ void CBonus::Update(float delta_time)
 				this->GetBox(),
 				m_pObject->GetBox(),
 				normalx, normaly,distanceX,distanceY, delta_time);
+			if (value == 1 && (CMario::getInstance()->position.x - this->position.x) <= 46 && (CMario::getInstance()->position.x - this->position.x) > 0 && this->isDead == false )
+			{
+				if(this->position.y == 125 && CMario::getInstance()->position.y == 150)
+				value = CCollision::getInstance()->CheckCollision(
+					this->GetBox(),
+					m_pObject->GetBox(),
+					normalx, normaly, distanceX, distanceY, delta_time);
+			}
 			if (value < 1  && !m_pObject->isDead) //a collision occur
 			{
 				switch (m_pObject->type)

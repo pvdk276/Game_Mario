@@ -557,11 +557,6 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 		float value;
 		value = CCollision::getInstance()->CheckCollision(
 			mario, m_pObject->GetBox(), normalx, normaly, distanceX, distanceY, delta_time);
-		if (value == 1 && m_pObject->type == PIPE)
-		{
-			value = CCollision::getInstance()->CheckCollision(
-				mario, m_pObject->GetBox(), normalx, normaly, distanceX, distanceY, delta_time);
-		}
 		if (value < 1 && !m_pObject->isDead && m_action != dead) //a collision occur
 		{
 			switch (m_pObject->type)
@@ -713,9 +708,8 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 						if (velocity.x != 0) m_action = run;
 						else m_action = stand;
 					}
-					position.y = position.y + distanceY;
-					flagPosition.y = position.y;
-					timer.y = 0.0f;
+					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
+						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
 				}
 				if (position.y != (position.y + distanceY))
 				{
