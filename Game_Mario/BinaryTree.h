@@ -59,4 +59,5 @@ public:
 	CSprite* spring;
 	CSprite* stone;
 	CSprite* tower;
+	CSprite* machine;
 };

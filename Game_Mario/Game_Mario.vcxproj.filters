@@ -170,11 +170,16 @@
     <ClCompile Include="Tower.cpp">
       <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="WinnerState.cpp">
       <Filter>Source Files\Game Mario\StateManagement</Filter>
     </ClCompile>
     <ClCompile Include="AboutState.cpp">
       <Filter>Source Files\Game Mario\StateManagement</Filter>
+=======
+    <ClCompile Include="Tank.cpp">
+      <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
+>>>>>>> refs/remotes/origin/master
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -323,11 +328,16 @@
     <ClInclude Include="Tower.h">
       <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="WinnerState.h">
       <Filter>Source Files\Game Mario\StateManagement</Filter>
     </ClInclude>
     <ClInclude Include="AboutState.h">
       <Filter>Source Files\Game Mario\StateManagement</Filter>
+=======
+    <ClInclude Include="Tank.h">
+      <Filter>Source Files\Game Mario\Game Object\Static Object</Filter>
+>>>>>>> refs/remotes/origin/master
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

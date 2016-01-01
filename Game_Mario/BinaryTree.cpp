@@ -17,6 +17,7 @@
 #include "Spring.h"
 #include "Bar.h"
 #include "Tower.h"
+#include "Tank.h"
 
 
 ////load data from binary_tree_file_text to a list of binary node
@@ -63,6 +64,7 @@ CBinaryTree::CBinaryTree()
 	spring = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Spring.png", 50, 100, 3, 3, NULL);
 	stone = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Stone.png", 50, 50, 1, 1, NULL);
 	tower = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Tower.png", 300, 400, 1, 1, NULL);
+	machine = new CSprite(CGameGraphic::getInstance()->spriteHandler, "Resources/Images/Other/Machine.png", 100, 100, 1, 1, NULL);
 }
 
 bool CBinaryTree::Init(std::string listObjectPath, std::string binaryTreePath)
@@ -199,6 +201,7 @@ std::vector<CBaseObject*> CBinaryTree::loadListObject(std::string listObjectPath
 			break;
 
 		case 6: //tank
+			gameObject = new CTank(id, position, machine, machineBullet);
 			break;
 
 		case 7: //stone
@@ -218,12 +221,15 @@ std::vector<CBaseObject*> CBinaryTree::loadListObject(std::string listObjectPath
 			break;
 
 		case 11: //left-pipe
+			gameObject = new CPipe(id, PIPE_LEFT, position, horizontalPipe, NULL);
 			break;
 
 		case 12: //left-pipe-1
+			gameObject = new CPipe(id, PIPE_LEFT_1, position, horizontalPipe, NULL);
 			break;
 
 		case 13: //left-pipe-2
+			gameObject = new CPipe(id, PIPE_LEFT_2, position, horizontalPipe, NULL);
 			break;
 
 		case 14: //cloud
