@@ -11,5 +11,7 @@ public:
 
 	void Update(float delta_time);
 	void Render();
+
+	D3DXVECTOR2 prePosition;
 };
 
