@@ -136,7 +136,8 @@ void CPlayState::End()
 	break;
 	case 3:
 	{
-		CScoreManagement::getInstance()->SetLevel(m_id_map++);
+		int idmap = m_id_map + 1;
+		CScoreManagement::getInstance()->SetLevel(idmap);
 		m_pNextState = new CPlayState();
 	}
 	break;

@@ -5,7 +5,7 @@
 #include "SoundManagement.h"
 #include "GameGraphic.h"
 
-CMario::CMario() : CLivingObject(0, D3DXVECTOR2(75.0f, 600.0f), NULL)
+CMario::CMario() : CLivingObject(0, D3DXVECTOR2(7500.0f, 600.0f), NULL)
 {
 	this->Init();
 }
@@ -291,6 +291,7 @@ void CMario::UpdatePosition(float delta_time)
 	{
 		timer.x = 0.0f;
 		flagPosition.x = position.x;
+		velocity.x = 0;
 		//deltaPosition = 0;
 	}
 
@@ -405,7 +406,7 @@ void CMario::Reset()
 {
 	direction = 1;
 	timer = D3DXVECTOR2(0.0f, 0.0f);
-	position = D3DXVECTOR2(75.0f, 600.0f);
+	position = flagPosition;
 	flagPosition = position;
 	this->Init();
 }
@@ -569,7 +570,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 				this->Backup();
 				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
 				{
-					m_collisionX = true;
+	 				m_collisionX = true;
 				}
 				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
 				{
