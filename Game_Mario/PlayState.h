@@ -8,16 +8,17 @@
 #include "Camera.h"
 #include "Mario.h"
 #include "GameOverState.h"
+#include "WinnerState.h"
 #include "ScoreManagement.h"
+#include "Singleton.h"
 
-class CPlayState : public CBaseGameState
+class CPlayState : public CBaseGameState, public CSingleton<CPlayState>
 {
 private:
-	CSprite* sprMenu;
-	int status;
-
+	int m_status;
+	int m_id_map;
 public:
-	CPlayState(int idmap);
+	CPlayState();
 	~CPlayState();
 	void Init();
 	void LoadResource();
@@ -25,5 +26,5 @@ public:
 	void Render();
 	void End();
 
-	int id_map;
+	
 };

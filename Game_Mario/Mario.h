@@ -42,6 +42,9 @@ private:
 	D3DXVECTOR2 posMasat;
 	ActionMario m_action;
 
+	D3DXVECTOR2 backupPosition;
+	CSprite* backupSprite;
+
 	CSprite* m_pSprBullet;
 	CBullet* m_pBullet;
 	bool isShooting;
@@ -55,11 +58,12 @@ private:
 	void CheckCollision(CBox mario, float delta_time);
 	void UpdatePosition(float delta_time);
 	void UpdateAnimation(float delta_time);
+	void Backup();
 public:
 	CSprite* smallMario;
 	CSprite* bigMario;
 	CSprite* superMario;
-
+	bool isWin;
 	CMario();
 	~CMario();
 
@@ -67,6 +71,7 @@ public:
 	void Render();
 	void Update(float delta_time);
 	void Reset();
+	void Resume();
 	void changeMario(CSprite* mario, float number);
 	void Deading();
 };

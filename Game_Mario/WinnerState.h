@@ -3,24 +3,19 @@
 #include "Sprite.h"
 #include "GameWindow.h"
 #include "PlayState.h"
-#include "AboutState.h"
 
-class CMenuState : public CBaseGameState
+class CWinnerState : public CBaseGameState, CAnimation
 {
-private:
-	bool m_keyDown = false;
-	bool m_keyUp = false;
-	int m_indexMenu;
-	CSprite* sprMenu;
+	CSprite* sprFireWork;
 public:
-	CMenuState();
-	~CMenuState();
+	CWinnerState();
+	~CWinnerState();
 	void Init();
 	void LoadResource();
 	void Update(float deltaTime);
 	void Render();
 	void End();
-	
+
 };
 
 

@@ -5,15 +5,22 @@
 class CScoreManagement : public CSingleton<CScoreManagement>
 {
 private:
-	CSprite* numbers;
-	int currentScore = 0;
-
+	CSprite* m_pNumbers;
+	CSprite* m_pMarioIcon;
+	CSprite* m_pLevel;
+	int m_currentScore;
+	int m_currentLife;
+	int m_currentLevel;
 public:
 
-	void Init();
+	int Init();
 	void Update();
 	void Render();
 	void AddScore();
+	void SetLife(int life);
+	int GetLife();
+	void SetLevel(int level);
+	int GetLevel();
 	~CScoreManagement();
 };
 

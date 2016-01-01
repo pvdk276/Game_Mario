@@ -10,11 +10,7 @@
 class CGameStateManager : public CSingleton<CGameStateManager>
 {
 private:
-
 	CBaseGameState* m_currentState;            //State hiện tại của game
-	
-											   //M?ng ch?a các State
-	CBaseGameState* m_state;
 public:
 	CGameStateManager();
 	~CGameStateManager();
@@ -24,6 +20,4 @@ public:
 	CBaseGameState* GetCurrentState();
 
 	void ChangeState(CBaseGameState* state);
-
-	CBaseGameState* m_pNextState;
 };
