@@ -37,14 +37,6 @@ void CBonus::Update(float delta_time)
 		CMario::getInstance()->GetBox(),
 		this->GetBox(),
 		normalx, normaly, distanceX, distanceY, delta_time);
-	if (value == 1 && ((CMario::getInstance()->position.x - this->position.x) <= 46 && (CMario::getInstance()->position.x - this->position.x) > 0))
-	{
-		value = CCollision::getInstance()->CheckCollision(
-			CMario::getInstance()->GetBox(),
-			this->GetBox(),
-			normalx, normaly, distanceX, distanceY, delta_time);
-	}
-
 	if (CCollision::getInstance()->CheckCollision(
 		CMario::getInstance()->GetBox(),
 		this->GetBox(),
@@ -53,7 +45,12 @@ void CBonus::Update(float delta_time)
 		switch (type)
 		{
 		case COIN:
-			break;
+		{
+			this->isDead = true;
+			CScoreManagement::getInstance()->AddScore();
+			SoundManagement::GetInstance()->Get(GETCOIN_SOUND)->Play();
+		}
+		break;
 		case FLOWER:
 			break;
 		case RED_MUSHROOM:

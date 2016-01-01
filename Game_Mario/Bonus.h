@@ -4,6 +4,7 @@
 #include "Global.h"
 #include "Singleton.h"
 #include "Mario.h"
+#include "SoundManagement.h"
 
 class CBonus : public CLivingObject
 {
