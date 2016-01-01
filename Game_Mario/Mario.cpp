@@ -265,7 +265,7 @@ void CMario::UpdatePosition(float delta_time)
 		deltaPosition = (flagPosition.x + velocity.x * timer.x + 1.0f / 2 * accel.x * timer.x * timer.x) - position.x;
 
 		//Giới hạn tốc độ cho Mario
-		if (abs(preVelocity.x + accel.x*timer.x) >= 350 && isSlowing == false)	//Giới hạn vận tốc nhỏ hơn 300
+		if (abs(preVelocity.x + accel.x*timer.x) >= 500 && isSlowing == false)	//Giới hạn vận tốc nhỏ hơn 300
 		{
 			//Chuyển thành chuyển động đều
 			velocity.x = preVelocity.x + accel.x*(timer.x - delta_time);
@@ -549,12 +549,6 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 		float value;
 		value = CCollision::getInstance()->CheckCollision(
 			mario, m_pObject->GetBox(), normalx, normaly, distanceX, distanceY, delta_time);
-		/*if (m_pObject->type == ENEMY && mario.y <= 203 && mario.y >= 150 && m_action == drop && value == 1)
-		{
- 			CBox bmario = mario;
-			value = CCollision::getInstance()->CheckCollision(
-				mario, m_pObject->GetBox(), normalx, normaly, distanceX, distanceY, delta_time);
-		}*/
 		if (value < 1 && !m_pObject->isDead && m_action != dead) //a collision occur
 		{
 			switch (m_pObject->type)

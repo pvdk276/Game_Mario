@@ -45,10 +45,16 @@ void CBullet::Update(float delta_time)
 			{
 				//Va chạm với ống
 			case PIPE:
-			case STONE:
 			case CARNIVOROUS_FLOWER_PIPE:
 			case PIPE_UP:
 			case PIPE_DOWN:
+			case PIPE_DOWN_1:
+			case PIPE_DOWN_2:
+			case PIPE_UP_1:
+			case PIPE_UP_2:
+			case PIPE_LEFT:
+			case PIPE_LEFT_1:
+			case PIPE_LEFT_2:
 			{
 				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
 				{
