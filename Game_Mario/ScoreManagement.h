@@ -10,14 +10,18 @@ private:
 	CSprite* m_pLevel;
 	int m_currentScore;
 	int m_currentLife;
+	int m_currentLevel;
 public:
 
-	void Init();
+	int Init();
 	void Update();
 	void Render();
 	void AddScore();
-	void SubtractLife();
-	void AddLife();
+	int SubtractLife();
+	int AddLife();
+	int GetLife();
+	void SetLevel(int level);
+	int GetLevel();
 	~CScoreManagement();
 };
 

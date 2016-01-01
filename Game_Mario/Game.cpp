@@ -32,6 +32,13 @@ int CGame::Init(HINSTANCE hInstance)
 		return 0;
 	}
 
+	//KhỞI tẠO ĐỐI tƯỢNG quẢN lÝ ĐiỂM vÀ mÀN chƠi
+	if (!CScoreManagement::getInstance()->Init())
+	{
+		OutputDebugString("[Game.cpp] Cannot init CSCoreManagement.");
+		return 0;
+	}
+
 	//Khởi tạo đối tượng quản lý game state
 	if (!CGameStateManager::getInstance()->Init(new CMenuState()))
 	{
