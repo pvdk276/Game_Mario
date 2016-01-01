@@ -26,6 +26,7 @@ private:
 	CBox mario;
 	CBaseObject* m_pObject;
 	ObjectName objectName;
+	CBaseObject* m_pBarup;
 
 	int magicCounter;	//biến đếm số lần thực hiện chuyển đổi
 	int posIndex;		//index của mario cũ

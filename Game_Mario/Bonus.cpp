@@ -13,6 +13,7 @@ CBonus::CBonus(int id, ObjectName typeObj, D3DXVECTOR2 position, CSprite * sprit
 	float vx = (rand() % 2) + 1;
 	if (vx != 1)
 		vx = -1;
+	vx = 1;
 	velocity = D3DXVECTOR2(vx*200.0f, 600.0f);
 	accel = D3DXVECTOR2(0.0f, 550.0f);
 	this->isDead = false;
@@ -72,6 +73,11 @@ void CBonus::Update(float delta_time)
 		}
 			break;
 		case GREEN_MUSHROOM:
+		{
+			this->isDead = true;
+			int life = CScoreManagement::getInstance()->GetLife() + 1;
+			CScoreManagement::getInstance()->SetLife(life);
+		}
 			break;
 		case STAR:
 			break;
@@ -91,14 +97,6 @@ void CBonus::Update(float delta_time)
 				this->GetBox(),
 				m_pObject->GetBox(),
 				normalx, normaly,distanceX,distanceY, delta_time);
-			if (value == 1 && (CMario::getInstance()->position.x - this->position.x) <= 46 && (CMario::getInstance()->position.x - this->position.x) > 0 && this->isDead == false )
-			{
-				if(this->position.y == 125 && CMario::getInstance()->position.y == 150)
-				value = CCollision::getInstance()->CheckCollision(
-					this->GetBox(),
-					m_pObject->GetBox(),
-					normalx, normaly, distanceX, distanceY, delta_time);
-			}
 			if (value < 1  && !m_pObject->isDead) //a collision occur
 			{
 				switch (m_pObject->type)
@@ -117,6 +115,17 @@ void CBonus::Update(float delta_time)
 				break;
 				case BRICK:
 				case COIN_BRICK:
+				{
+					if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
+					{
+						m_collisionY = true;
+						if (velocity.x == 0.0f)
+							velocity.x = -velocity.x;
+						if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
+							position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+					}
+				}
+				break;
 				case LEFT_LAND:
 				case CENTER_LAND:
 				case RIGHT_LAND:
@@ -126,8 +135,11 @@ void CBonus::Update(float delta_time)
 						m_collisionY = true;
 						if (velocity.x == 0.0f)
 							velocity.x = -velocity.x;
+						velocity.y = 0.0f;
+						accel.y = 0.0f;
 						if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
 							position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+						flagPosition.y = position.y;
 					}
 				}
 				break;
@@ -237,7 +249,7 @@ void CBonus::updatePosAnima(float delta_time)
 			position.x = flagPosition.x + velocity.x * timer.x + 1.0f / 2 * accel.x * timer.x * timer.x;
 		}
 
-		UpdateAnimation(delta_time, 1, 1, direction);
+		UpdateAnimation(delta_time, 1, 1, direction, 0.01f);
 	}
 	break;
 	case COIN:

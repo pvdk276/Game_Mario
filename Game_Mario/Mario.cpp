@@ -604,7 +604,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 				}
 				if (normalx == 0.0f && normaly == 1.0f)
 				{
-					//this->Backup();
+					this->Backup();
 					m_collisionY = true;
 					if (m_action == jump || m_action == drop)
 					{
@@ -791,12 +791,15 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 				}
 			}
 			break;
-			//Va chạm với đất
-			case LEFT_LAND:
-			case RIGHT_LAND:
-			case CENTER_LAND:
+			//Va chạm với bar
+			case BAR_DOWN:
+			case BAR_RIGHT:
 			{
-				if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
+				if (normalx == 0.0f && normaly == -1.0f)
+				{
+					this->droping();
+				}
+				if (normalx == 0.0f && normaly == 1.0f)
 				{
 					m_collisionY = true;
 					if (m_action == jump || m_action == drop)
@@ -804,6 +807,64 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 						if (velocity.x != 0) m_action = run;
 						else m_action = stand;
 					}
+					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
+						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+				}
+				if (position.y != (position.y + distanceY))
+				{
+					if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
+					{
+						m_collisionX = true;
+					}
+				}
+			}
+			break;
+			case BAR_UP:
+			{
+				if (normalx == 0.0f && normaly == -1.0f)
+				{
+					this->droping();
+				}
+				if (normalx == 0.0f && normaly == 1.0f)
+				{
+					m_collisionY = true;
+					if (m_action == jump || m_action == drop)
+					{
+						if (velocity.x != 0) m_action = run;
+						else m_action = stand;
+					}
+
+					if (position.y != m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
+						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+					flagPosition.y = position.y;
+					timer.y = 0.0f;
+					accel.y = 0.0f;
+					velocity.y = 0.0f;
+				}
+				if (position.y != (position.y + distanceY))
+				{
+					if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
+					{
+						m_collisionX = true;
+					}
+				}
+			}
+			break;
+			//Va chạm với đất
+			case LEFT_LAND:
+			case RIGHT_LAND:
+			case CENTER_LAND:
+			{
+ 				if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
+				{
+					m_collisionY = true;
+					if (m_action == jump || m_action == drop)
+					{
+						if (velocity.x != 0) m_action = run;
+						else m_action = stand;
+					}
+					velocity.y = 0.0f;
+					accel.y = 0.0f;
 					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
 						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
 				}

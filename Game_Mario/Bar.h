@@ -5,6 +5,8 @@
 
 class CBar : public CDynamicObject
 {
+private:
+	D3DXVECTOR2 prePosition;
 public:
 	CBar(int id, ObjectName type, D3DXVECTOR2 position, CSprite* sprite);
 	~CBar();
@@ -12,6 +14,6 @@ public:
 	void Update(float delta_time);
 	void Render();
 
-	D3DXVECTOR2 prePosition;
+	
 };
 

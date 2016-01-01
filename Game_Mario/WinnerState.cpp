@@ -28,11 +28,10 @@ void CWinnerState::LoadResource()
 
 void CWinnerState::Update(float delta_time)
 {
-	if (CGameKeyboard::getInstance()->IsKeyDown(DIK_RETURN))
+	if (CGameKeyboard::getInstance()->IsKeyDown(DIK_SPACE))
 	{
 		this->End();
 	}
-
 	CAnimation::UpdateAnimation(delta_time, 0, 2, 1, 0.2f);
 }
 
@@ -44,6 +43,7 @@ void CWinnerState::Render()
 
 void CWinnerState::End()
 {
+	CScoreManagement::getInstance()->SetLevel(1);
 	this->m_bFinished = true;
 	delete m_pNextState;
 	m_pNextState = new CMenuState();

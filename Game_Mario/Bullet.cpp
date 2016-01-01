@@ -92,18 +92,22 @@ void CBullet::Update(float delta_time)
 			case FLOWER_BLOCK:
 			case GREEN_MUSHROOM_BLOCK:
 			case STAR_BLOCK:
+			case STONE:
 			{
-				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
-				{
-					this->isDead = true;
-				}
-				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
+				if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
 				{
 					m_collisionY = true;
 					positionObject = m_pObject->GetBox().y;
 					heighObject = m_pObject->GetBox().h;
 					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
 						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+				}
+				if (position.y != (position.y + distanceY))
+				{
+					if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
+					{
+						this->isDead = true;
+					}
 				}
 			}
 			break;

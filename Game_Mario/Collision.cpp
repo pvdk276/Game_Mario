@@ -164,11 +164,23 @@ float CCollision::SweptAABB(CBox first, CBox second, float& distanceX, float& di
 	}
 }
 
-bool CCollision::isStandOn(CBox box1, CBox box2)
+int CCollision::checkCollisionDirection(CBox box1, CBox box2)
 {
-	if ((box1.y - box1.h / 2) == (box2.y - box2.h / 2))
-		return true;
-	return false;
+	if (box1.x + box1.w / 2 < box2.x - box2.w / 2 ||
+		box1.x - box1.w / 2 > box2.x + box2.w / 2)
+	{
+		if (!((box1.y - box1.h / 2) > (box2.y + box2.h / 2) ||
+			(box1.y + box1.h / 2) < (box2.y - box2.h / 2)))
+			return 1; //va chạm ngang
+	}
+	else if ((box1.y - box1.h / 2) > (box2.y + box2.h / 2) ||
+		(box1.y + box1.h / 2) < (box2.y - box2.h / 2))
+	{
+		if (!(box1.x + box1.w / 2 < box2.x - box2.w / 2 ||
+			box1.x - box1.w / 2 > box2.x + box2.w / 2))
+			return -1; //Va chạm dọc
+	}
+	return 0;	// không va chạm
 }
 
 //Broadphase box : if block is not within broadphase box, there is not a collision.
@@ -202,7 +214,6 @@ float CCollision::CheckCollision(CBox first, CBox second, float& normalx, float&
 	CBox box2 = second;
 	//Tính quãng đường đi được của 2 box
 	DeltaPosition(first, second, deltaTime);
-	m_isStandOn = isStandOn(first, second);
 	//Nếu 2 box cùng chuyển động
 	if (m_deltaPosition1.x != 0.0f && m_deltaPosition2.x != 0)
 	{
@@ -222,20 +233,39 @@ float CCollision::CheckCollision(CBox first, CBox second, float& normalx, float&
 	{
 		second.y += m_deltaPosition2.y;
 	}
-		
-	//Nếu 2 chuyển động, 1 đứng yên
-	if (m_deltaPosition1.x == 0.0f && m_isStandOn || 
-		m_deltaPosition1.y != 0.0f && m_deltaPosition1.x == 0.0f && m_deltaPosition2.x == 0.0f && m_deltaPosition2.y != 0.0f)
+	
+	//Xét va chạm ngang
+	if (this->checkCollisionDirection(box1, box2) == 1)
 	{
-		box1 = second;
-		box2 = first;
-		m_deltaPosition = m_deltaPosition2;
+		//Nếu 2 chuyển động, 1 đứng yên
+		if (m_deltaPosition1.x == 0.0f && m_deltaPosition2.x != 0.0f)
+		{
+			box1 = second;
+			box2 = first;
+			m_deltaPosition = m_deltaPosition2;
+		}
+		else  //Nếu 1 chuyển động
+		{
+			box1 = first;
+			box2 = second;
+			m_deltaPosition = m_deltaPosition1;
+		}
 	}
-	else  //Nếu 1 chuyển động
+	else if (this->checkCollisionDirection(box1, box2) == -1)	// va chạm dọc
 	{
-		box1 = first;
-		box2 = second;
-		m_deltaPosition = m_deltaPosition1;
+		//Nếu 2 chuyển động, 1 đứng yên
+		if (m_deltaPosition1.y == 0.0f && m_deltaPosition2.y != 0.0f)
+		{
+			box1 = second;
+			box2 = first;
+			m_deltaPosition = m_deltaPosition2;
+		}
+		else  //Nếu 1 chuyển động
+		{
+			box1 = first;
+			box2 = second;
+			m_deltaPosition = m_deltaPosition1;
+		}
 	}
 
 	CBox broadphasebox = GetSweptBroadphaseBox(box1);
