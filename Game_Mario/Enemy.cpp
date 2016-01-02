@@ -45,9 +45,16 @@ void CEnemy::Update(float delta_time)
 			case PIPE_LEFT_2:
 			case STONE:
 			{
-				timer.x = 0.0f;
-				this->velocity.x *= -1;
-				flagPosition.x = this->position.x;
+				if (position.y != (position.y + distanceY))
+				{
+					if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
+					{
+						timer.x = 0.0f;
+						this->velocity.x *= -1;
+						flagPosition.x = this->position.x;
+					}
+				}
+				
 			}
 			break;
 			default:

@@ -46,7 +46,7 @@ void CMario::Init()
 	shoot = false;
 	timerShoot = 0.0f;
 	this->isWin = false;
-
+	m_pBarup = this;
 	this->Backup();
 }
 
@@ -59,6 +59,7 @@ void CMario::Render()
 
 void CMario::Update(float delta_time)
 {
+	
 	this->CheckCollision(this->GetBox(), delta_time);
 
 #pragma region Di chuyển của Mario
@@ -251,6 +252,13 @@ void CMario::Update(float delta_time)
 	}
 
 #pragma endregion 
+#pragma region Va chạm với Barup
+	/*if (m_pBarup->type == BAR_UP)
+	{
+		m_collisionY = true;
+		position.y = m_pBarup->GetBox().y + m_pBarup->GetBox().h / 2 + height / 2;
+	}*/
+#pragma endregion
 	//Mario dead
 	if (position.y <= 0.0f)
 	{
@@ -557,6 +565,12 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 		float value;
 		value = CCollision::getInstance()->CheckCollision(
 			mario, m_pObject->GetBox(), normalx, normaly, distanceX, distanceY, delta_time);
+		if (m_pObject->type == COIN_BRICK && m_pObject->GetBox().x == 2225 && value == 1 && mario.x > 2220 && mario.x < 2250 && mario.y == 400)
+		{
+			float x = mario.x + 0;
+			value = CCollision::getInstance()->CheckCollision(
+				mario, m_pObject->GetBox(), normalx, normaly, distanceX, distanceY, delta_time);
+		}
 		if (value < 1 && !m_pObject->isDead && m_action != dead) //a collision occur
 		{
 			switch (m_pObject->type)
@@ -708,7 +722,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 						if (velocity.x != 0) m_action = run;
 						else m_action = stand;
 					}
-					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
+					if (position.y != m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
 						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
 				}
 				if (position.y != (position.y + distanceY))
@@ -717,7 +731,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 					{
 						m_collisionX = true;
 					}
-				}	
+				}
 			}
 			break;
 			case COIN_BRICK:
@@ -737,7 +751,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 						if (velocity.x != 0) m_action = run;
 						else m_action = stand;
 					}
-					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
+					if (position.y != m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
 						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
 				}
 				if (position.y != (position.y + distanceY))
@@ -792,6 +806,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 			}
 			break;
 			//Va chạm với bar
+			case BAR:
 			case BAR_DOWN:
 			case BAR_RIGHT:
 			{
@@ -827,6 +842,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 				}
 				if (normalx == 0.0f && normaly == 1.0f)
 				{
+					m_pBarup = m_pObject;
 					m_collisionY = true;
 					if (m_action == jump || m_action == drop)
 					{
@@ -834,12 +850,12 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 						else m_action = stand;
 					}
 
-					if (position.y != m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
-						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+					//if (position.y != m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
+						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2 + 3;
 					flagPosition.y = position.y;
-					timer.y = 0.0f;
+					timer.y = delta_time;
+					velocity.y = -100;
 					accel.y = 0.0f;
-					velocity.y = 0.0f;
 				}
 				if (position.y != (position.y + distanceY))
 				{

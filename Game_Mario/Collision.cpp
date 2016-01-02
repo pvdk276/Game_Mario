@@ -212,6 +212,7 @@ float CCollision::CheckCollision(CBox first, CBox second, float& normalx, float&
 {
 	CBox box1 = first;
 	CBox box2 = second;
+	m_deltaPosition = m_deltaPosition1;
 	//Tính quãng đường đi được của 2 box
 	DeltaPosition(first, second, deltaTime);
 	//Nếu 2 box cùng chuyển động
