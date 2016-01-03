@@ -18,6 +18,11 @@ void CScoreManagement::AddScore()
 	m_currentScore += SCORE;
 }
 
+void CScoreManagement::SetScore(int score)
+{
+	m_currentScore = score;
+}
+
 void CScoreManagement::SetLife(int life)
 {
 	m_currentLife = life;

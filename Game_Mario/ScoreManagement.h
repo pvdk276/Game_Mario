@@ -17,6 +17,7 @@ public:
 	void Update();
 	void Render();
 	void AddScore();
+	void SetScore(int score);
 	void SetLife(int life);
 	int GetLife();
 	void SetLevel(int level);

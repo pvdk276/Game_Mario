@@ -836,7 +836,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 			break;
 			case BAR_UP:
 			{
-				if (normalx == 0.0f && normaly == -1.0f)
+ 				if (normalx == 0.0f && normaly == -1.0f)
 				{
 					this->droping();
 				}
