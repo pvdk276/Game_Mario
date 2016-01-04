@@ -22,7 +22,9 @@ void CMenuState::Init()
 
 void CMenuState::LoadResource()
 {
-	sprMenu = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Other/StartMenu.png", 200.5, 56.2, 10, 2, NULL);
+	sprMenu = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Other/StartMenu2.png", 360, 120, 8, 2, NULL);
+	CGameGraphic::getInstance()->InitSurface("Resources/Images/Other/StartScreen.jpg");
+	SoundManagement::GetInstance()->Get(MENUMUSIC_SOUND)->PlayLoop();
 }
 
 void CMenuState::Update(float deltaTime)
@@ -33,7 +35,7 @@ void CMenuState::Update(float deltaTime)
 	}
 	if (CGameKeyboard::getInstance()->IsKeyUp(DIK_DOWN) == true)
 	{
-		if (this->m_keyDown == true && m_indexMenu < 4)
+		if (this->m_keyDown == true && m_indexMenu < 3)
 		{
 			m_indexMenu++;
 			SoundManagement::GetInstance()->Get(MENUCHANGE_SOUND)->Play();
@@ -57,28 +59,26 @@ void CMenuState::Update(float deltaTime)
 
 	if (CGameKeyboard::getInstance()->IsKeyDown(DIK_RETURN))
 	{
+		SoundManagement::GetInstance()->Get(SMALLER_SOUND)->Play();
 		this->End();
 	}
-	SoundManagement::GetInstance()->Get(MENUMUSIC_SOUND)->PlayLoop();
 }
 
 void CMenuState::Render()
 {
+	CGameGraphic::getInstance()->RenderBackbuffer(NULL, NULL);
 	sprMenu->Render(200, -200, 0, 0, 0);
 	if(this->m_indexMenu == 0)
 		sprMenu->Render(200, -200, 0, 0, 1);
-	sprMenu->Render(200, -250, 0, 0, 2);
+	sprMenu->Render(200, -300, 0, 0, 2);
 	if (this->m_indexMenu == 1)
-		sprMenu->Render(200, -250, 0, 0, 3);
-	sprMenu->Render(200, -300, 0, 0, 4);
+		sprMenu->Render(200, -300, 0, 0, 3);
+	sprMenu->Render(200, -400, 0, 0, 4);
 	if (this->m_indexMenu == 2)
-		sprMenu->Render(200, -300, 0, 0, 5);
-	sprMenu->Render(200, -350, 0, 0, 6);
+		sprMenu->Render(200, -400, 0, 0, 5);
+	sprMenu->Render(200, -500, 0, 0, 6);
 	if (this->m_indexMenu == 3)
-		sprMenu->Render(200, -350, 0, 0, 7);
-	sprMenu->Render(200, -400, 0, 0, 8);
-	if (this->m_indexMenu == 4)
-		sprMenu->Render(200, -400, 0, 0, 9);	
+		sprMenu->Render(200, -500, 0, 0, 7);	
 }
 
 void CMenuState::End()
@@ -95,15 +95,20 @@ void CMenuState::End()
 	}
 	break;
 	case 1:
+	{
+		m_pNextState = new CGuideState();
+	}
+	break;
 	case 2:
-	case 3:
 	{
 		m_pNextState = new CAboutState();
 	}
 	break;
-	case 4:
+	case 3:
+	{
 		exit(0);
-		break;
+	}
+	break;
 	default:
 		break;
 	}	

@@ -39,22 +39,24 @@ int CGame::Init(HINSTANCE hInstance)
 		return 0;
 	}
 
-	//Khởi tạo đối tượng quản lý game state
-	if (!CGameStateManager::getInstance()->Init(new CMenuState()))
-	{
-		OutputDebugString("[Game.cpp] Cannot init CGameStateManager.");
-		return 0;
-	}
 	//Khởi tạo âm thanh
 	if (!SoundManagement::GetInstance()->Init(CGameWindow::getInstance()->m_hWnd))
 	{
 		OutputDebugString("[Game.cpp] Cannot init SoundManagement.");
 		return 0;
 	}
-	else 
+	else
 	{
 		SoundManagement::GetInstance()->AddAll();
 	}
+
+	//Khởi tạo đối tượng quản lý game state
+	if (!CGameStateManager::getInstance()->Init(new CMenuState()))
+	{
+		OutputDebugString("[Game.cpp] Cannot init CGameStateManager.");
+		return 0;
+	}
+	
 
 	////Khởi tạo đối tượng quản lý thời gian
 	CTimer::getInstance()->Init();

@@ -36,7 +36,7 @@ void CMario::Init()
 	this->smallMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/SmallMario.png", 50, 50, 10, 5, NULL);
 	this->bigMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/BigMario.png", 50, 100, 10, 5, NULL);
 	this->superMario = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Mario/SuperMario.png", 50, 100, 10, 5, NULL);
-	changeMario(superMario, 0);
+	changeMario(smallMario, 0);
 	velocity = D3DXVECTOR2(0.0f, - 200);
 	accel = D3DXVECTOR2(0, - 100);
 	prePosition = D3DXVECTOR2(0.0f, 0.0f);
@@ -649,7 +649,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 					flagPosition.x = position.x;
 					timer.x = 0.0f;
 					accel.x = 0.0f;
-					SoundManagement::GetInstance()->Get(PIPE_SOUND)->Play();
+					SoundManagement::GetInstance()->Get(STANDUP_SOUND)->Play();
 				}
 				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
 				{

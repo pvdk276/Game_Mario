@@ -4,6 +4,7 @@
 #include "GameWindow.h"
 #include "PlayState.h"
 #include "AboutState.h"
+#include "GuideState.h"
 
 class CMenuState : public CBaseGameState
 {

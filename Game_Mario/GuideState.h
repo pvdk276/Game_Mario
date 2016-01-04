@@ -1,17 +1,12 @@
 #pragma once
 #include "BaseGameState.h"
 #include "MenuState.h"
-#include "Sprite.h"
-#include "Camera.h"
 
-class CAboutState:public CBaseGameState
+class CGuideState :public CBaseGameState
 {
-private:
-	CSprite* m_sprite;
-	float position;
 public:
-	CAboutState();
-	~CAboutState();
+	CGuideState();
+	~CGuideState();
 	void Init();
 	void LoadResource();
 	void Update(float deltaTime);
