@@ -1,6 +1,7 @@
 #pragma once
 #include "LivingObject.h"
 #include "Mario.h"
+#include "BinaryTree.h"
 #include "SoundManagement.h"
 
 enum Direction
@@ -14,7 +15,9 @@ enum Direction
 class CCarnivorousFlower : public CLivingObject
 {
 private:
+	CBox pipe;
 	float m_counter;
+	bool isAlone;
 public:
 	CCarnivorousFlower(int id, D3DXVECTOR2 position, CSprite* sprite);
 	~CCarnivorousFlower();

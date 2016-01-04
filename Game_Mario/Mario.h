@@ -26,6 +26,7 @@ private:
 	CBox mario;
 	CBaseObject* m_pObject;
 	ObjectName objectName;
+	
 
 	int magicCounter;	//biến đếm số lần thực hiện chuyển đổi
 	int posIndex;		//index của mario cũ
@@ -38,6 +39,10 @@ private:
 	float preDeltaPosition;
 	bool isSlowing;
 	bool started;
+	bool isBarDown;
+	bool isbarUp;
+	float vBarUp;
+	float timerImmortal; //Thời gian bất tử
 
 	D3DXVECTOR2 preVelocity;
 	D3DXVECTOR2 flagAccel;
@@ -69,6 +74,7 @@ public:
 	CSprite* bigMario;
 	CSprite* superMario;
 	bool isWin;
+	bool isImmortal; // bất tử
 	CMario();
 	~CMario();
 
