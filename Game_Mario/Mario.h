@@ -17,6 +17,13 @@ enum ActionMario
 	dead
 };
 
+enum marioState
+{
+	_smallMario,
+	_bigMario,
+	_superMario,
+};
+
 class CMario : public CSingleton<CMario>, public CLivingObject
 {
 private:
@@ -53,6 +60,7 @@ private:
 	CSprite* backupSprite;
 	D3DXVECTOR2 backVelocity;
 	D3DXVECTOR2 backAccel;
+	marioState m_mariostate;
 
 	//Shooting
 	CSprite* m_pSprBullet;

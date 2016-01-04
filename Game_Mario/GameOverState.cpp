@@ -46,6 +46,7 @@ void CGameOverState::Update(float deltaTime)
 		m_timer += deltaTime;
 		if (m_timer >= deltaTime * GAME_FPS)
 		{
+			SoundManagement::GetInstance()->Get(GAMEOVER_SOUND)->Play();
 			CScoreManagement::getInstance()->SetLevel(1);
 			CScoreManagement::getInstance()->SetLife(3);
 			CScoreManagement::getInstance()->SetScore(0);

@@ -33,8 +33,11 @@ void CMenuState::Update(float deltaTime)
 	}
 	if (CGameKeyboard::getInstance()->IsKeyUp(DIK_DOWN) == true)
 	{
-		if(this->m_keyDown == true && m_indexMenu < 4)
+		if (this->m_keyDown == true && m_indexMenu < 4)
+		{
 			m_indexMenu++;
+			SoundManagement::GetInstance()->Get(MENUCHANGE_SOUND)->Play();
+		}	
 		this->m_keyDown = false;
 	}
 
@@ -45,7 +48,10 @@ void CMenuState::Update(float deltaTime)
 	if (CGameKeyboard::getInstance()->IsKeyUp(DIK_UP))
 	{
 		if (this->m_keyUp == true && m_indexMenu > 0)
+		{
 			m_indexMenu--;
+			SoundManagement::GetInstance()->Get(MENUCHANGE_SOUND)->Play();
+		}	
 		this->m_keyUp = false;
 	}
 
@@ -53,6 +59,7 @@ void CMenuState::Update(float deltaTime)
 	{
 		this->End();
 	}
+	SoundManagement::GetInstance()->Get(MENUMUSIC_SOUND)->PlayLoop();
 }
 
 void CMenuState::Render()
@@ -71,7 +78,7 @@ void CMenuState::Render()
 		sprMenu->Render(200, -350, 0, 0, 7);
 	sprMenu->Render(200, -400, 0, 0, 8);
 	if (this->m_indexMenu == 4)
-		sprMenu->Render(200, -400, 0, 0, 9);
+		sprMenu->Render(200, -400, 0, 0, 9);	
 }
 
 void CMenuState::End()
@@ -87,6 +94,8 @@ void CMenuState::End()
 		m_pNextState = new CPlayState();
 	}
 	break;
+	case 1:
+	case 2:
 	case 3:
 	{
 		m_pNextState = new CAboutState();
@@ -98,6 +107,7 @@ void CMenuState::End()
 	default:
 		break;
 	}	
+	SoundManagement::GetInstance()->Get(MENUMUSIC_SOUND)->Stop();
 	CGameStateManager::getInstance()->ChangeState(m_pNextState);
 }
 

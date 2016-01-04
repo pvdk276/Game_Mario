@@ -20,6 +20,8 @@ CMario::~CMario()
 		delete m_pBullet;
 	if (m_pObject)
 		delete m_pObject;
+	if (backupSprite)
+		delete backupSprite;
 
 }
 
@@ -51,7 +53,7 @@ void CMario::Init()
 	this->isBarDown = false;
 	this->isbarUp = false;
 	this->vBarUp = 0.0f;
-	this->Backup();
+	
 }
 
 void CMario::Render()
@@ -89,7 +91,6 @@ void CMario::Update(float delta_time)
 		{
 			position.y += vBarUp * delta_time;
 			flagPosition.y = position.y;
-			//velocity.y = 0.0f;
 		}
 
 	}
@@ -449,7 +450,12 @@ void CMario::UpdateAnimation(float delta_time)
 void CMario::Backup()
 {
 	this->backupPosition = position;
-	this->backupSprite = this->sprite;
+	if(this->sprite == smallMario)
+		m_mariostate = _smallMario;
+	else if(this->sprite == bigMario)
+		this->m_mariostate = _bigMario;
+	else if (this->sprite == superMario)
+		this->m_mariostate = _superMario;
 	this->backAccel = accel;
 	this->backVelocity = velocity;
 }
@@ -467,17 +473,19 @@ void CMario::Reset()
 void CMario::Resume()
 {
 	position = backupPosition;
+	if(m_mariostate == _smallMario)
+		changeMario(smallMario,0);
+	else if (m_mariostate == _bigMario)
+		changeMario(bigMario, 0);
+	if (m_mariostate == _superMario)
+		changeMario(superMario, 0);
 	flagPosition = position;
-	this->sprite = this->backupSprite;
-	this->velocity = D3DXVECTOR2(0.0f, 0.0f);
-	this->accel = D3DXVECTOR2(0.0f, 0.0f);
 	m_action = stand;
-	timer.x = 0;
-	timer.y = 0;
 	deltaPosition = 0;
 	isSlowing = false;
 	isDead = false;
 	started = true;
+	isShoot = true;
 }
 
 void CMario::changeMario(CSprite* mario, float number)
@@ -653,7 +661,6 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 					}
 					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
 						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
-					this->Backup();
 				}
 			}
 			break;
@@ -673,6 +680,10 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 					}
 					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
 						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+					if (started == false)
+					{
+						this->Backup();
+					}
 				}
 				if (position.y != (position.y + distanceY))
 				{
@@ -765,7 +776,6 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 				}
 				if (normalx == 0.0f && normaly == 1.0f)
 				{
-					this->Backup();
 					m_collisionY = true;
 					if (m_action == jump || m_action == drop)
 					{
@@ -803,7 +813,6 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 					}
 					if (position.y != m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
 						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
-					this->Backup();
 				}
 				if (position.y != (position.y + distanceY))
 				{
@@ -846,7 +855,6 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 					}
 					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
 						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
-					this->Backup();
 				}
 				if (position.y != (position.y + distanceY))
 				{
@@ -930,6 +938,10 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 					}
 					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
 						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+					if (started == false)
+					{
+						this->Backup();
+					}
 				}
 			}
 			break;

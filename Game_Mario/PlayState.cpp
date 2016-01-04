@@ -120,11 +120,10 @@ void CPlayState::Render()
 }
 
 void CPlayState::End()
-{
-	//Khi state kết thúc m_bFinished = true
-	
+{	
 	//Xóa con trỏ m_pNextState
 	delete m_pNextState;
+
 	switch (m_status)
 	{
 	case 1:	
@@ -152,6 +151,7 @@ void CPlayState::End()
 		m_pNextState = new CMenuState();
 	break;
 	}
+	SoundManagement::GetInstance()->Get(BACKMUSIC_SOUND)->Stop();
 	CGameStateManager::getInstance()->ChangeState(m_pNextState);
 }
 

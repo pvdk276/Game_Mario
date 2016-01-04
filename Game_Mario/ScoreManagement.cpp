@@ -6,7 +6,7 @@ int CScoreManagement::Init()
 {
 	m_currentScore = 0;
 	m_currentLife = LIFE;
-	m_currentLevel = 1;
+	m_currentLevel = 2;
 	m_pNumbers = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Other/Number1.png", 30, 30, 10, 10, NULL);
 	m_pMarioIcon = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Other/MarioIcon.png", 21, 22, 1, 1, NULL);
 	m_pLevel = new CSprite(CGameGraphic::getInstance()->getSpriteHander(), "Resources/Images/Other/World.png", 62, 13, 1, 1, NULL);
