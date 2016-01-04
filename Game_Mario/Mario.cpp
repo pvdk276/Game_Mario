@@ -39,14 +39,13 @@ void CMario::Init()
 	accel = D3DXVECTOR2(0, - 100);
 	prePosition = D3DXVECTOR2(0.0f, 0.0f);
 	
-	posMasat = D3DXVECTOR2(5.0f, 0.0f);
 	deltaPosition = 0.0f;
-	masat = posMasat.x;
+	masat = 5.0f;
 	isShooting = false;
 	shoot = false;
 	timerShoot = 0.0f;
 	this->isWin = false;
-	m_pBarup = this;
+	this->started = false;
 	this->Backup();
 }
 
@@ -61,6 +60,23 @@ void CMario::Update(float delta_time)
 {
 	
 	this->CheckCollision(this->GetBox(), delta_time);
+	
+	if (m_collisionY == true)
+	{
+		this->started = true;
+		flagPosition.y = position.y;
+		accel.y = 0.0f;
+		velocity.y = 0.0f;
+		timer.y = 0.0f;
+	}
+	else
+	{
+		if (m_action != jump && m_action != drop && m_action != dead && started == true)
+		{
+			velocity.y = 1000;
+			droping();
+		}		
+	}
 
 #pragma region Di chuyển của Mario
 
@@ -76,7 +92,7 @@ void CMario::Update(float delta_time)
 			timer.x = 0.0f;
 		}
 	}
-	if (m_action != down && m_action != dead) //Đang di chuyển
+	if (m_action != down && m_action != dead && this->started == true) //Đang di chuyển
 	{
 		if (CGameKeyboard::getInstance()->IsKeyDown(DIK_RIGHT))
 		{
@@ -414,6 +430,8 @@ void CMario::Backup()
 {
 	this->backupPosition = position;
 	this->backupSprite = this->sprite;
+	this->backAccel = accel;
+	this->backVelocity = velocity;
 }
 
 void CMario::Reset()
@@ -430,10 +448,16 @@ void CMario::Resume()
 {
 	position = backupPosition;
 	flagPosition = position;
-	this->sprite = backupSprite;
+	this->sprite = this->backupSprite;
+	this->velocity = D3DXVECTOR2(0.0f, 0.0f);
+	this->accel = D3DXVECTOR2(0.0f, 0.0f);
+	m_action = stand;
 	timer.x = 0;
 	timer.y = 0;
+	deltaPosition = 0;
+	isSlowing = false;
 	isDead = false;
+	started = true;
 }
 
 void CMario::changeMario(CSprite* mario, float number)
@@ -504,7 +528,7 @@ void CMario::droping()
 	m_action = drop;
 	velocity.y = -(abs(velocity.y) + abs(accel.y) * timer.y);
 	timer.y = 0.0f;
-	accel.y = -flagAccel.y;
+	accel.y = - flagAccel.y;
 	flagPosition.y = position.y;
 }
 
@@ -588,14 +612,16 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 			case PIPE_LEFT_1:
 			case PIPE_LEFT_2:
 			{
-				this->Backup();
+				
 				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
 				{
+					this->Backup();
 	 				m_collisionX = true;
 					position.x += distanceX;
 					flagPosition.x = position.x;
 					timer.x = 0.0f;
 					accel.x = 0.0f;
+					SoundManagement::GetInstance()->Get(PIPE_SOUND)->Play();
 				}
 				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
 				{
@@ -607,6 +633,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 					}
 					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
 						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+					this->Backup();
 				}
 			}
 			break;
@@ -618,7 +645,6 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 				}
 				if (normalx == 0.0f && normaly == 1.0f)
 				{
-					this->Backup();
 					m_collisionY = true;
 					if (m_action == jump || m_action == drop)
 					{
@@ -646,24 +672,27 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 			{
 				if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
 				{
+					position.x = position.x + distanceX;
 					//Mario chết
 					if (this->sprite == smallMario)
 					{
-						if (!doingChanging)
-							this->isDead = true;
+						this->Deading();
 					}
 					else //Nếu là mario lớn
 					{
-						if (!doingChanging)
-							currentSprite = this->sprite;
-						changeMario(smallMario, 2);
+						//currentSprite = this->sprite;
+						changeMario(smallMario, 0);
+						SoundManagement::GetInstance()->Get(SMALLER_SOUND)->Play();
 					}
-
 				}
 				else if (normalx == 0.0f && normaly == 1.0f || normalx == 0.0f && normaly == -1.0f)
 				{
-					this->Jumping();
-					m_pObject->isCollision = true;
+					if (!m_pObject->isCollision)
+					{
+						this->Jumping();
+						m_pObject->isCollision = true;
+						SoundManagement::GetInstance()->Get(ENEMYDIE_SOUND)->Play();
+					}
 				}
 			}
 			break;
@@ -683,6 +712,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 						{
 							//currentSprite = this->sprite;
 							changeMario(smallMario, 0);
+							SoundManagement::GetInstance()->Get(SMALLER_SOUND)->Play();
 						}
 					}	
 				}
@@ -744,7 +774,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 				}
 				if (normalx == 0.0f && normaly == 1.0f)
 				{
-					this->Backup();
+					
 					m_collisionY = true;
 					if (m_action == jump || m_action == drop)
 					{
@@ -753,6 +783,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 					}
 					if (position.y != m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
 						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+					this->Backup();
 				}
 				if (position.y != (position.y + distanceY))
 				{
@@ -785,7 +816,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 				}
 				if (normalx == 0.0f && normaly == 1.0f)
 				{
-					this->Backup();
+					
 					m_collisionY = true;
 					if (m_action == jump || m_action == drop)
 					{
@@ -795,6 +826,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 					}
 					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
 						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
+					this->Backup();
 				}
 				if (position.y != (position.y + distanceY))
 				{
@@ -809,6 +841,7 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 			case BAR:
 			case BAR_DOWN:
 			case BAR_RIGHT:
+			case BAR_UP:
 			{
 				if (normalx == 0.0f && normaly == -1.0f)
 				{
@@ -834,38 +867,6 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 				}
 			}
 			break;
-			case BAR_UP:
-			{
- 				if (normalx == 0.0f && normaly == -1.0f)
-				{
-					this->droping();
-				}
-				if (normalx == 0.0f && normaly == 1.0f)
-				{
-					m_pBarup = m_pObject;
-					m_collisionY = true;
-					if (m_action == jump || m_action == drop)
-					{
-						if (velocity.x != 0) m_action = run;
-						else m_action = stand;
-					}
-
-					//if (position.y != m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
-						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2 + 3;
-					flagPosition.y = position.y;
-					timer.y = delta_time;
-					velocity.y = -100;
-					accel.y = 0.0f;
-				}
-				if (position.y != (position.y + distanceY))
-				{
-					if (normalx == -1.0f && normaly == 0.0f || normalx == 1.0f && normaly == 0.0f)
-					{
-						m_collisionX = true;
-					}
-				}
-			}
-			break;
 			//Va chạm với đất
 			case LEFT_LAND:
 			case RIGHT_LAND:
@@ -879,8 +880,6 @@ void CMario::CheckCollision(CBox mario, float delta_time)
 						if (velocity.x != 0) m_action = run;
 						else m_action = stand;
 					}
-					velocity.y = 0.0f;
-					accel.y = 0.0f;
 					if (position.y > m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2)
 						position.y = m_pObject->GetBox().y + m_pObject->GetBox().h / 2 + height / 2;
 				}

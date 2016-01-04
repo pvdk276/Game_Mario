@@ -7,7 +7,6 @@ CCarnivorousFlower::CCarnivorousFlower(int id, D3DXVECTOR2 position, CSprite * s
 	this->height = 50;
 	velocity = D3DXVECTOR2(0.0f, 50.0f);
 	accel = D3DXVECTOR2(0.0f, 0.0f);
-	m_posPosition = flagPosition.y;
 	m_counter = 0.0f;
 }
 
@@ -29,11 +28,15 @@ void CCarnivorousFlower::Update(float delta_time)
 		if (CMario::getInstance()->sprite == CMario::getInstance()->smallMario)
 			CMario::getInstance()->Deading();
 		else
-			CMario::getInstance()->changeMario(CMario::getInstance()->smallMario,0);
+		{
+			CMario::getInstance()->changeMario(CMario::getInstance()->smallMario, 0);
+			SoundManagement::GetInstance()->Get(SMALLER_SOUND)->Play();
+		}
+			
 	}
 
 	//Di chuyển
-	if (this->position.y >= 275)
+	if (this->position.y >= rootPosition.y + 100)
 	{
 		velocity.y = - abs(velocity.y);
 		timer.y = 0.0f;
@@ -43,7 +46,7 @@ void CCarnivorousFlower::Update(float delta_time)
 	else
 		m_counter = 0.0f;
 
-	if (this->position.y <= m_posPosition)
+	if (this->position.y <= rootPosition.y)
 	{
 		velocity.y = abs(velocity.y);
 		timer.y = 0.0f;

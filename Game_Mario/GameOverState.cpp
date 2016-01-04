@@ -74,10 +74,9 @@ void CGameOverState::End()
 		
 	else
 	{
-
-		CMario::getInstance()->Resume();
 		delete m_pNextState;
 		m_pNextState = new CPlayState();
+		CMario::getInstance()->Resume();
 	}
 	CGameStateManager::getInstance()->ChangeState(m_pNextState);
 }

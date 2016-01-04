@@ -33,6 +33,7 @@ void CWinnerState::Update(float delta_time)
 		this->End();
 	}
 	CAnimation::UpdateAnimation(delta_time, 0, 2, 1, 0.2f);
+	SoundManagement::GetInstance()->Get(WIN_SOUND)->Play();
 }
 
 void CWinnerState::Render()

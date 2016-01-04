@@ -26,7 +26,6 @@ private:
 	CBox mario;
 	CBaseObject* m_pObject;
 	ObjectName objectName;
-	CBaseObject* m_pBarup;
 
 	int magicCounter;	//biến đếm số lần thực hiện chuyển đổi
 	int posIndex;		//index của mario cũ
@@ -38,15 +37,19 @@ private:
 	float masat;
 	float preDeltaPosition;
 	bool isSlowing;
-	D3DXVECTOR2 tVelocity;
+	bool started;
+
 	D3DXVECTOR2 preVelocity;
 	D3DXVECTOR2 flagAccel;
-	D3DXVECTOR2 posMasat;
 	ActionMario m_action;
 
+	//Backup
 	D3DXVECTOR2 backupPosition;
 	CSprite* backupSprite;
+	D3DXVECTOR2 backVelocity;
+	D3DXVECTOR2 backAccel;
 
+	//Shooting
 	CSprite* m_pSprBullet;
 	CBullet* m_pBullet;
 	bool isShooting;

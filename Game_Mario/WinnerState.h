@@ -3,6 +3,7 @@
 #include "Sprite.h"
 #include "GameWindow.h"
 #include "PlayState.h"
+#include "SoundManagement.h"
 
 class CWinnerState : public CBaseGameState, CAnimation
 {

@@ -17,9 +17,12 @@ CBlock::CBlock(int id, ObjectName type, D3DXVECTOR2 position, CSprite* sprite1, 
 		srand((int)time(0));
 		this->numberCoin = rand() % 10 + 1;
 		this->count = 0;
-		bonus->isStaticCoin = false;
+		bonus->isStatic = false;
 	}
-	else if (type == FLOWER_BLOCK) bonus = new CBonus(id, FLOWER, position, sprite2);
+	else if (type == FLOWER_BLOCK)
+	{
+		bonus = new CBonus(id, FLOWER, position, sprite2);
+	}
 	else if (type == RED_MUSHROOM_BLOCK) bonus = new CBonus(id, RED_MUSHROOM, position, sprite2);
 	else if (type == GREEN_MUSHROOM_BLOCK) bonus = new CBonus(id, GREEN_MUSHROOM, position, sprite2);
 	else bonus = new CBonus(id, STAR, position, sprite2);
@@ -37,6 +40,8 @@ void CBlock::Update(float delta_time)
 	{
 		isBonus = true;
 		isBlock = true;
+		if (this->type != COIN_BLOCK)
+			SoundManagement::GetInstance()->Get(BONUSAPPEAR_SOUND)->Play();
 	}
 	
 	if (type == COIN_BLOCK)
@@ -47,12 +52,11 @@ void CBlock::Update(float delta_time)
 			{
 				SoundManagement::GetInstance()->Get(GETCOIN_SOUND)->Play();
 				bonus->Update(delta_time);
-
 				if (bonus->isDead)
 				{
 					CScoreManagement::getInstance()->AddScore();
 					bonus = new CBonus(id, COIN, position, sprite2);
-					bonus->isStaticCoin = false;
+					bonus->isStatic = false;
 					count++;
 					isBonus = false;
 				}

@@ -16,6 +16,7 @@ CBonus::CBonus(int id, ObjectName typeObj, D3DXVECTOR2 position, CSprite * sprit
 	vx = 1;
 	velocity = D3DXVECTOR2(vx*200.0f, 600.0f);
 	accel = D3DXVECTOR2(0.0f, 550.0f);
+		
 	this->isDead = false;
 	this->isCollision = false;
 }
@@ -34,10 +35,6 @@ void CBonus::Update(float delta_time)
 	//Va chạm với mario
 	float normalx, normaly;
 	float distanceX, distanceY;
-	float value = CCollision::getInstance()->CheckCollision(
-		CMario::getInstance()->GetBox(),
-		this->GetBox(),
-		normalx, normaly, distanceX, distanceY, delta_time);
 	if (CCollision::getInstance()->CheckCollision(
 		CMario::getInstance()->GetBox(),
 		this->GetBox(),
@@ -57,10 +54,12 @@ void CBonus::Update(float delta_time)
 			if (CMario::getInstance()->sprite == CMario::getInstance()->smallMario)
 			{
 				CMario::getInstance()->changeMario(CMario::getInstance()->bigMario, 0);
+				SoundManagement::GetInstance()->Get(LEVELUP_SOUND)->Play();
 			}
 			else
 			{
 				CMario::getInstance()->changeMario(CMario::getInstance()->superMario, 0);
+				SoundManagement::GetInstance()->Get(LEVELUP_SOUND)->Play();
 			}
 			this->isDead = true;
 		}
@@ -69,7 +68,11 @@ void CBonus::Update(float delta_time)
 		{
 			this->isDead = true;
 			if (CMario::getInstance()->sprite == CMario::getInstance()->smallMario)
+			{
 				CMario::getInstance()->changeMario(CMario::getInstance()->bigMario, 0);
+				SoundManagement::GetInstance()->Get(LEVELUP_SOUND)->Play();
+			}
+				
 		}
 			break;
 		case GREEN_MUSHROOM:
@@ -77,6 +80,7 @@ void CBonus::Update(float delta_time)
 			this->isDead = true;
 			int life = CScoreManagement::getInstance()->GetLife() + 1;
 			CScoreManagement::getInstance()->SetLife(life);
+			SoundManagement::GetInstance()->Get(EXTRALIFE_SOUND)->Play();
 		}
 			break;
 		case STAR:
@@ -167,7 +171,7 @@ void CBonus::Update(float delta_time)
 		break;
 		case COIN:
 		{
-			if(!isStaticCoin)
+			if(!isStatic)
 				this->isDead = true;
 		}
 		break;
@@ -184,9 +188,9 @@ void CBonus::Update(float delta_time)
 	if (type == FLOWER && position.y > posOfBlock.y + width)
 	{
 		m_collisionY = true;
-		timer.y = 0.0f;
-		velocity.y = 0.0f;
-		accel.y = 0.0f;
+		timer = D3DXVECTOR2(0.0f, 0.0f);
+		velocity = D3DXVECTOR2(0.0f,0.0f);
+		accel = D3DXVECTOR2(0.0f, 0.0f);
 		flagPosition.y = position.y;
 	}
 
@@ -194,6 +198,13 @@ void CBonus::Update(float delta_time)
 	switch (type)
 	{
 	case COIN:
+	{
+		if (isStatic == true)
+		{
+			velocity = D3DXVECTOR2(0.0f, 0.0f);
+			accel = D3DXVECTOR2(0.0f, 0.0f);
+		}
+	}
 		break;
 	case FLOWER:
 		break;
@@ -254,7 +265,7 @@ void CBonus::updatePosAnima(float delta_time)
 	break;
 	case COIN:
 	{
-		if (!isStaticCoin)
+		if (!isStatic)
 		{
 			timer.y += delta_time;
 			position.y = flagPosition.y + velocity.y * timer.y + 1.0f / 2 * accel.y * timer.y * timer.y;
