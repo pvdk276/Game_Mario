@@ -5,7 +5,7 @@
 #include "SoundManagement.h"
 #include "GameGraphic.h"
 
-CMario::CMario() : CLivingObject(0, D3DXVECTOR2(8000.0f, 600.0f), NULL)
+CMario::CMario() : CLivingObject(0, D3DXVECTOR2(75.0f, 600.0f), NULL)
 {
 	this->Init();
 }
@@ -65,11 +65,6 @@ void CMario::Render()
 
 void CMario::Update(float delta_time)
 {
-	//Nếu đang chuyển màn
-	if (started == false)
-	{
-		SoundManagement::GetInstance()->Get(FINISHMAP_SOUND)->Play();
-	}
 	//Bất tử 5 giây
 	if (isImmortal && timerImmortal <= delta_time * 5)
 	{
