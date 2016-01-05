@@ -5,7 +5,7 @@
 #include "SoundManagement.h"
 #include "GameGraphic.h"
 
-CMario::CMario() : CLivingObject(0, D3DXVECTOR2(75.0f, 600.0f), NULL)
+CMario::CMario() : CLivingObject(0, D3DXVECTOR2(8000.0f, 600.0f), NULL)
 {
 	this->Init();
 }

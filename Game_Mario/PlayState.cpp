@@ -89,12 +89,12 @@ void CPlayState::Update(float deltaTime)
 		m_status = 2;
 		this->End();	//GameOver State
 	}
-	if (CMario::getInstance()->isWin && m_id_map < 3)
+	if (CMario::getInstance()->isWin && m_id_map < LEVEL)
 	{
 		m_status = 3;	//ChangeLevel
 		this->End();
 	}
-	if (CMario::getInstance()->isWin && m_id_map == 3)
+	if (CMario::getInstance()->isWin && m_id_map == LEVEL)
 	{
 		m_status = 4;	//winerstate
 		this->End();
